@@ -26,6 +26,7 @@ Screenshot of MSFS Mobile Companion App in action:
 ## Known issues:
 - NAV frequencies can get out of sync, especially when rapidly pressing frequency adjustment buttons. Use the "Force Sync Button" to synchronize frequencies with the sim.
 - NAV G3000 can only switch between VOR1 and GPS. VOR2 is not available.
+- MSFS Mobile Companion App may crash when accessing it from multiple devices.
 
 ## Credits
 MSFS Mobile Companion App is based on the Python [SimConnect](https://pypi.org/project/SimConnect/) project.
