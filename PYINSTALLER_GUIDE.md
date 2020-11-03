@@ -19,11 +19,7 @@ else:
     app = Flask(__name__)
 ```
 
-## 2. Remane SimConnect.dll
-
-Rename the `SimConnect.dll` file located in the folder *SimConnect* into `SimConnect.dllc`.
-
-## 3. Compile MSFS Mobile Companion App using pyinstaller
+## 2. Compile MSFS Mobile Companion App using pyinstaller
 
 Use the following pyinstaller settings to compile MSFS Mobile Companion App:
 
@@ -31,4 +27,4 @@ Use the following pyinstaller settings to compile MSFS Mobile Companion App:
 pyinstaller -F --onefile --add-data "templates;templates" --add-data "static;static" --add-data "SimConnect;SimConnect" glass_server.py
 ```
 
-## 4. Enjoy and have fun!
+## 3. Enjoy and have fun!
