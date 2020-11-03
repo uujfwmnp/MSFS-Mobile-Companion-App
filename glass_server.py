@@ -2,16 +2,22 @@ from flask import Flask, jsonify, render_template, request
 from SimConnect import *
 from time import sleep
 import random
+import logging
+import math
+import socket
 
+print (socket.gethostbyname(socket.gethostname()))
 
 app = Flask(__name__)
+log = logging.getLogger('werkzeug')
+log.disabled = True
 
 # SIMCONNECTION RELATED STARTUPS
 
 # Create simconnection
 sm = SimConnect()
 ae = AircraftEvents(sm)
-aq = AircraftRequests(sm, _time=10)
+aq = AircraftRequests(sm, _time=20)
 
 # Create request holders
 
@@ -303,52 +309,105 @@ def output_ui_variables():
 	ui_friendly_dictionary = {}
 	ui_friendly_dictionary["STATUS"] = "success"
 
-	# Fuel
-	fuel_percentage = (aq.get("FUEL_TOTAL_QUANTITY") / aq.get("FUEL_TOTAL_CAPACITY")) * 100
-	ui_friendly_dictionary["FUEL_PERCENTAGE"] = round(fuel_percentage)
-	ui_friendly_dictionary["AIRSPEED_INDICATE"] = round(aq.get("AIRSPEED_INDICATED"))
-	ui_friendly_dictionary["ALTITUDE"] = thousandify(round(aq.get("PLANE_ALTITUDE")))
-
-	# Control surfaces
-	if aq.get("GEAR_HANDLE_POSITION") == 1:
-		ui_friendly_dictionary["GEAR_HANDLE_POSITION"] = "DOWN"
-	else:
-		ui_friendly_dictionary["GEAR_HANDLE_POSITION"] = "UP"
-	ui_friendly_dictionary["FLAPS_HANDLE_PERCENT"] = round(aq.get("FLAPS_HANDLE_PERCENT") * 100)
-
-	ui_friendly_dictionary["ELEVATOR_TRIM_PCT"] = round(aq.get("ELEVATOR_TRIM_PCT") * 100)
-	ui_friendly_dictionary["RUDDER_TRIM_PCT"] = round(aq.get("RUDDER_TRIM_PCT") * 100)
-
 	# Navigation
-	ui_friendly_dictionary["LATITUDE"] = aq.get("PLANE_LATITUDE")
-	ui_friendly_dictionary["LONGITUDE"] = aq.get("PLANE_LONGITUDE")
-	ui_friendly_dictionary["MAGNETIC_COMPASS"] = round(aq.get("MAGNETIC_COMPASS"))
-	ui_friendly_dictionary["MAGVAR"] = round(aq.get("MAGVAR"))
-	ui_friendly_dictionary["VERTICAL_SPEED"] = round(aq.get("VERTICAL_SPEED"))
+	try:
+		ui_friendly_dictionary["LATITUDE"] = aq.get("PLANE_LATITUDE")
+		ui_friendly_dictionary["LONGITUDE"] = aq.get("PLANE_LONGITUDE")
+		ui_friendly_dictionary["MAGNETIC_COMPASS"] = round(aq.get("MAGNETIC_COMPASS"))
+		ui_friendly_dictionary["MAGVAR"] = round(aq.get("MAGVAR"))
+	except:
+		None
+
+    # Radios
+	try:
+		ui_friendly_dictionary["NAV1_STANDBY"] = round(aq.get("NAV_STANDBY_FREQUENCY:1"),2)
+		ui_friendly_dictionary["NAV1_ACTIVE"] = round(aq.get("NAV_ACTIVE_FREQUENCY:1"),2)
+	except:
+		None
+        
+	try:
+		ui_friendly_dictionary["NAV2_STANDBY"] = round(aq.get("NAV_STANDBY_FREQUENCY:2"),2)
+		ui_friendly_dictionary["NAV2_ACTIVE"] = round(aq.get("NAV_ACTIVE_FREQUENCY:2"),2)
+	except:
+		None
+	
+    # ADF Active
+	try:
+		adf_use_bcd = int(aq.get("ADF_ACTIVE_FREQUENCY:1"))
+		adf_use_digits = ""
+
+		for i in reversed(range(4)):
+			adf_use_digit = math.floor(adf_use_bcd / (65536*(16**i)))
+			adf_use_digits = adf_use_digits + str(adf_use_digit)
+			adf_use_bcd = adf_use_bcd - (65536*(16**i)) * adf_use_digit
+
+		ui_friendly_dictionary["ADF_USE_1000"] = adf_use_digits[0]
+		ui_friendly_dictionary["ADF_USE_100"] = adf_use_digits[1]
+		ui_friendly_dictionary["ADF_USE_10"] = adf_use_digits[2]
+		ui_friendly_dictionary["ADF_USE_1"] = adf_use_digits[3]
+		ui_friendly_dictionary["ADF_USE"] = int(adf_use_digits)
+	except:
+		None
+
+    # ADF Standby
+	try:
+		adf_stby = int(aq.get("ADF_STANDBY_FREQUENCY:1"))/1000
+		if adf_stby >= 1000:
+			ui_friendly_dictionary["ADF_STBY_1000"] = str(adf_stby)[0]
+			ui_friendly_dictionary["ADF_STBY_100"] = str(adf_stby)[1]
+			ui_friendly_dictionary["ADF_STBY_10"] = str(adf_stby)[2]
+			ui_friendly_dictionary["ADF_STBY_1"] = str(adf_stby)[3]
+		else:
+			ui_friendly_dictionary["ADF_STBY_1000"] = "0"
+			ui_friendly_dictionary["ADF_STBY_100"] = str(adf_stby)[0]
+			ui_friendly_dictionary["ADF_STBY_10"] = str(adf_stby)[1]
+			ui_friendly_dictionary["ADF_STBY_1"] = str(adf_stby)[2]
+	except:
+		None
+
+    # NAV/ADF Compass Settings
+	try:
+		ui_friendly_dictionary["ADF_CARD_DEG"] = round(aq.get("ADF_CARD"),0)
+	except:
+		None
+	try:
+		ui_friendly_dictionary["NAV1_OBS_DEG"] = round(aq.get("NAV_OBS:1"),0)
+	except:
+		None
+	try:
+		ui_friendly_dictionary["NAV2_OBS_DEG"] = round(aq.get("NAV_OBS:2"),0)
+	except:
+		None
+
+    # Comms
+	#ui_friendly_dictionary["COM1_STANDBY"] = round(aq.get("COM_STANDBY_FREQUENCY:1"),2)
+	#ui_friendly_dictionary["COM1_ACTIVE"] = round(aq.get("COM_ACTIVE_FREQUENCY:1"),2)
+	#ui_friendly_dictionary["COM2_STANDBY"] = round(aq.get("COM_STANDBY_FREQUENCY:2"),2)
+	#ui_friendly_dictionary["COM2_ACTIVE"] = round(aq.get("COM_ACTIVE_FREQUENCY:2"),2)
 
 	# Autopilot
-	ui_friendly_dictionary["AUTOPILOT_MASTER"] = aq.get("AUTOPILOT_MASTER")
-	ui_friendly_dictionary["AUTOPILOT_NAV_SELECTED"] = aq.get("AUTOPILOT_NAV_SELECTED")
-	ui_friendly_dictionary["AUTOPILOT_WING_LEVELER"] = aq.get("AUTOPILOT_WING_LEVELER")
-	ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK"] = aq.get("AUTOPILOT_HEADING_LOCK")
-	ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"] = round(aq.get("AUTOPILOT_HEADING_LOCK_DIR"))
-	ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK"] = aq.get("AUTOPILOT_ALTITUDE_LOCK")
-	ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK_VAR"] = thousandify(round(aq.get("AUTOPILOT_ALTITUDE_LOCK_VAR")))
-	ui_friendly_dictionary["AUTOPILOT_ATTITUDE_HOLD"] = aq.get("AUTOPILOT_ATTITUDE_HOLD")
-	ui_friendly_dictionary["AUTOPILOT_GLIDESLOPE_HOLD"] = aq.get("AUTOPILOT_GLIDESLOPE_HOLD")
-	ui_friendly_dictionary["AUTOPILOT_APPROACH_HOLD"] = aq.get("AUTOPILOT_APPROACH_HOLD")
-	ui_friendly_dictionary["AUTOPILOT_BACKCOURSE_HOLD"] = aq.get("AUTOPILOT_BACKCOURSE_HOLD")
-	ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD"] = aq.get("AUTOPILOT_VERTICAL_HOLD")
-	ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD_VAR"] = aq.get("AUTOPILOT_VERTICAL_HOLD_VAR")
-	ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD"] = aq.get("AUTOPILOT_PITCH_HOLD")
-	ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD_REF"] = aq.get("AUTOPILOT_PITCH_HOLD_REF")
-	ui_friendly_dictionary["AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE"] = aq.get("AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE")
-	ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD"] = aq.get("AUTOPILOT_AIRSPEED_HOLD")
-	ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
-
-	# Cabin
-	ui_friendly_dictionary["CABIN_SEATBELTS_ALERT_SWITCH"] = aq.get("CABIN_SEATBELTS_ALERT_SWITCH")
-	ui_friendly_dictionary["CABIN_NO_SMOKING_ALERT_SWITCH"] = aq.get("CABIN_NO_SMOKING_ALERT_SWITCH")
+	try:
+		ui_friendly_dictionary["AUTOPILOT_MASTER"] = aq.get("AUTOPILOT_MASTER")
+		#ui_friendly_dictionary["AUTOPILOT_NAV_SELECTED"] = aq.get("AUTOPILOT_NAV_SELECTED")
+		#ui_friendly_dictionary["AUTOPILOT_WING_LEVELER"] = aq.get("AUTOPILOT_WING_LEVELER")
+		ui_friendly_dictionary["AUTOPILOT_NAV1_LOCK"] = aq.get("AUTOPILOT_NAV1_LOCK")
+		ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK"] = aq.get("AUTOPILOT_HEADING_LOCK")
+		ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"] = round(aq.get("AUTOPILOT_HEADING_LOCK_DIR"))
+		ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK"] = aq.get("AUTOPILOT_ALTITUDE_LOCK")
+		ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK_VAR"] = thousandify(round(aq.get("AUTOPILOT_ALTITUDE_LOCK_VAR")))
+		#ui_friendly_dictionary["AUTOPILOT_ATTITUDE_HOLD"] = aq.get("AUTOPILOT_ATTITUDE_HOLD")
+		ui_friendly_dictionary["AUTOPILOT_GLIDESLOPE_HOLD"] = aq.get("AUTOPILOT_GLIDESLOPE_HOLD")
+		ui_friendly_dictionary["AUTOPILOT_APPROACH_HOLD"] = aq.get("AUTOPILOT_APPROACH_HOLD")
+		ui_friendly_dictionary["AUTOPILOT_BACKCOURSE_HOLD"] = aq.get("AUTOPILOT_BACKCOURSE_HOLD")
+		ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD"] = aq.get("AUTOPILOT_VERTICAL_HOLD")
+		ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD_VAR"] = aq.get("AUTOPILOT_VERTICAL_HOLD_VAR")
+		#ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD"] = aq.get("AUTOPILOT_PITCH_HOLD")
+		#ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD_REF"] = aq.get("AUTOPILOT_PITCH_HOLD_REF")
+		#ui_friendly_dictionary["AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE"] = aq.get("AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE")
+		ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD"] = aq.get("AUTOPILOT_AIRSPEED_HOLD")
+		ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
+	except:
+		None
 
 	return jsonify(ui_friendly_dictionary)
 
@@ -431,7 +490,24 @@ def trigger_event(event_name, value_to_use = None):
 		if value_to_use is None:
 			EVENT_TO_TRIGGER()
 		else:
-			EVENT_TO_TRIGGER(int(value_to_use))
+			# Convert kHz to Hz BCD for NAV1_RADIO_SET, NAV2_RADIO_SET and AD_SET events
+			if event_name == "NAV1_RADIO_SET" or event_name == "NAV2_RADIO_SET":
+				print(value_to_use)
+				freq_hz = float(value_to_use) * 100
+				print(freq_hz)
+				freq_hz = str(int(freq_hz))
+				print(freq_hz)
+				freq_hz_bcd = 0
+				for figure,digit in enumerate(reversed(freq_hz)):
+					freq_hz_bcd += int(digit)*(16**(figure))
+				print(freq_hz_bcd)
+				EVENT_TO_TRIGGER(int(freq_hz_bcd))
+			else:
+				EVENT_TO_TRIGGER(int(value_to_use))
+			#try:
+				#EVENT_TO_TRIGGER(int(value_to_use))
+			#except:
+				#EVENT_TO_TRIGGER(value_to_use)
 
 		status = "success"
 	else:
@@ -471,4 +547,11 @@ def custom_emergency(emergency_type):
 	return text_to_return
 
 
-app.run(host='0.0.0.0', port=5000, debug=True)
+print("\n********* MSFS 2020 Mobile Companion App *********\n")
+print(f"Local web server for MSFS 2020 Mobile Companion App initialized.\n")
+print(f"Launch {socket.gethostbyname(socket.gethostname())}:4000 in your browser to access MSFS 2020 Mobile Companion App.\n")
+print(f"Make sure your your mobile device is connected to the same local network (WIFI) as this PC.\n")
+print(f"Notice: If your computer has more than one active ethernet/WIFI adapter, please check  \n ipconfig in command prompt.\n")
+print("**************************************************\n\n")
+
+app.run(host='0.0.0.0', port=4000, debug=False)

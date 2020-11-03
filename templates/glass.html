@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>MSFS2020 Cockpit Companion</title>
+	<title>MSFS2020 Mobile Companion App</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Bootstrap CSS-->
@@ -32,458 +32,531 @@
 	<script src="/static/vendor/jquery-ui-slider/jquery-ui-slider-pips.js"></script>
 
 	<!-- Sweetalert2 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 	<!-- Microtip tooltips -->
 	<link rel="stylesheet" href="https://unpkg.com/microtip/microtip.css">
 
+	<!-- Bootstrap Validator -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
 	<!-- Set script root-->
 	<script type=text/javascript>
-        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 	</script>
 
 	<style>
-		html, body {
-			height: 100vh;
-			overflow: hidden;
-			margin: 0;
-			padding: 0;
+		button {
+			margin-top: 2px;
+			margin-bottom: 2px;
 		}
-		body {
-			display: flex;
-			flex-direction: column;
-		}
-		.sim-input-field {
-			width: 125px;
-		}
-		.vertical-slider {
-			height: 150px;
-			margin-left: 15px;
-			margin-top: 20px;
-		}
+		
+		.navbar::-webkit-scrollbar { width: 0 !important }
 
-		.slider .ui-slider-tip {
-			visibility: visible;
-			opacity: 1;
-			top: -30px;
-		}
+		.navbar { overflow: -moz-scrollbars-none; }
+
+		.navbar { -ms-overflow-style: none; }
 	</style>
+
 </head>
 
-<body>
+<body style="background-color:#6c757d">
 
-<div class="container-fluid p-0" style="height: 100%; width: 100%;">  <!--Main container-->
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" style="min-width:200px;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;">
+	<a class="navbar-brand" href="#">
+		<img src="/static/img/fs_mca_logo.png" style="height:32px;" alt="MSFS MCA">
+	</a>
+	<button class="btn btn-warning" onclick="$(this).blur();mapRefreshFix();setTimeout(function(){map.invalidateSize(true);},500);" style="margin-left:-8px;margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">Map</button>
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseRadio" aria-expanded="false" aria-controls="collapseRadio">NAV</button>
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseG3000" aria-expanded="false" aria-controls="collapseG3000">NAV&nbsp;Direct</button>
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseAP" aria-expanded="false" aria-controls="collapseAP">AP</button>
+	&nbsp;&nbsp;
+</nav>
 
-	<!-- NAVBAR -->
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-			<ul class="navbar-nav mr-auto">
-				<button id=followModeButton class="btn btn-primary btn-sm" type="button" onclick="toggleFollowPlane()">
-					<i class="fas fa-location-arrow"></i> <span id=followMode>Moving map enabled</span>
-				</button>
-			</ul>
+<div class="container-fluid bg-secondary" id="myGroup" style="margin-bottom:0px">
+
+	<!-- Map -->
+	<div class="collapse show" id="collapseMap" data-parent="#myGroup" style="margin-bottom:-30px">
+		<div class="row" id="map_row" style="height:calc(100vh - 90px);height:calc((var(--vh, 1vh) * 100) - 90px);margin-top:10px;margin-bottom:-30px;">
+			<div class="col"  id="map_column" style="position:relative; height=100%;z-index:1;">
+				<div id = "map" style = "height: 100%; width: 100%;"></div>
+			</div>
 		</div>
-		<div class="mx-auto order-0">
-			<a class="navbar-brand mx-auto" href="#">MSFS2020 Cockpit Companion</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-		</div>
-		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item m-1">
-					<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseNavigation" aria-expanded="true" aria-controls="collapseNavigation" aria-label="Navigation" data-microtip-position="bottom" role="tooltip">
-						<i class="fas fa-map"></i>
-					</button>
-				</li>
-				<li class="nav-item m-1">
-					<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseFuel" aria-expanded="true" aria-controls="collapseFuel" aria-label="Fuel" data-microtip-position="bottom" role="tooltip">
-						<i class="fas fa-gas-pump"></i>
-					</button>
-				</li>
-				<li class="nav-item m-1">
-					<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseControlSurfaces" aria-expanded="true" aria-controls="collapseControlSurfaces" aria-label="Control surfaces" data-microtip-position="bottom" role="tooltip">
-						<i class="fas fa-sliders-h"></i>
-					</button>
-				</li>
-				<li class="nav-item m-1">
-					<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseAutopilot" aria-expanded="true" aria-controls="collapseAutopilot" aria-label="Autopilot" data-microtip-position="bottom" role="tooltip">
-						<i class="fas fa-robot"></i>
-					</button>
-				</li>
-				<li class="nav-item m-1">
-					<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseRadios" aria-expanded="true" aria-controls="collapseRadios" aria-label="Radios" data-microtip-position="bottom" role="tooltip">
-						<i class="fas fa-broadcast-tower"></i>
-					</button>
-				</li>
-				<li class="nav-item m-1">
-					<button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseCabin" aria-expanded="true" aria-controls="collapseCabin" aria-label="Cabin" data-microtip-position="bottom" role="tooltip">
-						<i class="fas fa-users"></i>
-					</button>
-				</li>
-				<li class="nav-item m-1">
-					<button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#collapseEmergency" aria-expanded="true" aria-controls="collapseEmergency" aria-label="Emergency" data-microtip-position="bottom" role="tooltip">
-						<i class="fas fa-fire-extinguisher"></i>
-					</button>
-				</li>
-				<li class="nav-item m-1">
-					<button class="btn btn-success ml-3" onclick="window.open('https://msfs2020.cc','_blank');" type="button" aria-label="Information about Cockpit Companion" data-microtip-position="bottom-left" role="tooltip">
-						<i class="fab fa-github fa-lg"></i>
-					</button>
-				</li>
-			</ul>
-		</div>
-	</nav>
+		<button id=followModeButton style="position:relative;z-index:2;top:-3px;" class="btn btn-primary btn-sm" type="button" onclick="toggleFollowPlane();$(this).blur();">
+			<i class="fas fa-location-arrow"></i> <span id=followMode>Unfollow Plane</span>
+		</button>
+	</div>
 
-
-	<div class="row p-2" style="height: 85vh">
-		<div class="col-sm-7 col-xl-8 no-gutters collapse show p-0" style="background-color: grey;" id="map_column" style="position: relative; height=100%;">
-			<div id = "map" style = "height: 100%; width: 100%;"></div>
-		</div>
-
-		<div class="col collapse show" id="hud_column">
-
-			<div class="accordion" id="accordionHUD">
-
-				<!-- NAVIGATION -->
-				<div class="card">
-
-					<div id="collapseNavigation" class="collapse show" aria-labelledby="collapseNavigation" data-parent="#accordionHUD">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-6">
-									<div class="card text-white bg-secondary mb-3">
-										<div class="card-body text-center">
-											<h7 class="card-title">Altitude</h7>
-											<h3 class="card-title"><span id=altitude>?</span></h3>
-										</div>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="card text-white bg-secondary mb-3">
-										<div class="card-body text-center">
-											<h7 class="card-title">V/Speed</h7>
-											<h3 class="card-title"><span id=vertical-speed>?</span></h3>
-										</div>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="card text-white bg-secondary mb-3">
-										<div class="card-body text-center">
-											<h7 class="card-title">Heading</h7>
-											<h3 class="card-title"><span id=compass>?</span></h3>
-										</div>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="card text-white bg-secondary mb-3">
-										<div class="card-body text-center">
-											<h7 class="card-title">Airspeed</h7>
-											<h3 class="card-title"><span id=airspeed>?</span></h3>
-										</div>
-									</div>
-								</div>
+	<!-- Radios Normal-->
+	<div class="collapse" id="collapseRadio" data-parent="#myGroup">
+		<div class="card bg-dark text-white" style="margin-top:10px; margin-bottom:12px;">
+			<div class="card-body">
+			
+				<!-- First Row - NAV 1 & 2-->
+				<div class="row" style="margin-top:-23px">
+					
+					<!-- NAV 1 -->
+					<div class="col" style="margin-top:20px; max-width:382px; min-width:278px;">
+						<div class="lead">NAV 1</div>					
+						<!-- NAV 1 Frequency Swap Row-->
+						<div class="row" style="margin-bottom:10px">
+						<div class="col">
+							<div class="btn-group" role="group" aria-label="NAV1 STBY">
+								<button type="button" class="btn btn-light" style="width:65px" disabled>STBY</button>
+								<button type="button" class="btn btn-light" style="background-color:#000000; width:80px" disabled><span class="text-danger" id="nav1_standby">?</span></button>
 							</div>
-
+							<button onclick="triggerSimEvent ('NAV1_RADIO_SWAP', 0, true); $(this).blur(); nav1switch();" type="button" class="btn btn-secondary" title="Swap NAV1 Standby frequency" style="width:55px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"></path></svg></button>
+							<div class="btn-group" role="group" aria-label="NAV1 USE">
+								<button type="button" class="btn btn-light" style="width:65px" disabled>USE</button>
+								<button type="button" class="btn btn-light" style="background-color:#000000; width:80px" disabled><span class="text-danger" id="nav1_active">?</span></button>
+							</div>
 						</div>
-					</div>
-				</div>
-
-				<!-- FUEL -->
-				<div class="card">
-					<div id="collapseFuel" class="collapse" aria-labelledby="collapseFuel" data-parent="#accordionHUD">
-						<div class="card-body text-center">
-							<div class="row">
-								<div class="col-12">
-									<div class="card bg-light mb-3">
-										<div class="card-body">
-											<h7 class="card-title">Fuel %</h7>
-											<div class="progress m-1" style="height: 25px;">
-												<div id="fuel-percentage-bar" class="progress-bar" style="width: 25%;" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span id=fuel-percentage></span></div>
-											</div>
-										</div>
-									</div>
+						</div>
+						
+						<!-- NAV 1 Tuner Row-->
+						<div class="row align-items-center" style="margin-bottom:10px;margin-top:5px">
+						<div class="col-auto" style="padding-right:5px">
+							<button onclick="triggerSimEvent ('NAV1_RADIO_WHOLE_DEC', 1, true); $(this).blur(); nav1minus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
+							<button onclick="triggerSimEvent ('NAV1_RADIO_FRACT_DEC', 1, true); $(this).blur(); nav1minus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
+						</div>
+						<div class="col" style="padding-left:0px;padding-right:0px;margin">
+							<button type="button" class="btn btn-light btn-sm" style="width:100%" disabled>Tune NAV 1</button>
+						</div>
+						<div class="col-auto" style="padding-left:5px">
+							<button onclick="triggerSimEvent ('NAV1_RADIO_FRACT_INC', 1, true); $(this).blur(); nav1plus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
+							<button onclick="triggerSimEvent ('NAV1_RADIO_WHOLE_INC', 1, true); $(this).blur(); nav1plus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
+						</div>
+						</div>
+						
+						<!-- NAV 1 OBS Settings-->
+						<div class="row">
+						<div class="col">
+							<div class="input-group" style="width:220px">
+								<div class="input-group-prepend">
+									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8">OBS 1 (Deg)</span>
+								</div>
+								<input type="text" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS_1_Set').click()" inputmode="numeric" pattern="[0-9]*" id="OBS_1_heading" aria-label="OBS 1 Deg" aria-describedby="OBS_1_Deg" placeholder="-">
+								<div class="input-group-append">
+									<button onclick='if (document.getElementById("OBS_1_heading").value <= 360 && document.getElementById("OBS_1_heading").value >= 0 && document.getElementById("OBS_1_heading").value % 1 === 0 && document.getElementById("OBS_1_heading").value != "") {triggerSimEventFromField ("VOR1_SET", "OBS_1_heading", "");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS_1_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS 1 heading in degrees">Set</button>
 								</div>
 							</div>
 						</div>
+						</div>		
 					</div>
-				</div>
+					
+					
+					<!-- NAV 2 -->
+					<div class="col" style="margin-top:20px; max-width:382px; min-width:278px;">
+						<div class="lead">NAV 2</div>	
 
-				<!-- EMERGENCY -->
-				<div class="card">
-					<div id="collapseEmergency" class="collapse" aria-labelledby="collapseFuel" data-parent="#accordionHUD">
-						<div class="card-body text-center">
-							<div class="row">
-								<div class="col-12">
-									<div class="card bg-light mb-3">
-										<div class="card-body">
-											<button onclick="triggerCustomEmergency('random_engine_fire')" id="emergency-engine-fire" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">Engine Fire</button>
-											<div class="row">
-												<div class="col-6"><button onclick="triggerSimEvent('TOGGLE_ENGINE1_FAILURE')" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">Engine 1 Fail</button></div>
-												<div class="col-6">	<button onclick="triggerSimEvent('TOGGLE_ENGINE2_FAILURE')" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">Engine 2 Fail</button></div>
-												<div class="col-6">	<button onclick="triggerSimEvent('TOGGLE_ENGINE3_FAILURE')" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">Engine 3 Fail</button></div>
-												<div class="col-6">	<button onclick="triggerSimEvent('TOGGLE_ENGINE4_FAILURE')" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">Engine 3 Fail</button></div>
-
-											</div>
-
-											<button onclick="triggerSimEvent('TOGGLE_ELECTRICAL_FAILURE')" type="button" class="btn mt-5 btn-block btn-outline-danger btn-lg">Electrical Fail</button>
-											<button onclick="triggerSimEvent('TOGGLE_HYDRAULIC_FAILURE')" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">Hydraulic Fail</button>
-											<button onclick="triggerSimEvent('TOGGLE_TOTAL_BRAKE_FAILURE')" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">Brake Fail</button>
-											<button onclick="triggerSimEvent('TOGGLE_PITOT_BLOCKAGE')" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">Pitot Blockage</button>
-										</div>
-									</div>
+						<!-- NAV 2 Frequency Swap Row-->
+						<div class="row" style="margin-bottom:10px">
+						<div class="col">
+							<div class="btn-group" role="group" aria-label="NAV2 STBY">
+								<button type="button" class="btn btn-light" style="width:65px" disabled>STBY</button>
+								<button type="button" class="btn btn-light" style="background-color:#000000; width:80px" disabled><span class="text-danger" id="nav2_standby">?</span></button>
+							</div>
+							<button onclick="triggerSimEvent ('NAV2_RADIO_SWAP', 0, true); $(this).blur(); nav2switch();" type="button" class="btn btn-secondary" title="Swap NAV2 Standby frequency" style="width:55px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"></path></svg></button>
+							<div class="btn-group" role="group" aria-label="NAV2 USE">
+								<button type="button" class="btn btn-light" style="width:65px" disabled>USE</button>
+								<button type="button" class="btn btn-light" style="background-color:#000000; width:80px" disabled><span class="text-danger" id="nav2_active">?</span></button>
+							</div>
+						</div>
+						</div>
+						
+						<!-- NAV 2 Tuner Row-->
+						<div class="row align-items-center" style="margin-bottom:10px;margin-top:5px">
+						<div class="col-auto" style="padding-right:5px">
+							<button onclick="triggerSimEvent ('NAV2_RADIO_WHOLE_DEC', 1, true); $(this).blur(); nav2minus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
+							<button onclick="triggerSimEvent ('NAV2_RADIO_FRACT_DEC', 1, true); $(this).blur(); nav2minus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
+						</div>
+						<div class="col" style="padding-left:0px;padding-right:0px;margin">	
+							<button type="button" class="btn btn-light btn-sm" style="width:100%" disabled>Tune NAV 2</button>
+						</div>
+						<div class="col-auto" style="padding-left:5px">	
+							<button onclick="triggerSimEvent ('NAV2_RADIO_FRACT_INC', 1, true); $(this).blur(); nav2plus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
+							<button onclick="triggerSimEvent ('NAV2_RADIO_WHOLE_INC', 1, true); $(this).blur(); nav2plus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
+						</div>
+						</div>
+						
+						<!-- NAV 2 OBS Settings-->
+						<div class="row">
+						<div class="col">		
+							<div class="input-group" style="width:220px">
+								<div class="input-group-prepend">
+									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8">OBS 2 (Deg)</span>
+								</div>
+								<input type="text" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS_2_Set').click()" inputmode="numeric" pattern="[0-9]*" id="OBS_2_heading" aria-label="OBS 2 Deg" aria-describedby="OBS_2_Deg" placeholder="-">
+								<div class="input-group-append">
+									<button onclick='if (document.getElementById("OBS_2_heading").value <= 360 && document.getElementById("OBS_2_heading").value >= 0 && document.getElementById("OBS_2_heading").value % 1 === 0 && document.getElementById("OBS_2_heading").value != "") {triggerSimEventFromField ("VOR2_SET", "OBS_2_heading", ""); nav2_deg_display ("OBS_2_heading");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS_2_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS 2 heading in degrees">Set</button>
 								</div>
 							</div>
 						</div>
+						</div>
 					</div>
-				</div>
+					
+					<!-- ADF -->
+					<div class="col sm-auto" style="margin-top:20px; max-width:382px; min-width:278px;">
+						<div class="lead">ADF</div>	
 
-				<!-- CABIN -->
-				<div class="card">
-					<div id="collapseCabin" class="collapse" aria-labelledby="collapseCabin" data-parent="#accordionHUD">
-						<div class="card-body text-center">
+						<div class="row align-items-center" style="margin-bottom:10px;margin-top:5px">
+							<div class="col" style="min-width:208px;max-width:208px;">
 							<div class="row">
-								<div class="col-12">
-									<div class="card bg-light mb-3">
-										<div class="card-body">
-											<button onclick="triggerSimEvent('CABIN_SEATBELTS_ALERT_SWITCH_TOGGLE')" id="seatbelt-sign" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">Seatbelt sign ?</button>
-											<button onclick="triggerSimEvent('CABIN_NO_SMOKING_ALERT_SWITCH_TOGGLE')" id="no-smoking-sign" type="button" class="btn mt-1 btn-block btn-outline-danger btn-lg">No smoking sign ?</button>
-											<button onclick="temporaryAlert('', 'Cabin crew please contact cockpit', 'success')" id="cabin-crew-contact" type="button" class="btn mt-5 btn-block btn-primary btn-lg">Cabin crew chime</button>
-										</div>
-									</div>
+							<!-- ADF Standby Tuner-->
+							<div class="col" style="margin-left:15px">
+								<div class="row">
+								<button type="button" class="btn btn-secondary" style="width:45px;" disabled>&nbsp;</button>
+								</div>
+								<div class="row">
+								<button type="button" class="btn btn-light" style="background-color:#000000; width:45px;" disabled><span class="text-danger" id="adf_stby_1000">?</span></button>
+								</div>
+								<div class="row">
+								<button type="button" class="btn btn-secondary" style="width:45px;" disabled>&nbsp;</button>
+								</div>
+							</div>
+							<div class="col" style="margin-left:4px">
+								<div class="row">
+								<button onclick="triggerSimEvent ('ADF_100_INC', 1, true); $(this).blur(); adfplus100();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase ADF frequency by 100 kHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg></button>
+								</div>
+								<div class="row">
+								<button type="button" class="btn btn-light" style="background-color:#000000; width:45px" disabled><span class="text-danger" id="adf_stby_100">?</span></button>
+								</div>
+								<div class="row">
+								<button onclick="triggerSimEvent ('ADF_100_DEC', 1, true); $(this).blur(); adfminus100();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease ADF frequency by 100 kHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></button>
+								</div>
+							</div>
+							<div class="col" style="margin-left:4px">
+								<div class="row">
+								<button onclick="triggerSimEvent ('ADF_10_INC', 1, true); $(this).blur(); adfplus10();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase ADF frequency by 10 kHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg></button>
+								</div>
+								<div class="row">
+								<button type="button" class="btn btn-light" style="background-color:#000000; width:45px" disabled><span class="text-danger" id="adf_stby_10">?</span></button>
+								</div>
+								<div class="row">
+								<button onclick="triggerSimEvent ('ADF_10_DEC', 1, true); $(this).blur(); adfminus10();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease ADF frequency by 10 kHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></button>
+								</div>
+							</div>
+							<div class="col" style="margin-left:4px">
+								<div class="row">
+								<button onclick="triggerSimEvent ('ADF_1_INC', 1, true); $(this).blur(); adfplus1();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase ADF frequency by 1 kHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg></button>
+								</div>
+								<div class="row">
+								<button type="button" class="btn btn-light" style="background-color:#000000; width:45px" disabled><span class="text-danger" id="adf_stby_1">?</span></button>
+								</div>
+								<div class="row">
+								<button onclick="triggerSimEvent ('ADF_1_DEC', 1, true); $(this).blur(); adfminus1();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease ADF frequency by 1 kHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></button>
+								</div>
+							</div>
+							</div>
+							</div>
+							
+							<!-- ADF Frequency Switch -->
+							<div class="col" style="margin-left:6px;">
+								<div class="row">
+								<button onclick="triggerSimEvent ('ADF1_RADIO_SWAP', 1, true); $(this).blur(); adfswitch();" type="button" class="btn btn-secondary" title="Swap ADF Standby frequency" style="width:55px;margin-right:-10px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"></path></svg></button>
+								</div>
+							</div>
+							
+							<!-- ADF Active -->
+							<div class="col" style="margin-left:15px">
+								<div class="row">
+								<span class="text-light">&nbsp;ADF USE:</span>
+								</div>
+								<div class="row">
+								<button type="button" class="btn btn-light" style="background-color:#000000; width:75px; margin-right:32px; margin-bottom:26px;" disabled><span class="text-danger" id="adf_act_1000">?</span> <span class="text-danger" id="adf_act_100">?</span> <span class="text-danger" id="adf_act_10">?</span> <span class="text-danger" id="adf_act_1">?</span></button>
+								</div>
+
+							</div>
+							
+						</div>
+						
+						<!-- ADF Card -->
+						<div class="row">
+						<div class="col">		
+							<div class="input-group" style="width:220px">
+								<div class="input-group-prepend">
+									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8">ADF (Deg)</span>
+								</div>
+								<input type="text" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Set').click()" inputmode="numeric" pattern="[0-9]*" id="ADF_heading" aria-label="ADF Deg" aria-describedby="OBS_2_Deg" placeholder="-">
+								<div class="input-group-append">
+									<button onclick='if (document.getElementById("ADF_heading").value <= 360 && document.getElementById("ADF_heading").value >= 0 && document.getElementById("ADF_heading").value % 1 === 0 && document.getElementById("ADF_heading").value != "") {triggerSimEventFromField ("ADF_CARD_SET", "ADF_heading", ""); adf_deg_display ("ADF_heading");}; $(this).blur();' class="btn btn-warning" type="button" id="ADF_Set" style="margin-top:0px;margin-bottom:0px;" title="Set ADF card heading in degrees">Set</button>
 								</div>
 							</div>
 						</div>
+						</div>
+						
 					</div>
-				</div>
-
-				<!-- CONTROL SURFACES -->
-				<div class="card">
-					<div id="collapseControlSurfaces" class="collapse" aria-labelledby="collapseControlSurfaces" data-parent="#accordionHUD">
-						<div class="card-body text-center">
-							<div class="row">
-								<div class="col-12">
-									<div class="card bg-light mb-3">
-										<div class="card-body">
-											<h7 class="card-title">Landing gear</h7>
-											<button onclick="triggerSimEvent('GEAR_TOGGLE')" id="gear-handle-position" type="button" class="btn mt-3 btn-block btn-danger btn-lg">?</button>
-										</div>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="card bg-light">
-										<div class="card-body text-center">
-											<h7 class="card-title">Flaps (%)</h7><br><br>
-
-											<table>
-												<tbody>
-												<tr>
-													<td><div id="flaps-slider" class="slider vertical-slider"></div></td>
-													<td><span id=flaps-handle-pct>?</span></td>
-												</tr>
-												</tbody>
-											</table>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="card bg-light mb-3">
-										<div class="card-body text-center">
-											<h7 class="card-title">Elevator Trim (%)</h7><br><br>
-											<table>
-												<tbody>
-												<tr>
-													<td><div id="elevator-trim-slider" class="slider vertical-slider"></div></td>
-													<td><span id=elevator-trim-pct>?</span></td>
-												</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<!--
-								<div class="col-12">
-									<div class="card bg-light">
-										<div class="card-body"">
-											<h7 class="card-title">Rudder Trim (%)</h7>
-											<div id="rudder-trim-slider" class="slider mt-3"></div
-											<div class="text-center"><span style="text-align: center" id=rudder-trim-pct>?</span></div>
-										</div>
-									</div>
-								</div>
-								-->
-
+					
+					<!-- General -->
+					<div class="col-md-auto" style="margin-top:20px">
+						<div class="lead">General</div>	
+						<!-- Toggel Buttons Row-->
+						<div class="row" style="margin-bottom:10px;margin-top:5px">
+						<div class="col">				
+						<button type="button" onclick="triggerSimEvent ('TOGGLE_GPS_DRIVES_NAV1', 0, true); $(this).blur();" class="btn btn-secondary" style="width:175px" title="Toggle between GPS and NAV 1 driving NAV 1 OBS display (and AP)">CDI NAV1/GPS</button>
+						<button type="button" onclick="triggerSimEvent ('TOGGLE_DME', 0, true); $(this).blur();" class="btn btn-secondary" style="width:175px" title="Toggle between NAV 1 and NAV 2">DME NAV1/NAV2</button>
+						</div>
+						</div>
+						<div class="row" style="margin-bottom:10px;margin-top:5px">
+							<div class="col-auto" style="margin-right:-14px">
+							Gyro Drift:
+							<button type="button" onclick="triggerSimEvent ('GYRO_DRIFT_DEC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px" title="Decrements heading indicator">-</button>
+							<button type="button" onclick="triggerSimEvent ('GYRO_DRIFT_INC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px" title="Increment heading indicator">+</button>
+							</div>
+							<div class="col-auto">
+							Altimeter:
+							<button type="button" onclick="triggerSimEvent ('KOHLSMAN_DEC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px;margin-left:2px;" title="Decrements altimeter setting">-</button>
+							<button type="button" onclick="triggerSimEvent ('KOHLSMAN_INC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px" title="Decrements altimeter setting">+</button>
 							</div>
 						</div>
 					</div>
-				</div>
-
-				<!-- AUTOPILOT -->
-				<div class="card">
-					<div id="collapseAutopilot" class="collapse" aria-labelledby="collapseAutopilot" data-parent="#accordionHUD">
-						<div class="card-body text-center">
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="card bg-light mb-3">
-										<div class="card-body">
-											<h7>Autopilot Master</h7>
-											<button onclick="triggerSimEvent('AP_MASTER')" id="autopilot-master" type="button" class="btn mt-3 btn-block btn-danger btn-lg">?</button>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-sm-12">
-									<div class="card bg-light mb-3">
-										<div class="card-body text-left">
-
-											<table style="border-collapse:separate; border-spacing:0 5px; vertical-align: center">
-												<tr>
-													<td width="120">Wing Leveler</td>
-													<td width="100"><button onclick="triggerSimEvent('AP_WING_LEVELER')" id="autopilot-wing-leveler" type="button" class="btn m-1 btn-danger" style="width: 75px">?</button></td>
-													<td></td>
-												</tr>
-
-												<tr>
-													<td>Heading</td>
-													<td width="100"><button onclick="triggerSimEvent('AP_HDG_HOLD')" id="autopilot-heading-lock" type="button" class="btn m-1 btn-danger" style="width: 75px">?</button></td>
-													<td>
-														<div class="input-group sim-input-field">
-															<input id="autopilot-heading-lock-dir" type="text" class="form-control" placeholder="?" aria-describedby="basic-addon2">
-															<div class="input-group-append">
-																<button onclick='triggerSimEventFromField ("HEADING_BUG_SET", "autopilot-heading-lock-dir", "Setting heading lock")' class="btn btn-outline-primary" type="button">Set</button>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>Altitude</td>
-													<td width="100"><button onclick="triggerSimEvent('AP_ALT_HOLD')" id="autopilot-altitude-lock" type="button" class="btn m-1 btn-danger" style="width: 75px">?</button></td>
-													<td>
-														<div class="input-group sim-input-field">
-															<input id="autopilot-altitude-lock-var" type="text" class="form-control" placeholder="?" aria-describedby="basic-addon2">
-															<div class="input-group-append">
-																<button onclick='triggerSimEventFromField ("AP_ALT_VAR_SET_ENGLISH", "autopilot-altitude-lock-var", "Setting altitude lock")' class="btn btn-outline-primary" type="button">Set</button>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>Vertical Speed</td>
-													<td width="100"><button onclick="temporaryAlert('Error', 'Vertical speed cannot be enabled/disabled from here - please do so in simulator', 'error')" id="autopilot-vertical-hold" type="button" class="btn m-1 btn-danger" style="width: 75px">?</button></td>
-													<td>
-														<div class="input-group sim-input-field">
-															<input id="autopilot-vertical-hold-var" type="text" class="form-control" placeholder="?" aria-describedby="basic-addon2">
-															<div class="input-group-append">
-																<button onclick='triggerSimEventFromField ("AP_VS_VAR_SET_ENGLISH", "autopilot-vertical-hold-var", "Setting vertical speed hold")' class="btn btn-outline-primary" type="button">Set</button>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>Airspeed</td>
-													<td width="100"><button onclick="triggerSimEvent('AP_AIRSPEED_HOLD')" id="autopilot-airspeed-hold" type="button" class="btn m-1 btn-danger" style="width: 75px">?</button></td>
-													<td>
-														<div class="input-group sim-input-field">
-															<input id="autopilot-airspeed-hold-var" type="text" class="form-control" placeholder="?" aria-describedby="basic-addon2">
-															<div class="input-group-append">
-																<button onclick='triggerSimEventFromField ("AP_SPD_VAR_SET", "autopilot-airspeed-hold-var", "Setting airspeed hold")' class="btn btn-outline-primary" type="button">Set</button>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>Attitude</td>
-													<td width="100"><button onclick="triggerSimEvent('AP_ATT_HOLD')" id="autopilot-attitude-hold" type="button" class="btn m-1 btn-danger" style="width: 75px">?</button></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>Backcourse</td>
-													<td width="100"><button onclick="triggerSimEvent('AP_BC_HOLD')" id="autopilot-backcourse-hold" type="button" class="btn m-1 btn-danger" style="width: 75px">?</button></td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>Approach</td>
-													<td width="100"><button onclick="triggerSimEvent('AP_APR_HOLD')" id="autopilot-approach-hold" type="button" class="btn m-1 btn-danger" style="width: 75px">?</button></td>
-													<td></td>
-												</tr>
-											</table>
-
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 				
-				<!-- RADIOS -->
-				<div class="card">
-					<div id="collapseRadios" class="collapse" aria-labelledby="collapseRadios" data-parent="#accordionHUD">
-						<div class="card-body text-center">
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="card bg-light mb-3">
-										<div class="card-body text-left">
+				<!-- Last Row Force Sync Frequencies -->
+				<div class="row" style="margin-top:25px">
+					<div class="col">
+						<button type="button" onclick="syncRadio();$(this).blur();" class="btn-sm btn-danger">Force Sync Frequencies</button>
+						<p class="font-italic text-secondary">Press "Force Sync Frequencies" if radio frequencies are out of sync with MSFS. Allow up to 3 seconds to sync frequencies.</p>
+					</div>
+				</div>
+			
 
-											<table style="border-collapse:separate; border-spacing:0 5px; vertical-align: center">
-												<tr>
-													<td>COM1 Frequency</td>
-													<td colspan="2">
-														<button onclick="triggerSimEvent ('COM_RADIO_WHOLE_DEC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Decrease COM1 frequency by 1 MHz" style="width:55px">&lt;&lt;</button>
-														<button onclick="triggerSimEvent ('COM_RADIO_FRACT_DEC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Decrease COM1 frequency by 25 kHz" style="width:55px">&lt;</button>
-														<button onclick="triggerSimEvent ('COM_RADIO_FRACT_INC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Increase COM1 frequency by 25 kHz" style="width:55px">&gt;</button>
-														<button onclick="triggerSimEvent ('COM_RADIO_WHOLE_INC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Increase COM1 frequency by 1 MHz" style="width:55px">&gt;&gt;</button>
-														<button onclick="triggerSimEvent ('COM_STBY_RADIO_SWAP', 0, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Swap COM1 Standby frequency" style="width:65px">&lt;--&gt;</button>
-													</td>
-												</tr>
+			</div>
+		</div>
+	</div>
+	<!-- End of Navigation-->
+	
+	
+	
 
-												<tr>
-													<td>COM2 Frequency</td>
-													<td colspan="2">
-														<button onclick="triggerSimEvent ('COM2_RADIO_WHOLE_DEC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Decrease COM2 frequency by 1 MHz" style="width:55px">&lt;&lt;</button>
-														<button onclick="triggerSimEvent ('COM2_RADIO_FRACT_DEC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Decrease COM2 frequency by 25 kHz" style="width:55px">&lt;</button>
-														<button onclick="triggerSimEvent ('COM2_RADIO_FRACT_INC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Increase COM2 frequency by 25 kHz" style="width:55px">&gt;</button>
-														<button onclick="triggerSimEvent ('COM2_RADIO_WHOLE_INC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Increase COM2 frequency by 1 MHz" style="width:55px">&gt;&gt;</button>
-														<button onclick="triggerSimEvent ('COM2_RADIO_SWAP', 0, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Swap COM2 Standby frequency" style="width:65px">&lt;--&gt;</button>
-													</td>
-												</tr>
-
-												<tr>
-													<td>NAV1 Frequency</td>
-													<td colspan="2">
-														<button onclick="triggerSimEvent ('NAV1_RADIO_WHOLE_DEC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Decrease NAV1 frequency by 1 MHz" style="width:55px">&lt;&lt;</button>
-														<button onclick="triggerSimEvent ('NAV1_RADIO_FRACT_DEC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Decrease NAV1 frequency by 25 kHz" style="width:55px">&lt;</button>
-														<button onclick="triggerSimEvent ('NAV1_RADIO_FRACT_INC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Increase NAV1 frequency by 25 kHz" style="width:55px">&gt;</button>
-														<button onclick="triggerSimEvent ('NAV1_RADIO_WHOLE_INC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Increase NAV1 frequency by 1 MHz" style="width:55px">&gt;&gt;</button>
-														<button onclick="triggerSimEvent ('NAV1_RADIO_SWAP', 0, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Swap NAV1 Standby frequency" style="width:65px">&lt;--&gt;</button>
-													</td>
-												</tr>
-
-												<tr>
-													<td>NAV2 Frequency</td>
-													<td colspan="2">
-														<button onclick="triggerSimEvent ('NAV2_RADIO_WHOLE_DEC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Decrease NAV2 frequency by 1 MHz" style="width:55px">&lt;&lt;</button>
-														<button onclick="triggerSimEvent ('NAV2_RADIO_FRACT_DEC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Decrease NAV2 frequency by 25 kHz" style="width:55px">&lt;</button>
-														<button onclick="triggerSimEvent ('NAV2_RADIO_FRACT_INC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Increase NAV2 frequency by 25 kHz" style="width:55px">&gt;</button>
-														<button onclick="triggerSimEvent ('NAV2_RADIO_WHOLE_INC', 1, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Increase NAV2 frequency by 1 MHz" style="width:55px">&gt;&gt;</button>
-														<button onclick="triggerSimEvent ('NAV2_RADIO_SWAP', 0, true)" id="autopilot-com-freq" type="button" class="btn m-1 btn-danger" title="Swap NAV2 Standby frequency" style="width:65px">&lt;--&gt;</button>
-													</td>
-												</tr>
-											</table>
-
-										</div>
+	<!-- Radios 350i-->
+	<div class="collapse" id="collapseG3000" data-parent="#myGroup">
+		<div class="card bg-dark text-white" style="margin-top:10px; margin-bottom:12px;">
+			<div class="card-body">
+			
+				<!-- First Row-->
+				<div class="row" style="margin-top:-23px">
+					
+					<!-- NAV 1 350i-->
+					<div class="col" style="margin-top:20px; max-width:382px; min-width:320px;">
+						<div class="lead">NAV 1 Active</div>					
+						
+						<!-- NAV 1 Freq Set 350i-->
+						<div class="row" style="margin-bottom:10px; margin-top:10px">
+							<div class="col">
+								<div class="input-group" style="width:278px">
+									<div class="input-group-prepend">
+										<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">NAV 1 Freq (MHz)</span>
+									</div>
+									<input type="text" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('NAV1_Set').click()" inputmode="numeric" pattern="[0-9]*" id="NAV1_freq" aria-label="NAV 1 Freq" aria-describedby="NAV1_freq" placeholder="-">
+									<div class="input-group-append">
+										<button onclick='if (document.getElementById("NAV1_freq").value <= 117.95 && document.getElementById("NAV1_freq").value >= 108 && document.getElementById("NAV1_freq").value != "") {triggerSimEventFromField ("NAV1_RADIO_SET", "NAV1_freq", ""); nav1_g3000_freq_display ("NAV1_freq");}; $(this).blur();' class="btn btn-warning" type="button" id="NAV1_Set" style="margin-top:0px;margin-bottom:0px;" title="Set NAV 1 frequency in kHz">Set</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- NAV 1 OBS Set 350i-->
+						<div class="row" style="margin-bottom:10px; margin-top:10px">
+							<div class="col">
+								<div class="input-group" style="width:278px">
+									<div class="input-group-prepend">
+										<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">NAV 1 OBS (deg)</span>
+									</div>
+									<input type="text" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS1_G3_Set').click()" inputmode="numeric" pattern="[0-9]*" id="OBS1_G3_heading" aria-label="OBS 1 G3000 Deg" aria-describedby="OBS1_G3_freq" placeholder="-">
+									<div class="input-group-append">
+										<button onclick='if (document.getElementById("OBS1_G3_heading").value <= 360 && document.getElementById("OBS1_G3_heading").value >= 0 && document.getElementById("OBS1_G3_heading").value % 1 === 0 && document.getElementById("OBS1_G3_heading").value != "") {triggerSimEventFromField ("VOR1_SET", "OBS1_G3_heading", ""); nav1_g3000_obs ("OBS1_G3_heading");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS1_G3_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS1 heading in degrees">Set</button>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					
+					<!-- NAV 2 350i-->
+					<div class="col" style="margin-top:20px; max-width:382px; min-width:320px;">
+						<div class="lead">NAV 2 Active</div>					
+						
+						<!-- NAV 2 Freq Set 350i-->
+						<div class="row" style="margin-bottom:10px; margin-top:10px">
+							<div class="col">
+								<div class="input-group" style="width:278px">
+									<div class="input-group-prepend">
+										<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">NAV 2 Freq (MHz)</span>
+									</div>
+									<input type="text" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('NAV2_Set').click()" inputmode="numeric" pattern="[0-9]*" id="NAV2_freq" aria-label="NAV 2 Freq" aria-describedby="NAV2_freq" placeholder="-">
+									<div class="input-group-append">
+										<button onclick='if (document.getElementById("NAV2_freq").value <= 117.95 && document.getElementById("NAV2_freq").value >= 108 && document.getElementById("NAV2_freq").value != "") {triggerSimEventFromField ("NAV2_RADIO_SET", "NAV2_freq", ""); nav2_g3000_freq_display ("NAV2_freq");}; $(this).blur();' class="btn btn-warning" type="button" id="NAV2_Set" style="margin-top:0px;margin-bottom:0px;" title="Set NAV 2 frequency in kHz">Set</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- NAV 2 OBS Set -->
+						<div class="row" style="margin-bottom:10px; margin-top:10px">
+							<div class="col">
+								<div class="input-group" style="width:278px">
+									<div class="input-group-prepend">
+										<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">NAV 2 OBS (deg)</span>
+									</div>
+									<input type="text" class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS2_G3_Set').click()" inputmode="numeric" pattern="[0-9]*" id="OBS2_G3_heading" aria-label="OBS 2 G3000 Deg" aria-describedby="OBS2_G3_freq" placeholder="-">
+									<div class="input-group-append">
+										<button onclick='if (document.getElementById("OBS2_G3_heading").value <= 360 && document.getElementById("OBS2_G3_heading").value >= 0 && document.getElementById("OBS2_G3_heading").value % 1 === 0 && document.getElementById("OBS2_G3_heading").value != "") {triggerSimEventFromField ("VOR2_SET", "OBS2_G3_heading", ""); nav2_g3000_obs_display ("OBS2_G3_heading");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS2_G3_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS2 heading in degrees">Set</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- General 350i-->
+					<div class="col-md-auto" style="margin-top:20px">
+						<div class="lead">General</div>	
+						<!-- Toggel Buttons Row-->
+						<div class="row" style="margin-bottom:10px;margin-top:5px">
+						<div class="col">				
+						<button type="button" onclick="triggerSimEvent ('TOGGLE_GPS_DRIVES_NAV1', 0, true); $(this).blur();" class="btn btn-secondary" style="width:175px" title="Toggle between GPS and NAV 1 driving NAV 1 OBS display (and AP)">CDI NAV1/GPS</button>
+						</div>
+						</div>
+						<div class="row" style="margin-bottom:10px;margin-top:5px">
+							<div class="col-auto">
+							Altimeter:
+							<button type="button" onclick="triggerSimEvent ('KOHLSMAN_DEC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:48px;margin-left:2px;" title="Decrements altimeter setting">-</button>
+							<button type="button" onclick="triggerSimEvent ('KOHLSMAN_INC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:48px" title="Decrements altimeter setting">+</button>
+							</div>
+						</div>
+					</div>
+					
 				</div>
+				
+				<!-- Last Row Force Sync Frequencies -->
+				<div class="row" style="margin-top:25px">
+					<div class="col">
+						<p class="font-italic text-secondary">Intended for use with default 747, A320 and 350i.</p>
+					</div>
+				</div>
+			
 			</div>
 		</div>
 	</div>
 
-</div>  <!--Main container-->
+
+
+
+
+
+	
+	<!-- Autopilot -->
+	<div class="collapse" id="collapseAP" data-parent="#myGroup">
+		<div class="card bg-dark text-white" style="margin-top:10px;margin-bottom:12px;">
+			<div class="card-body">
+			
+				<!-- First Row-->
+				<div class="row" style="margin-top:-23px">
+					
+					<!-- AP -->
+					<div class="col" style="margin-top:20px">
+						<div class="lead" style="margin-bottom:-15px">AP Master</div>
+						
+						<button onclick="triggerSimEvent('AP_MASTER');$(this).blur();" id="autopilot-master" type="button" class="btn mt-3 btn-block btn-danger btn-lg">?</button>
+						
+						<hr class="bg-secondary">
+						
+						<div class="lead">AP Settings</div>
+						
+						<table style="border-collapse:separate; border-spacing:0 5px; vertical-align: middle; text-align: left">
+							<tr>
+								<td width="120">NAV Mode</td>
+								<td width="70"><button onclick="triggerSimEvent('AP_NAV1_HOLD');$(this).blur();" id="autopilot-nav1-lock" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Heading (Deg)</td>
+								<td><button onclick="triggerSimEvent('AP_PANEL_HEADING_HOLD');$(this).blur();" id="autopilot-heading-lock" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
+								<td>
+									<div class="input-group sim-input-field" style="width:150px">
+										<input id="autopilot-heading-lock-dir" type="text" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button onclick='triggerSimEventFromField ("HEADING_BUG_SET", "autopilot-heading-lock-dir", "");$(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP heading in degrees">Set</button>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>Altitude (Ft)</td>
+								<td><button onclick="triggerSimEvent('AP_ALT_HOLD');$(this).blur();" id="autopilot-altitude-lock" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
+								<td>
+									<div class="input-group sim-input-field" style="width:150px">
+										<input id="autopilot-altitude-lock-var" type="text" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button onclick='triggerSimEventFromField ("AP_ALT_VAR_SET_ENGLISH", "autopilot-altitude-lock-var", "");$(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP altitude in feet">Set</button>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>Vertical Speed</td>
+								<td><button onclick="triggerSimEvent('AP_PANEL_VS_HOLD');$(this).blur();" id="autopilot-vertical-hold" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
+								<td>
+									<div class="input-group sim-input-field" style="width:150px">
+										<input id="autopilot-vertical-hold-var" type="text" class="form-control" placeholder="?" aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button onclick="triggerSimEvent ('AP_VS_VAR_INC', 1, true); $(this).blur()" class="btn btn-secondary" type="button" style="margin-top:0px;margin-bottom:0px;width:36px;" title="Increase AP verical speed">+</button>
+										</div>
+										<div class="input-group-append">
+											<button onclick="triggerSimEvent ('AP_VS_VAR_DEC', 1, true); $(this).blur()" class="btn btn-secondary" type="button" style="margin-top:0px;margin-bottom:0px;width:35px;" title="Decrease AP verical speed">-</button>
+										</div>
+									</div>
+								</td>
+							
+							</tr>
+							<tr>
+								<td>Airspeed (Kts)</td>
+								<td><button onclick="triggerSimEvent('AP_AIRSPEED_HOLD');$(this).blur();" id="autopilot-airspeed-hold" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
+								<td>
+									<div class="input-group sim-input-field" style="width:150px">
+										<input id="autopilot-airspeed-hold-var" type="text" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<button onclick='triggerSimEventFromField ("AP_SPD_VAR_SET", "autopilot-airspeed-hold-var", "");$(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP airspeed in knots">Set</button>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>Back-course</td>
+								<td><button onclick="triggerSimEvent('AP_BC_HOLD');$(this).blur();" id="autopilot-backcourse-hold" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Approach</td>
+								<td><button onclick="triggerSimEvent('AP_APR_HOLD');$(this).blur();" id="autopilot-approach-hold" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
+								<td></td>
+							</tr>
+						</table>
+
+								
+							
+						
+						
+						
+					</div>
+				</div>
+				
+				<!-- Last Row Information -->
+				<div class="row" style="margin-top:25px">
+					<div class="col">
+						<p class="font-italic text-secondary" style="margin-bottom:0px">MSFS Mobile Companion App v1.0 by <a href="https://www.caronstudios.net" target="_blank" class="text-light">Caron Studios s.r.o.</a></p>
+						<p class="font-italic text-secondary">Follow the development on <a href="https://github.com/mracko/MSFS-Mobile-Companion-App" target="_blank" class="text-light">GitHub</a>. Support the development by donating <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CXDDYFUSWA2Z4&source=url" target="_blank" class="text-light">here.</a></p>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+</div>
+
 
 <!-- Create map object -->
 <script>
@@ -492,7 +565,7 @@
 
     // Create map options
     var mapOptions = {
-        center: [41.8601, -87.6101],
+        center: [48.1434, 17.1083],
         zoom: 10,
         dragging: true,
     }
@@ -610,6 +683,23 @@
 
 <!-- Custom JS imports -->
 <script src="/static/js/custom/getSimData.js"></script>
+
+<!-- Sync Frequencies at Startup-->
+<script>
+syncRadio();
+</script>
+
+<!-- Fix Map Size -->
+<script>
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+window.addEventListener('resize', () => {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
+</script>
 
 </body>
 </html>

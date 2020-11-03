@@ -6,8 +6,33 @@ let airspeed;
 let latitude;
 let longitude;
 
+let nav1_active;
+let nav1_standby;
+let nav2_active;
+let nav2_standby;
+
+let adf_stby_1000;
+let adf_stby_100;
+let adf_stby_10;
+let adf_stby_1;
+
+let adf_use_1000;
+let adf_use_100;
+let adf_use_10;
+let adf_use_1;
+
+let adf_card_deg
+let nav1_obs_deg
+let nav2_obs_deg
+
+let nav1_g3000_freq
+let nav1_g3000_obs
+let nav2_g3000_freq
+let nav2_g3000_obs
+let adf_g3000_freq
+
 let autopilot_master;
-let autopilot_nav_selected;
+let autopilot_nav1_lock;
 let autopilot_wing_leveler;
 let autopilot_heading_lock;
 let autopilot_heading_lock_dir;
@@ -35,30 +60,350 @@ let flaps_handle_pct_reversed;
 let cabin_seatbelts_alert_switch;
 let cabin_no_smoking_alert_switch;
 
+// Maps Size Fix Function
+let map_size_fix;
+let map_size_fix_mod
+map_size_fix = 0;
+
+function mapRefreshFix() {
+	map_size_fix = map_size_fix + 1;
+	map_size_fix_mod = map_size_fix % 2;
+	
+	if (map_size_fix_mod = 0) {
+		$('#map_row').height('+=1');
+	} else {
+		$('#map_row').height('-=1');
+	};
+	
+	map_size_fix = map_size_fix * 1;
+}
+
+// Display Radio (Navigation) Data
+function displayRadio() {
+	$("#nav1_active").text(nav1_active);
+	$("#nav1_standby").text(nav1_standby);
+	$("#nav2_active").text(nav2_active);
+	$("#nav2_standby").text(nav2_standby);
+	$("#adf_stby_1000").text(adf_stby_1000);
+	$("#adf_stby_100").text(adf_stby_100);
+	$("#adf_stby_10").text(adf_stby_10);
+	$("#adf_stby_1").text(adf_stby_1);
+	$("#adf_act_1000").text(adf_use_1000);
+	$("#adf_act_100").text(adf_use_100);
+	$("#adf_act_10").text(adf_use_10);
+	$("#adf_act_1").text(adf_use_1);
+	$("#ADF_heading").attr('placeholder', adf_card_deg);
+	$("#OBS_1_heading").attr('placeholder', nav1_obs_deg);
+	$("#OBS_2_heading").attr('placeholder', nav2_obs_deg);
+}
+
+// Sync Radio/Navigation variables
+function syncRadio() {
+	$.getJSON($SCRIPT_ROOT + '/ui', {}, function(data) {
+		nav1_active = Number(data.NAV1_ACTIVE).toFixed(2);
+		nav1_standby = Number(data.NAV1_STANDBY).toFixed(2);
+		nav2_active = Number(data.NAV2_ACTIVE).toFixed(2);
+		nav2_standby = Number(data.NAV2_STANDBY).toFixed(2);
+		adf_stby_1000 = Number(data.ADF_STBY_1000);
+		adf_stby_100 = Number(data.ADF_STBY_100);
+		adf_stby_10 = Number(data.ADF_STBY_10);
+		adf_stby_1 = Number(data.ADF_STBY_1);
+		adf_use_1000 = Number(data.ADF_USE_1000);
+		adf_use_100 = Number(data.ADF_USE_100);
+		adf_use_10 = Number(data.ADF_USE_10);
+		adf_use_1 = Number(data.ADF_USE_1);
+		adf_card_deg = Number(data.ADF_CARD_DEG);
+		nav1_obs_deg = Number(data.NAV1_OBS_DEG);
+		nav2_obs_deg = Number(data.NAV2_OBS_DEG);
+    });
+	setTimeout(function() {
+		displayRadio();
+	}, 2500);
+}
+
+// Following 3 functions keep the OBS/ADF Card values after submit
+function adf_deg_display(deg){
+	
+	adf_card_deg = deg;
+	$("#ad-card-deg").attr('placeholder', adf_card_deg);
+}
+
+function nav1_deg_display(deg){
+	alert(deg)
+	nav1_obs_deg = deg;
+	$("#OBS_1_heading").attr('placeholder', nav1_obs_deg);
+}
+
+function nav2_deg_display(deg){
+	nav2_obs_deg = deg;
+	$("#OBS_2_heading").attr('placeholder', nav2_obs_deg);
+}
+
+// Following 5 functions keep the G3000 navigation values after submit
+function nav1_g3000_freq_display(freq){
+	
+	nav1_g3000_freq = freq;
+	$("#NAV1_freq").attr('placeholder', nav1_g3000_freq);
+}
+
+function nav1_g3000_obs_display(deg){
+	
+	nav1_g3000_obs = deg;
+	$("#OBS1_G3_heading").attr('placeholder', nav1_g3000_obs);
+}
+
+function nav2_g3000_freq_display(freq){
+	
+	nav2_g3000_freq = freq;
+	$("#NAV2_freq").attr('placeholder', nav2_g3000_freq);
+}
+
+function nav2_g3000_obs_display(deg){
+	
+	nav2_g3000_obs = deg;
+	$("#OBS2_G3_heading").attr('placeholder', nav2_g3000_obs);
+}
+
+function adf_g3000_freq_display(freq){
+	
+	adf_g3000_freq = freq;
+	$("#ADF_G3_freq").attr('placeholder', adf_g3000_freq);
+}
+
 window.setInterval(function(){
     getSimulatorData();
-    displayData()
-    updateMap()
+    displayData();
+    updateMap();
 }, 2000);
 
+function adfplus1() {
+	// ADF plus 1 kHz
+	adf_stby_1 = adf_stby_1 + 1;
+	if (adf_stby_1 > 9) {
+		adf_stby_1 = 0;
+	}
+	$("#adf_stby_1").text(adf_stby_1);
+}
 
+function adfminus1() {
+	// ADF minus 1 kHz
+	adf_stby_1 = adf_stby_1 - 1;
+	if (adf_stby_1 < 0) {
+		adf_stby_1 = 9;
+	}
+	$("#adf_stby_1").text(adf_stby_1);
+}
+
+function adfplus10() {
+	// ADF plus 10 kHz
+	adf_stby_10 = adf_stby_10 + 1;
+	if (adf_stby_10 > 9) {
+		adf_stby_10 = 0;
+	}
+	$("#adf_stby_10").text(adf_stby_10);
+}
+
+function adfminus10() {
+	// ADF minus 10 kHz
+	adf_stby_10 = adf_stby_10 - 1;
+	if (adf_stby_10 < 0) {
+		adf_stby_10 = 9;
+	}
+	$("#adf_stby_10").text(adf_stby_10);
+}
+
+function adfplus100() {
+	// ADF plus 100 kHz
+	
+	if (adf_stby_1000 == 0) {
+		adf_stby_100 = adf_stby_100 + 1;
+		if (adf_stby_100 > 9) {
+			adf_stby_100 = 0;
+			adf_stby_1000 = 1;
+		}
+	} else {
+		adf_stby_100 = adf_stby_100 + 1;
+		if (adf_stby_100 > 7) {
+			adf_stby_100 = 1;
+			adf_stby_1000 = 0;
+		}
+	}
+	$("#adf_stby_1000").text(adf_stby_1000);
+	$("#adf_stby_100").text(adf_stby_100);
+}
+
+function adfminus100() {
+	// ADF minus 100 kHz
+	if (adf_stby_1000 == 0) {
+		adf_stby_100 = adf_stby_100 - 1;
+		if (adf_stby_100 < 1) {
+			adf_stby_100 = 7;
+			adf_stby_1000 = 1;
+		}
+	} else {
+		adf_stby_100 = adf_stby_100 - 1;
+		if (adf_stby_100 < 0) {
+			adf_stby_100 = 9;
+			adf_stby_1000 = 0;
+		}
+	}
+	$("#adf_stby_1000").text(adf_stby_1000);
+	$("#adf_stby_100").text(adf_stby_100);
+}
+
+function adfswitch() {
+	dummy_adf_stby_1000 = adf_stby_1000 * 1;
+	dummy_adf_stby_100 = adf_stby_100 * 1;
+	dummy_adf_stby_10 = adf_stby_10 * 1;
+	dummy_adf_stby_1 = adf_stby_1 * 1;
+	dummy_adf_use_1000 = adf_use_1000 * 1;
+	dummy_adf_use_100 = adf_use_100 * 1;
+	dummy_adf_use_10 = adf_use_10 * 1;
+	dummy_adf_use_1 = adf_use_1 * 1;
+	adf_use_1000 = dummy_adf_stby_1000 * 1;
+	adf_use_100 = dummy_adf_stby_100 * 1;
+	adf_use_10 = dummy_adf_stby_10 * 1;
+	adf_use_1 = dummy_adf_stby_1 * 1;
+	adf_stby_1000 = dummy_adf_use_1000 * 1;
+	adf_stby_100 = dummy_adf_use_100 * 1;
+	adf_stby_10 = dummy_adf_use_10 * 1;
+	adf_stby_1 = dummy_adf_use_1 * 1;
+	$("#adf_stby_1000").text(adf_stby_1000);
+	$("#adf_stby_100").text(adf_stby_100);
+	$("#adf_stby_10").text(adf_stby_10);
+	$("#adf_stby_1").text(adf_stby_1);
+	$("#adf_act_1000").text(adf_use_1000);
+	$("#adf_act_100").text(adf_use_100);
+	$("#adf_act_10").text(adf_use_10);
+	$("#adf_act_1").text(adf_use_1);
+}
+
+function nav1minus1() {
+	// NAV 1 minus 1 MHz
+	nav1_standby = Number(nav1_standby) - 1;
+	if (nav1_standby < 108) {
+		nav1_standby = nav1_standby + 10
+	};
+	nav1_standby = nav1_standby.toFixed(2);
+	$("#nav1_standby").text(nav1_standby);
+}
+
+function nav1plus1() {
+	// NAV 1 minus 1 MHz
+	nav1_standby = Number(nav1_standby) + 1;
+	if (nav1_standby > 118) {
+		nav1_standby = nav1_standby - 10
+	};
+	nav1_standby = nav1_standby.toFixed(2);
+	$("#nav1_standby").text(nav1_standby);
+}
+
+function nav1minus005() {
+	// NAV 1 minus 0.05 MHz
+	nav1_standby_floor = Math.floor(nav1_standby);
+	nav1_standby_decimal = nav1_standby - nav1_standby_floor;
+	nav1_standby_decimal = nav1_standby_decimal - 0.05;
+	if (nav1_standby_decimal < 0) {
+		nav1_standby_decimal = 0.95
+	};
+	nav1_standby = nav1_standby_floor + nav1_standby_decimal;
+	nav1_standby = nav1_standby.toFixed(2);
+	$("#nav1_standby").text(nav1_standby);
+}
+
+function nav1plus005() {
+	// NAV 1 plus 0.05 MHz
+	nav1_standby_floor = Math.floor(nav1_standby);
+	nav1_standby_decimal = nav1_standby - nav1_standby_floor;
+	nav1_standby_decimal = nav1_standby_decimal + 0.05;
+	if (nav1_standby_decimal >= 1) {
+		nav1_standby_decimal = 0.0
+	};
+	nav1_standby = nav1_standby_floor + nav1_standby_decimal;
+	nav1_standby = nav1_standby.toFixed(2);
+	$("#nav1_standby").text(nav1_standby);
+}
+
+function nav1switch() {
+	dummy_nav1_standby = nav1_standby * 1;
+	dummy_nav1_active = nav1_active * 1;
+	nav1_active = dummy_nav1_standby * 1;
+	nav1_standby = dummy_nav1_active * 1;
+	nav1_standby = nav1_standby.toFixed(2);
+	nav1_active = nav1_active.toFixed(2);
+	$("#nav1_active").text(nav1_active);
+	$("#nav1_standby").text(nav1_standby);
+}
+
+function nav2minus1() {
+	// NAV 2 minus 1 MHz
+	nav2_standby = Number(nav2_standby) - 1;
+	if (nav2_standby < 108) {
+		nav2_standby = nav2_standby + 10
+	};
+	nav2_standby = nav2_standby.toFixed(2);
+	$("#nav2_standby").text(nav2_standby);
+}
+
+function nav2plus1() {
+	// NAV 2 plus 1 MHz
+	nav2_standby = Number(nav2_standby) + 1;
+	if (nav2_standby > 118) {
+		nav2_standby = nav2_standby - 10
+	};
+	nav2_standby = nav2_standby.toFixed(2);
+	$("#nav2_standby").text(nav2_standby);
+}
+
+function nav2minus005() {
+	// NAV 2 minus 0.05 MHz
+	nav2_standby_floor = Math.floor(nav2_standby);
+	nav2_standby_decimal = nav2_standby - nav2_standby_floor;
+	nav2_standby_decimal = nav2_standby_decimal - 0.05;
+	if (nav2_standby_decimal < 0) {
+		nav2_standby_decimal = 0.95
+	};
+	nav2_standby = nav2_standby_floor + nav2_standby_decimal;
+	nav2_standby = nav2_standby.toFixed(2);
+	$("#nav2_standby").text(nav2_standby);
+}
+
+function nav2plus005() {
+	// NAV 2 plus 0.05 MHz
+	nav2_standby_floor = Math.floor(nav2_standby);
+	nav2_standby_decimal = nav2_standby - nav2_standby_floor;
+	nav2_standby_decimal = nav2_standby_decimal + 0.05;
+	if (nav2_standby_decimal >= 1) {
+		nav2_standby_decimal = 0.0
+	};
+	nav2_standby = nav2_standby_floor + nav2_standby_decimal;
+	nav2_standby = nav2_standby.toFixed(2);
+	$("#nav2_standby").text(nav2_standby);
+}
+
+function nav2switch() {
+	dummy_nav2_standby = nav2_standby * 1;
+	dummy_nav2_active = nav2_active * 1;
+	nav2_active = dummy_nav2_standby * 1;
+	nav2_standby = dummy_nav2_active * 1;
+	nav2_standby = nav2_standby.toFixed(2);
+	nav2_active = nav2_active.toFixed(2);
+	$("#nav2_active").text(nav2_active);
+	$("#nav2_standby").text(nav2_standby);
+}
+
+// Get rest of sim data which needs to be updated regularly 
 function getSimulatorData() {
     $.getJSON($SCRIPT_ROOT + '/ui', {}, function(data) {
 
         //Navigation
-        altitude = data.ALTITUDE;
-        vertical_speed = data.VERTICAL_SPEED;
         compass = data.MAGNETIC_COMPASS + data.MAGVAR;
-        airspeed = data.AIRSPEED_INDICATE;
         latitude = data.LATITUDE;
         longitude = data.LONGITUDE;
-
-        //Fuel
-        fuel_percentage = data.FUEL_PERCENTAGE;
-
+		
         //Autopilot
         autopilot_master = data.AUTOPILOT_MASTER;
-        autopilot_nav_selected = data.AUTOPILOT_NAV_SELECTED;
+        autopilot_nav1_lock = data.AUTOPILOT_NAV1_LOCK;
         autopilot_wing_leveler = data.AUTOPILOT_WING_LEVELER;
         autopilot_heading_lock = data.AUTOPILOT_HEADING_LOCK;
         autopilot_heading_lock_dir = data.AUTOPILOT_HEADING_LOCK_DIR;
@@ -76,38 +421,32 @@ function getSimulatorData() {
         autopilot_airspeed_hold = data.AUTOPILOT_AIRSPEED_HOLD;
         autopilot_airspeed_hold_var = data.AUTOPILOT_AIRSPEED_HOLD_VAR;
 
+        //G3000 Navigation
+		nav1_g3000_freq = Number(data.NAV1_ACTIVE).toFixed(2);
+		nav1_g3000_obs = Number(data.NAV1_OBS_DEG);
+		nav2_g3000_freq = Number(data.NAV2_ACTIVE).toFixed(2);
+		nav2_g3000_obs = Number(data.NAV2_OBS_DEG);
+		adf_g3000_freq = Number(data.ADF_USE);
+		
         //Control surfaces
-        gear_handle_position = data.GEAR_HANDLE_POSITION;
-        elevator_trim_pct = data.ELEVATOR_TRIM_PCT;
-        elevator_trim_pct_reversed = - elevator_trim_pct
+        //gear_handle_position = data.GEAR_HANDLE_POSITION;
+        //elevator_trim_pct = data.ELEVATOR_TRIM_PCT;
+        //elevator_trim_pct_reversed = - elevator_trim_pct;
         //rudder_trim_pct = data.RUDDER_TRIM_PCT;
-        flaps_handle_pct = data.FLAPS_HANDLE_PERCENT;
-        flaps_handle_pct_reversed = - flaps_handle_pct;
-
-        //Cabin
-        cabin_no_smoking_alert_switch = data.CABIN_NO_SMOKING_ALERT_SWITCH;
-        cabin_seatbelts_alert_switch = data.CABIN_SEATBELTS_ALERT_SWITCH;
+        //flaps_handle_pct = data.FLAPS_HANDLE_PERCENT;
+        //flaps_handle_pct_reversed = - flaps_handle_pct;
 
     });
     return false;
 }
 
-
+// Display sim data which needs to be updated regularly 
 function displayData() {
-    //Navigation
-    $("#altitude").text(altitude);
-    $("#compass").text(compass);
-    $("#vertical-speed").text(vertical_speed);
-    $("#airspeed").text(airspeed);
-
-    //Fuel
-    $("#fuel-percentage").text(fuel_percentage);
-    $("#fuel-percentage-bar").css("width", fuel_percentage+"%");
-
     //Autopilot
     checkAndUpdateButton("#autopilot-master", autopilot_master, "Engaged", "Disengaged");
     checkAndUpdateButton("#autopilot-wing-leveler", autopilot_wing_leveler);
-    checkAndUpdateButton("#autopilot-heading-lock", autopilot_heading_lock);
+    checkAndUpdateButton("#autopilot-nav1-lock", autopilot_nav1_lock);
+	checkAndUpdateButton("#autopilot-heading-lock", autopilot_heading_lock);
     checkAndUpdateButton("#autopilot-altitude-lock", autopilot_altitude_lock);
     checkAndUpdateButton("#autopilot-airspeed-hold", autopilot_airspeed_hold);
     checkAndUpdateButton("#autopilot-attitude-hold", autopilot_attitude_hold);
@@ -119,7 +458,14 @@ function displayData() {
     $("#autopilot-altitude-lock-var").attr('placeholder', autopilot_altitude_lock_var);
     $("#autopilot-airspeed-hold-var").attr('placeholder', autopilot_airspeed_hold_var);
     $("#autopilot-pitch-hold-ref").attr('placeholder', autopilot_pitch_hold_ref);
-    $("#autopilot-vertical-hold-ref").attr('placeholder', autopilot_vertical_hold_var);
+    $("#autopilot-vertical-hold-var").attr('placeholder', autopilot_vertical_hold_var);
+	
+	//G3000 Refresh
+	$("#NAV1_freq").attr('placeholder', nav1_g3000_freq);
+	$("#OBS1_G3_heading").attr('placeholder', nav1_g3000_obs);
+	$("#NAV2_freq").attr('placeholder', nav2_g3000_freq);
+	$("#OBS2_G3_heading").attr('placeholder', nav2_g3000_obs);
+	$("#ADF_G3_freq").attr('placeholder', adf_g3000_freq);
 
     //Control surfaces
     $("#gear-handle-position").html(gear_handle_position);
@@ -163,12 +509,12 @@ function checkAndUpdateButton(buttonName, variableToCheck, onText="On", offText=
 function toggleFollowPlane() {
     followPlane = !followPlane;
     if (followPlane === true) {
-        $("#followMode").text("Moving map enabled")
-        $("#followModeButton").removeClass("btn-outline-danger").addClass("btn-primary")
+        $("#followMode").text("Unfollow plane")
+        $("#followModeButton").removeClass("btn-danger").addClass("btn-primary")
     }
     if (followPlane === false) {
-        $("#followMode").text("Moving map disabled")
-        $("#followModeButton").removeClass("btn-primary").addClass("btn-outline-danger")
+        $("#followMode").text("Follow plane")
+        $("#followModeButton").removeClass("btn-primary").addClass("btn-danger")
     }
 }
 
@@ -183,6 +529,12 @@ function updateMap() {
     if (followPlane === true) {
         map.panTo(pos);
     }
+}
+
+function refreshMapSize() {
+	setTimeout(function () {
+	map.invalidateSize();
+	}, 1000);
 }
 
 function setSimDatapoint(datapointToSet, valueToUse) {
@@ -209,7 +561,7 @@ function triggerSimEventFromField(eventToTrigger, fieldToUse, messageToDisplay =
     $.post( url_to_call, { value_to_use: valueToUse } );
 
     // Clear the field so it can be repopulated with the placeholder
-    $(fieldToUse).val("")
+    //$(fieldToUse).val("")
 
     if (messageToDisplay) {
         temporaryAlert('', messageToDisplay + " to " + valueToUse, "success")
