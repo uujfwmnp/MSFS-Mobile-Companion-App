@@ -20,7 +20,7 @@ Screenshot of MSFS Mobile Companion App in action:
 1. Make sure your PC and your mobile device are connected to the same local network and that your home network is set to *Private* in your Network Profile settings. 
 2. Run MSFS_MCA.exe that you've unzipped previously.
 3. A Windows Security Alert Window will open when you launch MSFS_MCA.exe for the first time. Allow private network access for MSFS_MCA.exe in the Windows Security Alert Window.
-4. A command line window will open, giving you instructions on which IP-address you have open in your mobile device's web browser. The IP address will most likelely by something like *192.168.0.XXX:4000".
+4. A command line window will open that will give you instructions on the IP-address to access the MSFS Mobile Companion App. Open the IP-address in your mobile device's web browser. The IP address will most likelely be something like *192.168.0.XXX:4000".
 
 *Notice: You can launch MSFS Mobile Companion App directly from your PC's browser. In that case, just type in localhost:4000 in your browser's url bar.* 
 
