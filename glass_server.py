@@ -492,15 +492,11 @@ def trigger_event(event_name, value_to_use = None):
 		else:
 			# Convert kHz to Hz BCD for NAV1_RADIO_SET, NAV2_RADIO_SET and AD_SET events
 			if event_name == "NAV1_RADIO_SET" or event_name == "NAV2_RADIO_SET":
-				print(value_to_use)
 				freq_hz = float(value_to_use) * 100
-				print(freq_hz)
 				freq_hz = str(int(freq_hz))
-				print(freq_hz)
 				freq_hz_bcd = 0
 				for figure,digit in enumerate(reversed(freq_hz)):
 					freq_hz_bcd += int(digit)*(16**(figure))
-				print(freq_hz_bcd)
 				EVENT_TO_TRIGGER(int(freq_hz_bcd))
 			else:
 				EVENT_TO_TRIGGER(int(value_to_use))
