@@ -7,6 +7,7 @@ MSFS Mobile Companion App is a tool that allows you to control essential aircraf
 - NAV 2 frequency and OBS 2 selection
 - ADF frequency and ADF card selection
 - Autopilot with altitude, vertical speed, and airspeed settings
+- Gyro drift and altimeter pressure settings
 
 Screenshot of MSFS Mobile Companion App in action:
 ![](images/MSFS_Landing_Inspector_Screenshot.png)
@@ -32,7 +33,7 @@ Screenshot of MSFS Mobile Companion App in action:
 - Tuning frequencies in the *NAV* tab doesn't work for the default 747, A320, CJ4 and King Air 350i. Use the *NAV Direct* tab for these planes.
 - CDI switch doesn't work in 747, A320 and CJ4.
 - *NAV Direct* can only switch the CDI between VOR1 and GPS. VOR2 is not available.
-- MSFS Mobile Companion App may crash when accessing it from multiple devices.
+- MSFS Mobile Companion App may crash when accessing it from multiple devices at once.
 
 ## Credits
 MSFS Mobile Companion App is based on the Python [SimConnect](https://pypi.org/project/SimConnect/) project.
