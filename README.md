@@ -21,7 +21,7 @@ Screenshot of MSFS Mobile Companion App in action:
 1. Make sure your PC and your mobile device are connected to the same local network and that your home network is set to *Private* in your Network Profile settings. 
 2. Start a flight in Microsoft Flight Simulator.
 3. Run MSFS_MCA.exe that you've unzipped previously.
-4. A Windows Security Alert Window will open when you launch MSFS_MCA.exe for the first time. Allow private network access for MSFS_MCA.exe in the Windows Security Alert Window.
+4. A Microsoft Defender security window may open when launching MSFS_MCA.exe for the first time. Allow the "unrecognized app" to run. Additionally, a Windows Security Alert Window may open when you launch MSFS_MCA.exe for the first time. Allow private network access for MSFS_MCA.exe in the Windows Security Alert Window.
 5. A command line window will open that will give you instructions on the IP-address where you can access the MSFS Mobile Companion App. Don't close the command line window.
 6. Open the IP-address in your mobile device's web browser. The IP address will most likelely be something like *192.168.0.XXX:4000*.
 
