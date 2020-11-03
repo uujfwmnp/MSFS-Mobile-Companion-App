@@ -18,15 +18,18 @@ Screenshot of MSFS Mobile Companion App in action:
 
 ## How do I run MSFS Mobile Companion App?
 1. Make sure your PC and your mobile device are connected to the same local network and that your home network is set to *Private* in your Network Profile settings. 
-2. Run MSFS_MCA.exe that you've unzipped previously.
-3. A Windows Security Alert Window will open when you launch MSFS_MCA.exe for the first time. Allow private network access for MSFS_MCA.exe in the Windows Security Alert Window.
-4. A command line window will open that will give you instructions on the IP-address to access the MSFS Mobile Companion App. Open the IP-address in your mobile device's web browser. The IP address will most likelely be something like *192.168.0.XXX:4000".
+2. Start a flight in Microsoft Flight Simulator.
+3. Run MSFS_MCA.exe that you've unzipped previously.
+4. A Windows Security Alert Window will open when you launch MSFS_MCA.exe for the first time. Allow private network access for MSFS_MCA.exe in the Windows Security Alert Window.
+5. A command line window will open that will give you instructions on the IP-address to access the MSFS Mobile Companion App. Don't close the command line window. Open the IP-address in your mobile device's web browser. The IP address will most likelely be something like *192.168.0.XXX:4000*.
 
 *Notice: You can launch MSFS Mobile Companion App directly from your PC's browser. In that case, just type in localhost:4000 in your browser's url bar.* 
 
 ## Known issues:
 - NAV frequencies can get out of sync, especially when rapidly pressing frequency adjustment buttons. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
-- NAV G3000 can only switch between VOR1 and GPS. VOR2 is not available.
+- NAV frequencies are not automatically syncronized when starting a second flight. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
+- Tuning frequencies in the *NAV* tab doesn't work for the default 747, A320 and King Air 350i. Use the *NAV Direct* tab for these planes.
+- *NAV Direct* can only switch the CDI between VOR1 and GPS. VOR2 is not available.
 - MSFS Mobile Companion App may crash when accessing it from multiple devices.
 
 ## Credits
