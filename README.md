@@ -29,7 +29,8 @@ Screenshot of MSFS Mobile Companion App in action:
 ## Known issues:
 - NAV frequencies can get out of sync, especially when rapidly pressing frequency adjustment buttons. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
 - NAV frequencies are not automatically syncronized when starting a second flight. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
-- Tuning frequencies in the *NAV* tab doesn't work for the default 747, A320 and King Air 350i. Use the *NAV Direct* tab for these planes.
+- Tuning frequencies in the *NAV* tab doesn't work for the default 747, A320, CJ4 and King Air 350i. Use the *NAV Direct* tab for these planes.
+- CDI switch doesn't work in 747, A320 and CJ4.
 - *NAV Direct* can only switch the CDI between VOR1 and GPS. VOR2 is not available.
 - MSFS Mobile Companion App may crash when accessing it from multiple devices.
 
