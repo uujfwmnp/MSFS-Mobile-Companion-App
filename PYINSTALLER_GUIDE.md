@@ -28,7 +28,7 @@ Rename the `SimConnect.dll` file located in the folder *SimConnect* into `SimCon
 Use the following pyinstaller settings to compile MSFS Mobile Companion App:
 
 ```
-pyinstaller -F --onefile --add-data "templates;templates" --add-data "static;static" --add-data "SimConnectCust;SimConnectCust" glass_server.py
+pyinstaller -F --onefile --add-data "templates;templates" --add-data "static;static" --add-data "SimConnect;SimConnect" glass_server.py
 ```
 
 ## 4. Enjoy and have fun!
