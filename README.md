@@ -14,8 +14,8 @@ Screenshot of MSFS Mobile Companion App in action:
 
 
 ## How do install MSFS Mobile Companion App?
-1. Download the latest build [here](https://github.com/hankhank10/MSFS2020-cockpit-companion).
-2. Unzip the archive. That's it.
+1. Download the latest build [here](https://github.com/mracko/MSFS-Mobile-Companion-App/releases/tag/v1.0).
+2. That's it.
 
 ## How do I run MSFS Mobile Companion App?
 1. Make sure your PC and your mobile device are connected to the same local network and that your home network is set to *Private* in your Network Profile settings. 
