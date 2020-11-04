@@ -1,6 +1,9 @@
 # MSFS Mobile Companion App
 MSFS Mobile Companion App is a tool that allows you to control essential aircraft instruments such as NAV frequencies or autopilot using almost any mobile device. The MSFS Mobile Companion App is free to use.
 
+Screenshot of MSFS Mobile Companion App in action:
+![](images/MSFS_MCA_Screenshot.png)
+
 ### MSFS Mobile Companion App features:
 - Moving Map (Open Street Maps)
 - NAV 1 frequency and OBS 1 selection
@@ -8,10 +11,6 @@ MSFS Mobile Companion App is a tool that allows you to control essential aircraf
 - ADF frequency and ADF card selection
 - Autopilot with altitude, vertical speed, and airspeed settings
 - Gyro drift and altimeter pressure settings
-
-Screenshot of MSFS Mobile Companion App in action:
-![](images/MSFS_Landing_Inspector_Screenshot.png)
-
 
 ## How do install MSFS Mobile Companion App?
 1. Download the latest build [here](https://github.com/mracko/MSFS-Mobile-Companion-App/releases/tag/v1.0).
