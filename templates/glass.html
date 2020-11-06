@@ -476,9 +476,9 @@
 								<td><button onclick="triggerSimEvent('AP_PANEL_HEADING_HOLD');$(this).blur();" id="autopilot-heading-lock" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
 								<td>
 									<div class="input-group sim-input-field" style="width:150px">
-										<input id="autopilot-heading-lock-dir" type="text" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
+										<input id="autopilot-heading-lock-dir" type="text" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('AP_hdg_set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
 										<div class="input-group-append">
-											<button onclick='triggerSimEventFromField ("HEADING_BUG_SET", "autopilot-heading-lock-dir", "");$(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP heading in degrees">Set</button>
+											<button onclick='triggerSimEventFromField ("HEADING_BUG_SET", "autopilot-heading-lock-dir", "");$(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP heading in degrees" id="AP_hdg_set">Set</button>
 										</div>
 									</div>
 								</td>
@@ -488,9 +488,9 @@
 								<td><button onclick="triggerSimEvent('AP_ALT_HOLD');$(this).blur();" id="autopilot-altitude-lock" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
 								<td>
 									<div class="input-group sim-input-field" style="width:150px">
-										<input id="autopilot-altitude-lock-var" type="text" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
+										<input id="autopilot-altitude-lock-var" type="text" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('AP_alt_set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
 										<div class="input-group-append">
-											<button onclick='triggerSimEventFromField ("AP_ALT_VAR_SET_ENGLISH", "autopilot-altitude-lock-var", "");$(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP altitude in feet">Set</button>
+											<button onclick='triggerSimEventFromField ("AP_ALT_VAR_SET_ENGLISH", "autopilot-altitude-lock-var", "");$(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP altitude in feet" id="AP_alt_set">Set</button>
 										</div>
 									</div>
 								</td>
@@ -516,9 +516,9 @@
 								<td><button onclick="triggerSimEvent('AP_AIRSPEED_HOLD');$(this).blur();" id="autopilot-airspeed-hold" type="button" class="btn m-1 btn-danger" style="width: 55px">?</button></td>
 								<td>
 									<div class="input-group sim-input-field" style="width:150px">
-										<input id="autopilot-airspeed-hold-var" type="text" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
+										<input id="autopilot-airspeed-hold-var" type="text" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('AP_spd_set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
 										<div class="input-group-append">
-											<button onclick='triggerSimEventFromField ("AP_SPD_VAR_SET", "autopilot-airspeed-hold-var", "");$(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP airspeed in knots">Set</button>
+											<button onclick='triggerSimEventFromField ("AP_SPD_VAR_SET", "autopilot-airspeed-hold-var", "");$(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP airspeed in knots" id="AP_spd_set">Set</button>
 										</div>
 									</div>
 								</td>
