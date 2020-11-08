@@ -15,7 +15,14 @@ log.disabled = True
 # SIMCONNECTION RELATED STARTUPS
 
 # Create simconnection
-sm = SimConnect()
+while True:
+    try:
+        sm = SimConnect()
+        break
+    except:
+        print("Could not find MSFS running. Please launch MSFS.")
+        sleep(5)
+
 ae = AircraftEvents(sm)
 aq = AircraftRequests(sm, _time=20)
 
