@@ -39,7 +39,8 @@ let autopilot_heading_lock_dir;
 let autopilot_altitude_lock;
 let autopilot_altitude_lock_var;
 let autopilot_attitude_hold;
-let autopilot_glidescope_hold;
+let autopilot_autothrottle;
+let autopilot_glideslope_hold;
 let autopilot_approach_hold;
 let autopilot_backcourse_hold;
 let autopilot_vertical_hold;
@@ -410,7 +411,8 @@ function getSimulatorData() {
         autopilot_altitude_lock = data.AUTOPILOT_ALTITUDE_LOCK;
         autopilot_altitude_lock_var = data.AUTOPILOT_ALTITUDE_LOCK_VAR;
         autopilot_attitude_hold = data.AUTOPILOT_ATTITUDE_HOLD;
-        autopilot_glidescope_hold = data.AUTOPILOT_GLIDESLOPE_HOLD;
+        autopilot_autothrottle = data.AUTOPILOT_AUTOTHROTTLE;
+        autopilot_glideslope_hold = data.AUTOPILOT_GLIDESLOPE_HOLD;
         autopilot_approach_hold = data.AUTOPILOT_APPROACH_HOLD;
         autopilot_backcourse_hold = data.AUTOPILOT_BACKCOURSE_HOLD;
         autopilot_vertical_hold = data.AUTOPILOT_VERTICAL_HOLD
@@ -420,14 +422,17 @@ function getSimulatorData() {
         autopilot_flight_director_active = data.AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE;
         autopilot_airspeed_hold = data.AUTOPILOT_AIRSPEED_HOLD;
         autopilot_airspeed_hold_var = data.AUTOPILOT_AIRSPEED_HOLD_VAR;
-
-        //G3000 Navigation
-		nav1_g3000_freq = Number(data.NAV1_ACTIVE).toFixed(2);
-		nav1_g3000_obs = Number(data.NAV1_OBS_DEG);
-		nav2_g3000_freq = Number(data.NAV2_ACTIVE).toFixed(2);
-		nav2_g3000_obs = Number(data.NAV2_OBS_DEG);
-		adf_g3000_freq = Number(data.ADF_USE);
 		
+		//NAV
+		nav1_obs_deg = Number(data.NAV1_OBS_DEG);
+		nav2_obs_deg = Number(data.NAV2_OBS_DEG);
+		nav1_active = Number(data.NAV1_ACTIVE).toFixed(2);
+		nav2_active = Number(data.NAV2_ACTIVE).toFixed(2);
+		adf_active = Number(data.ADF_USE);
+		adf_card_deg = Number(data.ADF_CARD_DEG);
+		
+		//Altitude
+		altitude = data.INDICATED_ALTITUDE;
         //Control surfaces
         //gear_handle_position = data.GEAR_HANDLE_POSITION;
         //elevator_trim_pct = data.ELEVATOR_TRIM_PCT;
@@ -446,13 +451,15 @@ function displayData() {
     checkAndUpdateButton("#autopilot-master", autopilot_master, "Engaged", "Disengaged");
     checkAndUpdateButton("#autopilot-wing-leveler", autopilot_wing_leveler);
     checkAndUpdateButton("#autopilot-nav1-lock", autopilot_nav1_lock);
-	checkAndUpdateButton("#autopilot-heading-lock", autopilot_heading_lock);
+    checkAndUpdateButton("#autopilot-heading-lock", autopilot_heading_lock);
     checkAndUpdateButton("#autopilot-altitude-lock", autopilot_altitude_lock);
     checkAndUpdateButton("#autopilot-airspeed-hold", autopilot_airspeed_hold);
     checkAndUpdateButton("#autopilot-attitude-hold", autopilot_attitude_hold);
     checkAndUpdateButton("#autopilot-backcourse-hold", autopilot_backcourse_hold);
     checkAndUpdateButton("#autopilot-approach-hold", autopilot_approach_hold);
     checkAndUpdateButton("#autopilot-vertical-hold", autopilot_vertical_hold);
+    checkAndUpdateButton("#autopilot-autothrottle", autopilot_autothrottle);
+    checkAndUpdateButton("#autopilot-glideslope-hold", autopilot_glideslope_hold);
 
     $("#autopilot-heading-lock-dir").attr('placeholder', autopilot_heading_lock_dir);
     $("#autopilot-altitude-lock-var").attr('placeholder', autopilot_altitude_lock_var);
@@ -460,12 +467,18 @@ function displayData() {
     $("#autopilot-pitch-hold-ref").attr('placeholder', autopilot_pitch_hold_ref);
     $("#autopilot-vertical-hold-var").attr('placeholder', autopilot_vertical_hold_var);
 	
-	//G3000 Refresh
-	$("#NAV1_freq").attr('placeholder', nav1_g3000_freq);
-	$("#OBS1_G3_heading").attr('placeholder', nav1_g3000_obs);
-	$("#NAV2_freq").attr('placeholder', nav2_g3000_freq);
-	$("#OBS2_G3_heading").attr('placeholder', nav2_g3000_obs);
-	$("#ADF_G3_freq").attr('placeholder', adf_g3000_freq);
+	//NAV Swap
+	$("#ADF_heading").attr('placeholder', adf_card_deg);
+	$("#OBS_1_heading").attr('placeholder', nav1_obs_deg);
+	$("#OBS_2_heading").attr('placeholder', nav2_obs_deg);
+	
+	//NAV Direct
+	$("#NAV1_freq").attr('placeholder', nav1_active);
+	$("#OBS1_G3_heading").attr('placeholder', nav1_obs_deg);
+	$("#NAV2_freq").attr('placeholder', nav2_active);
+	$("#OBS2_G3_heading").attr('placeholder', nav2_obs_deg);
+	$("#ADF_freq").attr('placeholder', adf_active);
+	$("#ADF_direct_heading").attr('placeholder', adf_card_deg);
 
     //Control surfaces
     $("#gear-handle-position").html(gear_handle_position);
@@ -555,6 +568,23 @@ function triggerSimEventFromField(eventToTrigger, fieldToUse, messageToDisplay =
     // Get the field and the value in there
     fieldToUse = "#" + fieldToUse
     valueToUse = $(fieldToUse).val();
+
+    // Pass it to the API
+    url_to_call = "/event/"+eventToTrigger+"/trigger";
+    $.post( url_to_call, { value_to_use: valueToUse } );
+
+    // Clear the field so it can be repopulated with the placeholder
+    //$(fieldToUse).val("")
+
+    if (messageToDisplay) {
+        temporaryAlert('', messageToDisplay + " to " + valueToUse, "success")
+    }
+
+}
+
+function triggerSimEventFromVar(eventToTrigger, VarToUse, messageToDisplay = null){
+    // Get the field and the value in there
+    valueToUse = VarToUse;
 
     // Pass it to the API
     url_to_call = "/event/"+eventToTrigger+"/trigger";

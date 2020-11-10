@@ -16,15 +16,18 @@ log.disabled = True
 
 # Create simconnection
 while True:
-    try:
-        sm = SimConnect()
-        break
-    except:
-        print("Could not find MSFS running. Please launch MSFS.")
-        sleep(5)
+	try:
+		sm = SimConnect()
+		break
+	except:
+		print("Could not find MSFS running. Please launch MSFS.")
+		sleep(5)
 
 ae = AircraftEvents(sm)
 aq = AircraftRequests(sm, _time=20)
+
+# Initialize previous altitude for code stability
+previous_alt = -400
 
 # Create request holders
 
@@ -413,9 +416,18 @@ def output_ui_variables():
 		#ui_friendly_dictionary["AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE"] = aq.get("AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE")
 		ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD"] = aq.get("AUTOPILOT_AIRSPEED_HOLD")
 		ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
+		ui_friendly_dictionary["AUTOPILOT_AUTOTHROTTLE"] = aq.get("AUTOTHROTTLE_ACTIVE")
 	except:
 		None
-
+    
+    # Current altitude
+	current_alt = aq.get("INDICATED_ALTITUDE")
+	if current_alt > -300:
+		ui_friendly_dictionary["INDICATED_ALTITUDE"] = round(current_alt)
+		previous_alt = current_alt
+	else:
+		ui_friendly_dictionary["INDICATED_ALTITUDE"] = previous_alt
+    
 	return jsonify(ui_friendly_dictionary)
 
 
@@ -497,9 +509,16 @@ def trigger_event(event_name, value_to_use = None):
 		if value_to_use is None:
 			EVENT_TO_TRIGGER()
 		else:
-			# Convert kHz to Hz BCD for NAV1_RADIO_SET, NAV2_RADIO_SET and AD_SET events
+			# Convert Hz BCD for NAV1_RADIO_SET, NAV2_RADIO_SET and AD_SET events
 			if event_name == "NAV1_RADIO_SET" or event_name == "NAV2_RADIO_SET":
 				freq_hz = float(value_to_use) * 100
+				freq_hz = str(int(freq_hz))
+				freq_hz_bcd = 0
+				for figure,digit in enumerate(reversed(freq_hz)):
+					freq_hz_bcd += int(digit)*(16**(figure))
+				EVENT_TO_TRIGGER(int(freq_hz_bcd))
+			elif event_name == "ADF_SET":
+				freq_hz = int(value_to_use)
 				freq_hz = str(int(freq_hz))
 				freq_hz_bcd = 0
 				for figure,digit in enumerate(reversed(freq_hz)):
