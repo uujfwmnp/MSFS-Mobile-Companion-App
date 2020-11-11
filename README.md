@@ -22,7 +22,7 @@ Screenshot of MSFS Mobile Companion App in action:
 - Various other minor bug fixes.
 
 ## How do I install MSFS Mobile Companion App?
-1. Download the latest build [here](https://github.com/mracko/MSFS-Mobile-Companion-App/releases/tag/v1.1).
+1. Download the latest build [here](https://github.com/mracko/MSFS-Mobile-Companion-App/releases/tag/1.1).
 2. That's it.
 
 ## How do I run MSFS Mobile Companion App?
