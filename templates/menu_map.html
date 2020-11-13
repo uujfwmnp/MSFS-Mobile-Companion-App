@@ -1,0 +1,10 @@
+	<div class="collapse show" id="collapseMap" data-parent="#myGroup" style="margin-bottom:-30px">
+		<div class="row" id="map_row" style="height:calc(100vh - 90px);height:calc((var(--vh, 1vh) * 100) - 90px);margin-top:10px;margin-bottom:-30px;">
+			<div class="col"  id="map_column" style="position:relative; height=100%;z-index:1;">
+				<div id = "map" style = "height: 100%; width: 100%;"></div>
+			</div>
+		</div>
+		<button id=followModeButton style="position:relative;z-index:2;top:-3px;" class="btn btn-primary btn-sm" type="button" onclick="toggleFollowPlane();$(this).blur();">
+			<i class="fas fa-location-arrow"></i> <span id=followMode>Unfollow Plane</span>
+		</button>
+	</div>
