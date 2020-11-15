@@ -5,6 +5,7 @@ import random
 import logging
 import math
 import socket
+import asyncio
 
 print (socket.gethostbyname(socket.gethostname()))
 
@@ -24,7 +25,7 @@ while True:
 		sleep(5)
 
 ae = AircraftEvents(sm)
-aq = AircraftRequests(sm, _time=20)
+aq = AircraftRequests(sm)
 
 # Initialize previous altitude for code stability
 previous_alt = -400
@@ -312,45 +313,30 @@ def get_dataset(data_type):
 	return request_to_action
 
 
-@app.route('/ui')
-def output_ui_variables():
-
-	# Initialise dictionaru
-	ui_friendly_dictionary = {}
-	ui_friendly_dictionary["STATUS"] = "success"
-
-	# Navigation
-	try:
-		ui_friendly_dictionary["LATITUDE"] = aq.get("PLANE_LATITUDE")
-		ui_friendly_dictionary["LONGITUDE"] = aq.get("PLANE_LONGITUDE")
-		ui_friendly_dictionary["MAGNETIC_COMPASS"] = round(aq.get("MAGNETIC_COMPASS"))
-		ui_friendly_dictionary["MAGVAR"] = round(aq.get("MAGVAR"))
-	except:
-		None
+async def ui_dictionary(ui_friendly_dictionary):
+	# Position
+	ui_friendly_dictionary["LATITUDE"] = await aq.get("PLANE_LATITUDE")
+	ui_friendly_dictionary["LONGITUDE"] = await aq.get("PLANE_LONGITUDE")
+	ui_friendly_dictionary["MAGNETIC_COMPASS"] = round(await aq.get("MAGNETIC_COMPASS"))
+	ui_friendly_dictionary["MAGVAR"] = round(await aq.get("MAGVAR"))
 
     # Radios
-	try:
-		ui_friendly_dictionary["NAV1_STANDBY"] = round(aq.get("NAV_STANDBY_FREQUENCY:1"),2)
-		ui_friendly_dictionary["NAV1_ACTIVE"] = round(aq.get("NAV_ACTIVE_FREQUENCY:1"),2)
-	except:
-		None
-        
-	try:
-		ui_friendly_dictionary["NAV2_STANDBY"] = round(aq.get("NAV_STANDBY_FREQUENCY:2"),2)
-		ui_friendly_dictionary["NAV2_ACTIVE"] = round(aq.get("NAV_ACTIVE_FREQUENCY:2"),2)
-	except:
-		None
-	
+	ui_friendly_dictionary["NAV1_STANDBY"] = round(await aq.get("NAV_STANDBY_FREQUENCY:1"),2)
+	ui_friendly_dictionary["NAV1_ACTIVE"] = round(await aq.get("NAV_ACTIVE_FREQUENCY:1"),2)
+
+	ui_friendly_dictionary["NAV2_STANDBY"] = round(await aq.get("NAV_STANDBY_FREQUENCY:2"),2)
+	ui_friendly_dictionary["NAV2_ACTIVE"] = round(await aq.get("NAV_ACTIVE_FREQUENCY:2"),2)
+
     # ADF Active
+	adf_use_bcd = int(await aq.get("ADF_ACTIVE_FREQUENCY:1"))
+	adf_use_digits = ""
+
+	for i in reversed(range(4)):
+		adf_use_digit = math.floor(adf_use_bcd / (65536*(16**i)))
+		adf_use_digits = adf_use_digits + str(adf_use_digit)
+		adf_use_bcd = adf_use_bcd - (65536*(16**i)) * adf_use_digit
+
 	try:
-		adf_use_bcd = int(aq.get("ADF_ACTIVE_FREQUENCY:1"))
-		adf_use_digits = ""
-
-		for i in reversed(range(4)):
-			adf_use_digit = math.floor(adf_use_bcd / (65536*(16**i)))
-			adf_use_digits = adf_use_digits + str(adf_use_digit)
-			adf_use_bcd = adf_use_bcd - (65536*(16**i)) * adf_use_digit
-
 		ui_friendly_dictionary["ADF_USE_1000"] = adf_use_digits[0]
 		ui_friendly_dictionary["ADF_USE_100"] = adf_use_digits[1]
 		ui_friendly_dictionary["ADF_USE_10"] = adf_use_digits[2]
@@ -360,8 +346,8 @@ def output_ui_variables():
 		None
 
     # ADF Standby
+	adf_stby = int(await aq.get("ADF_STANDBY_FREQUENCY:1"))/1000
 	try:
-		adf_stby = int(aq.get("ADF_STANDBY_FREQUENCY:1"))/1000
 		if adf_stby >= 1000:
 			ui_friendly_dictionary["ADF_STBY_1000"] = str(adf_stby)[0]
 			ui_friendly_dictionary["ADF_STBY_100"] = str(adf_stby)[1]
@@ -376,18 +362,9 @@ def output_ui_variables():
 		None
 
     # NAV/ADF Compass Settings
-	try:
-		ui_friendly_dictionary["ADF_CARD_DEG"] = round(aq.get("ADF_CARD"),0)
-	except:
-		None
-	try:
-		ui_friendly_dictionary["NAV1_OBS_DEG"] = round(aq.get("NAV_OBS:1"),0)
-	except:
-		None
-	try:
-		ui_friendly_dictionary["NAV2_OBS_DEG"] = round(aq.get("NAV_OBS:2"),0)
-	except:
-		None
+	ui_friendly_dictionary["ADF_CARD_DEG"] = round(await aq.get("ADF_CARD"),0)
+	ui_friendly_dictionary["NAV1_OBS_DEG"] = round(await aq.get("NAV_OBS:1"),0)
+	ui_friendly_dictionary["NAV2_OBS_DEG"] = round(await aq.get("NAV_OBS:2"),0)
 
     # Comms
 	#ui_friendly_dictionary["COM1_STANDBY"] = round(aq.get("COM_STANDBY_FREQUENCY:1"),2)
@@ -396,51 +373,56 @@ def output_ui_variables():
 	#ui_friendly_dictionary["COM2_ACTIVE"] = round(aq.get("COM_ACTIVE_FREQUENCY:2"),2)
 
 	# Autopilot
-	try:
-		ui_friendly_dictionary["AUTOPILOT_MASTER"] = aq.get("AUTOPILOT_MASTER")
-		#ui_friendly_dictionary["AUTOPILOT_NAV_SELECTED"] = aq.get("AUTOPILOT_NAV_SELECTED")
-		#ui_friendly_dictionary["AUTOPILOT_WING_LEVELER"] = aq.get("AUTOPILOT_WING_LEVELER")
-		ui_friendly_dictionary["AUTOPILOT_NAV1_LOCK"] = aq.get("AUTOPILOT_NAV1_LOCK")
-		ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK"] = aq.get("AUTOPILOT_HEADING_LOCK")
-		ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"] = round(aq.get("AUTOPILOT_HEADING_LOCK_DIR"))
-		ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK"] = aq.get("AUTOPILOT_ALTITUDE_LOCK")
-		ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK_VAR"] = thousandify(round(aq.get("AUTOPILOT_ALTITUDE_LOCK_VAR")))
-		#ui_friendly_dictionary["AUTOPILOT_ATTITUDE_HOLD"] = aq.get("AUTOPILOT_ATTITUDE_HOLD")
-		ui_friendly_dictionary["AUTOPILOT_GLIDESLOPE_HOLD"] = aq.get("AUTOPILOT_GLIDESLOPE_HOLD")
-		ui_friendly_dictionary["AUTOPILOT_APPROACH_HOLD"] = aq.get("AUTOPILOT_APPROACH_HOLD")
-		ui_friendly_dictionary["AUTOPILOT_BACKCOURSE_HOLD"] = aq.get("AUTOPILOT_BACKCOURSE_HOLD")
-		ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD"] = aq.get("AUTOPILOT_VERTICAL_HOLD")
-		ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD_VAR"] = aq.get("AUTOPILOT_VERTICAL_HOLD_VAR")
-		#ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD"] = aq.get("AUTOPILOT_PITCH_HOLD")
-		#ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD_REF"] = aq.get("AUTOPILOT_PITCH_HOLD_REF")
-		#ui_friendly_dictionary["AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE"] = aq.get("AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE")
-		ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD"] = aq.get("AUTOPILOT_AIRSPEED_HOLD")
-		ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
-		ui_friendly_dictionary["AUTOPILOT_AUTOTHROTTLE"] = aq.get("AUTOTHROTTLE_ACTIVE")
-	except:
-		None
+	ui_friendly_dictionary["AUTOPILOT_MASTER"] = await aq.get("AUTOPILOT_MASTER")
+	#ui_friendly_dictionary["AUTOPILOT_NAV_SELECTED"] = await aq.get("AUTOPILOT_NAV_SELECTED")
+	#ui_friendly_dictionary["AUTOPILOT_WING_LEVELER"] = await aq.get("AUTOPILOT_WING_LEVELER")
+	ui_friendly_dictionary["AUTOPILOT_NAV1_LOCK"] = await aq.get("AUTOPILOT_NAV1_LOCK")
+	ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK"] = await aq.get("AUTOPILOT_HEADING_LOCK")
+	ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"] = round(await aq.get("AUTOPILOT_HEADING_LOCK_DIR"))
+	ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK"] = await aq.get("AUTOPILOT_ALTITUDE_LOCK")
+	ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK_VAR"] = thousandify(round(await aq.get("AUTOPILOT_ALTITUDE_LOCK_VAR")))
+	#ui_friendly_dictionary["AUTOPILOT_ATTITUDE_HOLD"] = await aq.get("AUTOPILOT_ATTITUDE_HOLD")
+	ui_friendly_dictionary["AUTOPILOT_GLIDESLOPE_HOLD"] = await aq.get("AUTOPILOT_GLIDESLOPE_HOLD")
+	ui_friendly_dictionary["AUTOPILOT_APPROACH_HOLD"] = await aq.get("AUTOPILOT_APPROACH_HOLD")
+	ui_friendly_dictionary["AUTOPILOT_BACKCOURSE_HOLD"] = await aq.get("AUTOPILOT_BACKCOURSE_HOLD")
+	ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD"] = await aq.get("AUTOPILOT_VERTICAL_HOLD")
+	ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD_VAR"] = await aq.get("AUTOPILOT_VERTICAL_HOLD_VAR")
+	#ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD"] = await aq.get("AUTOPILOT_PITCH_HOLD")
+	#ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD_REF"] = await aq.get("AUTOPILOT_PITCH_HOLD_REF")
+	#ui_friendly_dictionary["AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE"] = await aq.get("AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE")
+	ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD"] = await aq.get("AUTOPILOT_AIRSPEED_HOLD")
+	ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(await aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
+	ui_friendly_dictionary["AUTOPILOT_AUTOTHROTTLE"] = await aq.get("AUTOTHROTTLE_ACTIVE")
     
     # Current altitude
-	current_alt = aq.get("INDICATED_ALTITUDE")
+	current_alt = await aq.get("INDICATED_ALTITUDE")
 	if current_alt > -300:
 		ui_friendly_dictionary["INDICATED_ALTITUDE"] = round(current_alt)
 		previous_alt = current_alt
 	else:
 		ui_friendly_dictionary["INDICATED_ALTITUDE"] = previous_alt
-    
+
+@app.route('/ui')
+def output_ui_variables():
+	# Initialise dictionaru
+	ui_friendly_dictionary = {}
+	ui_friendly_dictionary["STATUS"] = "success"
+	asyncio.run(ui_dictionary(ui_friendly_dictionary))
 	return jsonify(ui_friendly_dictionary)
 
+async def _dictionary(data_dictionary):
+	dataset_map = {}  # I have renamed map to dataset_map as map is used elsewhere
+	for datapoint_name in data_dictionary:
+		print(datapoint_name)
+		dataset_map[datapoint_name] = await aq.get(datapoint_name)
+	return jsonify(dataset_map)
 
 @app.route('/dataset/<dataset_name>/', methods=["GET"])
 def output_json_dataset(dataset_name):
-	dataset_map = {}  #I have renamed map to dataset_map as map is used elsewhere
 	data_dictionary = get_dataset(dataset_name)
-	for datapoint_name in data_dictionary:
-		dataset_map[datapoint_name] = aq.get(datapoint_name)
-	return jsonify(dataset_map)
+	return asyncio.run(_dictionary(data_dictionary))
 
-
-def get_datapoint(datapoint_name, index=None):
+async def get_datapoint(datapoint_name, index=None):
 	# This function actually does the work of getting the datapoint
 
 	if index is not None and ':index' in datapoint_name:
@@ -448,7 +430,7 @@ def get_datapoint(datapoint_name, index=None):
 		if dp is not None:
 			dp.setIndex(int(index))
 
-	return aq.get(datapoint_name)
+	return await aq.get(datapoint_name)
 
 
 @app.route('/datapoint/<datapoint_name>/get', methods=["GET"])
@@ -458,7 +440,7 @@ def get_datapoint_endpoint(datapoint_name):
 	ds = request.get_json() if request.is_json else request.form
 	index = ds.get('index')
 
-	output = get_datapoint(datapoint_name, index)
+	output = asyncio.run(get_datapoint(datapoint_name, index))
 
 	if isinstance(output, bytes):
 		output = output.decode('ascii')
@@ -491,17 +473,14 @@ def set_datapoint(datapoint_name, index=None, value_to_use=None):
 @app.route('/datapoint/<datapoint_name>/set', methods=["POST"])
 def set_datapoint_endpoint(datapoint_name):
 	# This is the http endpoint wrapper for setting a datapoint
-
 	ds = request.get_json() if request.is_json else request.form
 	index = ds.get('index')
 	value_to_use = ds.get('value_to_use')
-
-	status = set_datapoint (datapoint_name, index, value_to_use)
-
+	status = set_datapoint(datapoint_name, index, value_to_use)
 	return jsonify(status)
 
 
-def trigger_event(event_name, value_to_use = None):
+def trigger_event(event_name, value_to_use=None):
 	# This function actually does the work of triggering the event
 
 	EVENT_TO_TRIGGER = ae.find(event_name)
@@ -549,6 +528,8 @@ def trigger_event_endpoint(event_name):
 
 	return jsonify(status)
 
+async def get_engen_ct():
+	return await aq.get("NUMBER_OF_ENGINES")
 
 @app.route('/custom_emergency/<emergency_type>', methods=["GET", "POST"])
 def custom_emergency(emergency_type):
@@ -557,10 +538,11 @@ def custom_emergency(emergency_type):
 
 	if emergency_type == "random_engine_fire":
 		# Calculate number of engines
-		number_of_engines = aq.get("NUMBER_OF_ENGINES")
+		number_of_engines = asyncio.run(get_engen_ct())
 
-		if number_of_engines < 0: return "error, no engines found - is sim running?"
-		engine_to_set_on_fire = random.randint(1,number_of_engines)
+		if number_of_engines < 0:
+			return "error, no engines found - is sim running?"
+		engine_to_set_on_fire = random.randint(1, number_of_engines)
 
 		set_datapoint("ENG_ON_FIRE:index", engine_to_set_on_fire, 1)
 
