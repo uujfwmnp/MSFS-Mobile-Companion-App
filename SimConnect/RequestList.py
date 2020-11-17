@@ -169,8 +169,6 @@ class AircraftRequests():
 			if key in clas.list:
 				rqest = getattr(clas, key)
 				if index is not None:
-					if 'index' in index:
-						index = 0
 					rqest.setIndex(index)
 				return rqest
 		return None
