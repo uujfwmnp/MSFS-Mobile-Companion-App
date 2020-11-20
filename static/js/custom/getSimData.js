@@ -43,8 +43,8 @@ let xpndr_g3000;
 let com1_g3000_freq;
 let com2_g3000_freq;
 
-let com1_transmit
-let com2_transmit
+let com1_transmit;
+let com2_transmit;
 
 let autopilot_master;
 let autopilot_nav1_lock;
@@ -76,9 +76,18 @@ let flaps_handle_pct_reversed;
 let cabin_seatbelts_alert_switch;
 let cabin_no_smoking_alert_switch;
 
+let landing_vs1;
+let landing_t1;
+let landing_vs2;
+let landing_t2;
+let landing_vs3;
+let landing_t3;
+
+let sim_rate;
+
 // Maps Size Fix Function
 let map_size_fix;
-let map_size_fix_mod
+let map_size_fix_mod;
 map_size_fix = 0;
 
 function mapRefreshFix() {
@@ -628,6 +637,15 @@ function getSimulatorData() {
 		
 		//Altitude
 		altitude = data.INDICATED_ALTITUDE;
+		
+		//Other
+		landing_vs1 = data.LANDING_VS1;
+		landing_t1 = data.LANDING_T1;
+		landing_vs2 = data.LANDING_VS2;
+		landing_t2 = data.LANDING_T2;
+		landing_vs3 = data.LANDING_VS3;
+		landing_t3 = data.LANDING_T3;
+		sim_rate = data.SIMULATION_RATE;
     });
     return false;
 }
@@ -675,6 +693,14 @@ function displayData() {
 	$("#COM2_freq").attr('placeholder', com2_g3000_freq);
 	$("#XPNDR_g3000").attr('placeholder', xpndr_g3000);
 	
+	//Other
+	$("#landing-vs1").text(landing_vs1);
+	$("#landing-t1").text(landing_t1);
+	$("#landing-vs2").text(landing_vs2);
+	$("#landing-t2").text(landing_t2);
+	$("#landing-vs3").text(landing_vs3);
+	$("#landing-t3").text(landing_t3);
+	$("#sim-rate").text(sim_rate);
 }
 
 function checkAndUpdateButton(buttonName, variableToCheck, onText="On", offText="Off") {
@@ -805,4 +831,8 @@ function temporaryAlert(title, message, icon) {
             console.log('I was closed by the timer')
         }
     })
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

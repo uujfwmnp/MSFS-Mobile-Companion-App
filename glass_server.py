@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, render_template, request
 from SimConnect import *
-from time import sleep
+from time import sleep, localtime
 import random
 import logging
 import math
 import socket
 import asyncio
 from threading import Thread
+import datetime
 
 print (socket.gethostbyname(socket.gethostname()))
 
@@ -141,11 +142,19 @@ def simconnect_thread_func(threadname):
     # Initialize previous altitude for code stability
     previous_alt = -400
 
+    # Initialize vars for landing info
+    ui_friendly_dictionary["LANDING_VS1"] = "N/A"
+    ui_friendly_dictionary["LANDING_T1"] = 0
+    ui_friendly_dictionary["LANDING_VS2"] = "N/A"
+    ui_friendly_dictionary["LANDING_T2"] = 0
+    ui_friendly_dictionary["LANDING_VS3"] = "N/A"
+    ui_friendly_dictionary["LANDING_T3"] = 0
 
+    
     def thousandify(x):
         return f"{x:,}"
 
-    async def ui_dictionary(ui_friendly_dictionary):
+    async def ui_dictionary(ui_friendly_dictionary, previous_alt, landing_t1, landing_vs1, landing_t2, landing_vs2, landing_t3, landing_vs3):
         # Position
         try:
             ui_friendly_dictionary["LATITUDE"] = await aq.get("PLANE_LATITUDE")
@@ -266,7 +275,7 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["ENG_ANTI_ICE2"] = await aq.get("ENG_ANTI_ICE:2")
         ui_friendly_dictionary["ENG_ANTI_ICE3"] = await aq.get("ENG_ANTI_ICE:3")
         ui_friendly_dictionary["ENG_ANTI_ICE4"] = await aq.get("ENG_ANTI_ICE:4")
-        ui_friendly_dictionary["ENG_COMBUSTION"] = await aq.get("ENG_COMBUSTION")          
+        ui_friendly_dictionary["SIMULATION_RATE"] = await aq.get("SIMULATION_RATE")
         
         
         # Current altitude
@@ -279,9 +288,32 @@ def simconnect_thread_func(threadname):
                 ui_friendly_dictionary["INDICATED_ALTITUDE"] = previous_alt
             except:
                 pass
-    
+        
+        # Other
+        
+        current_landing = round(await aq.get("PLANE_TOUCHDOWN_NORMAL_VELOCITY") * 60)
+        current_time = datetime.datetime.now().strftime('%H:%M:%S')
+        
+        if landing_vs1 != current_landing:
+            # Move 2nd to 3rd
+            landing_t3 = landing_t2
+            landing_vs3 = landing_vs2
+            # Move 1st to 2nd
+            landing_t2 = landing_t1
+            landing_vs2 = landing_vs1
+            # Assign new 1st
+            landing_t1 = current_time
+            landing_vs1 = current_landing
+            # Dictionary Output
+            ui_friendly_dictionary["LANDING_VS1"] = landing_vs1
+            ui_friendly_dictionary["LANDING_T1"] = landing_t1
+            ui_friendly_dictionary["LANDING_VS2"] = landing_vs2
+            ui_friendly_dictionary["LANDING_T2"] = landing_t2
+            ui_friendly_dictionary["LANDING_VS3"] = landing_vs3
+            ui_friendly_dictionary["LANDING_T3"] = landing_t3
+        
     while True:
-        asyncio.run(ui_dictionary(ui_friendly_dictionary))
+        asyncio.run(ui_dictionary(ui_friendly_dictionary, previous_alt, ui_friendly_dictionary["LANDING_T1"], ui_friendly_dictionary["LANDING_VS1"], ui_friendly_dictionary["LANDING_T2"], ui_friendly_dictionary["LANDING_VS2"], ui_friendly_dictionary["LANDING_T3"], ui_friendly_dictionary["LANDING_VS3"]))
         #sleep(0.3)
        
 

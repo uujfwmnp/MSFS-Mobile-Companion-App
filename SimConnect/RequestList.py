@@ -467,6 +467,7 @@ class AircraftRequests():
 			"INCIDENCE_ALPHA": ["Angle of attack", b'INCIDENCE ALPHA', b'Radians', 'N'],
 			"INCIDENCE_BETA": ["Sideslip angle", b'INCIDENCE BETA', b'Radians', 'N'],
 			"WING_FLEX_PCT:index": ["The current wing flex. Different values can be set for each wing (for example, during banking). Set an index of 1 for the left wing, and 2 for the right wing.", b'WING FLEX PCT:index', b'Percent over 100', 'Y'],
+			"PLANE_TOUCHDOWN_NORMAL_VELOCITY": ["Vertical speed at landing.", b'PLANE TOUCHDOWN NORMAL VELOCITY', b'Feet per second', 'N'],
 			# "STRUCT_LATLONALT": ["Returns the latitude, longitude and altitude of the user aircraft.", b'STRUCT LATLONALT', b'SIMCONNECT_DATA_LATLONALT', 'N'],
 			# "STRUCT_LATLONALTPBH": ["Returns the pitch, bank and heading of the user aircraft.", b'STRUCT LATLONALTPBH', b'SIMCONNECT_DATA_LATLONALT', 'N'],
 			# "STRUCT_SURFACE_RELATIVE_VELOCITY": ["The relative surface velocity.", b'STRUCT SURFACE RELATIVE VELOCITY', b'SIMCONNECT_DATA_XYZ', 'N'],

@@ -72,6 +72,7 @@
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseRadio" aria-expanded="false" aria-controls="collapseRadio">NAV</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseCOM" aria-expanded="false" aria-controls="collapseCOM">COM</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseAP" aria-expanded="false" aria-controls="collapseAP">AP</button>
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseAP">Other</button>
 	&nbsp;&nbsp;
 </nav>
 
@@ -88,6 +89,9 @@
 	
 	<!-- Autopilot -->
 	{% include 'menu_ap.html' %}
+
+	<!-- Other -->
+	{% include 'menu_other.html' %}
 
 </div>
 
@@ -211,7 +215,7 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Custom JS imports -->
-<script src="/static/js/custom/getSimData.js?v121"></script>
+<script src="/static/js/custom/getSimData.js?v122"></script>
 
 <!-- Sync Frequencies at Startup-->
 <script>
