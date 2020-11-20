@@ -70,7 +70,9 @@
 	</a>
 	<button class="btn btn-warning" onclick="$(this).blur();mapRefreshFix();setTimeout(function(){map.invalidateSize(true);},500);" style="margin-left:-8px;margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">Map</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseRadio" aria-expanded="false" aria-controls="collapseRadio">NAV</button>
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseCOM" aria-expanded="false" aria-controls="collapseCOM">COM</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseAP" aria-expanded="false" aria-controls="collapseAP">AP</button>
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseAP">Other</button>
 	&nbsp;&nbsp;
 </nav>
 
@@ -82,8 +84,14 @@
 	<!-- NAV-->
 	{% include 'menu_nav.html' %}
 	
+	<!-- COM-->
+	{% include 'menu_com.html' %}
+	
 	<!-- Autopilot -->
 	{% include 'menu_ap.html' %}
+
+	<!-- Other -->
+	{% include 'menu_other.html' %}
 
 </div>
 
@@ -105,11 +113,8 @@
     // Creating a Layer object
     var simple = new L.tileLayer.provider('CartoDB.Voyager');
     var openstreet = new L.tileLayer.provider('OpenStreetMap.Mapnik');
-    var grayscale = new L.tileLayer.provider('CartoDB.Positron');
-    var basic = new L.tileLayer.provider('Jawg.Terrain', {
-        variant: '',
-        accessToken: 'CQVU4GpEMHf6XeTxVy2x2zRCDJpr6zFX61tYzcs27Jeus4kfc9XBUNfz3mhPakJZ'
-    });
+    var grayscale = new L.tileLayer.provider('Stadia.AlidadeSmoothDark');
+    var basic = new L.tileLayer.provider('Stadia.Outdoors');
 
     var openaip_cached_basemap = new L.TileLayer("http://{s}.tile.maps.openaip.net/geowebcache/service/tms/1.0.0/openaip_basemap@EPSG%3A900913@png/{z}/{x}/{y}.png", {
         maxZoom: 14,
@@ -125,7 +130,7 @@
     map.addLayer(basic);
 
     var baseLayers = {
-        "Grayscale": grayscale,
+        "Dark": grayscale,
         "Open Street": openstreet,
         "Pale": simple,
         "Default": basic,
@@ -210,7 +215,7 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Custom JS imports -->
-<script src="/static/js/custom/getSimData.js?v11"></script>
+<script src="/static/js/custom/getSimData.js?v122"></script>
 
 <!-- Sync Frequencies at Startup-->
 <script>
@@ -228,10 +233,12 @@ window.addEventListener('resize', () => {
 });
 </script>
 
-<!-- Hide Direct Nav and set switch to off-->
+<!-- Hide Direct Nav/Com and set switch to off-->
 <script>
 $('#directNAV').hide();
 $('#NAVtypeswitch').prop('checked', false);
+$('#directCOM').hide();
+$('#COMtypeswitch').prop('checked', false);
 </script>
 
 </body>
