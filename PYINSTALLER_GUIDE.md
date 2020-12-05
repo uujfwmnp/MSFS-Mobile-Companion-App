@@ -4,7 +4,7 @@ To compile an executable version of MSFS Mobile Companion App using pyinstaller 
 
 ## 1. Change glass_server.py:
 
-Change line 11 from:
+Change line 29 from:
 
 `app = Flask(__name__)`
 
@@ -19,7 +19,11 @@ else:
     app = Flask(__name__)
 ```
 
-## 2. Compile MSFS Mobile Companion App using pyinstaller
+## 2. Rename SimConnect.dll
+
+Rename the *SimConnect.dll* file into *SimConnect.dllc*.
+
+## 3. Compile MSFS Mobile Companion App using pyinstaller
 
 Use the following pyinstaller settings to compile MSFS Mobile Companion App:
 
@@ -27,4 +31,4 @@ Use the following pyinstaller settings to compile MSFS Mobile Companion App:
 pyinstaller -F --onefile --add-data "templates;templates" --add-data "static;static" --add-data "SimConnect;SimConnect" glass_server.py
 ```
 
-## 3. Enjoy and have fun!
+## 4. Enjoy and have fun!
