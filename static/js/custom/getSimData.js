@@ -4,7 +4,9 @@ let vertical_speed;
 let compass;
 let airspeed;
 let latitude;
+latitude = 0;
 let longitude;
+longitude = 0;
 
 let nav1_active;
 let nav1_standby;
@@ -84,6 +86,20 @@ let landing_vs3;
 let landing_t3;
 
 let sim_rate;
+
+let light_landing;
+let light_taxi;
+let light_strobe;
+let light_nav;
+let light_beacon;
+let light_cabin;
+let light_logo;
+let light_panel;
+let light_wing;
+let light_recognition;
+let pitot_heat;
+let eng_anti_ice;
+let structural_deice;
 
 // Maps Size Fix Function
 let map_size_fix;
@@ -595,7 +611,7 @@ function getSimulatorData() {
     $.getJSON($SCRIPT_ROOT + '/ui', {}, function(data) {
 
         //Navigation
-        compass = data.MAGNETIC_COMPASS + data.MAGVAR;
+        compass = data.MAGNETIC_COMPASS;
         latitude = data.LATITUDE;
         longitude = data.LONGITUDE;
 		
@@ -638,6 +654,21 @@ function getSimulatorData() {
 		//Altitude
 		altitude = data.INDICATED_ALTITUDE;
 		
+		//Panel
+		light_landing = data.LIGHT_LANDING;
+		light_taxi = data.LIGHT_TAXI;
+		light_strobe = data.LIGHT_STROBE;
+		light_nav = data.LIGHT_NAV;
+		light_beacon = data.LIGHT_BEACON;
+		light_cabin = data.LIGHT_CABIN;
+		light_logo = data.LIGHT_LOGO;
+		light_panel = data.LIGHT_PANEL;
+		light_wing = data.LIGHT_WING;
+		light_recognition = data.LIGHT_RECOGNITION;
+		pitot_heat = data.PITOT_HEAT;
+		eng_anti_ice = data.ENG_ANTI_ICE;
+		structural_deice = data.STRUCTURAL_DEICE_SWITCH;
+		
 		//Other
 		landing_vs1 = data.LANDING_VS1;
 		landing_t1 = data.LANDING_T1;
@@ -669,7 +700,20 @@ function displayData() {
     checkAndUpdateButton("#com2-transmit", com2_transmit, "COM 2", "COM 2");
     checkAndUpdateButton("#com1-transmit-direct", com1_transmit, "Transmit COM 1", "Transmit COM 1");
     checkAndUpdateButton("#com2-transmit-direct", com2_transmit, "Transmit COM 2", "Transmit COM 2");
-
+    checkAndUpdateButton("#light-beacon", light_beacon, "Beacon", "Beacon");
+    checkAndUpdateButton("#light-landing", light_landing, "Landing", "Landing");
+    checkAndUpdateButton("#light-taxi", light_taxi, "Taxi", "Taxi");
+    checkAndUpdateButton("#light-nav", light_nav, "NAV", "NAV");
+    checkAndUpdateButton("#light-strobe", light_strobe, "Strobe", "Strobe");
+    checkAndUpdateButton("#light-logo", light_logo, "Logo", "Logo");
+    checkAndUpdateButton("#light-recognition", light_recognition, "Recognition", "Recognition");
+    checkAndUpdateButton("#light-wings", light_wing, "Wings", "Wings");
+    checkAndUpdateButton("#light-cabin", light_cabin, "Cabin", "Cabin");
+    checkAndUpdateButton("#light-panel", light_panel, "Panel", "Panel");
+    checkAndUpdateButton("#pitot-heat", pitot_heat, "Pitot Heat", "Pitot Heat");
+    checkAndUpdateButton("#anti-ice", eng_anti_ice, "General Anti-Ice", "General Anti-Ice");
+    checkAndUpdateButton("#structural-deice", structural_deice, "Structural Deice", "Structural Deice");
+	
     $("#autopilot-heading-lock-dir").attr('placeholder', autopilot_heading_lock_dir);
     $("#autopilot-altitude-lock-var").attr('placeholder', autopilot_altitude_lock_var);
     $("#autopilot-airspeed-hold-var").attr('placeholder', autopilot_airspeed_hold_var);
@@ -723,17 +767,39 @@ function toggleFollowPlane() {
     }
 }
 
+function toggleGPStrack() {
+    trackGPS = !trackGPS;
+    if (trackGPS === true) {
+        $("#GPStrackButton").removeClass("btn-danger").addClass("btn-primary");
+        trackline.setStyle({opacity: 1.0});
+    }
+    if (trackGPS === false) {
+        $("#GPStrackButton").removeClass("btn-primary").addClass("btn-danger")
+        trackline.setStyle({opacity: 0});
+    }
+}
+
 function updateMap() {
     var pos = L.latLng(latitude, longitude);
 
-    marker.slideTo(	pos, {
-        duration: 200,
+    marker.slideTo( [latitude, longitude], {
+        duration: 200, keepAtCenter: false
     });
     marker.setRotationAngle(compass);
 
     if (followPlane === true) {
         map.panTo(pos);
-    }
+    };
+    // Trackline Update
+    trackline.addLatLng([latitude, longitude]);
+    
+    // Trackline clear when distance between points > 2000m (MSFS places the plane in menu to 0,0)
+    tracklinelen = trackline.getLatLngs().length;
+    if (tracklinelen > 1) {
+        if (trackline.getLatLngs()[tracklinelen - 1].distanceTo(trackline.getLatLngs()[tracklinelen - 2]) > 2000) {
+            trackline.setLatLngs([]);
+        }
+    };
 }
 
 function refreshMapSize() {

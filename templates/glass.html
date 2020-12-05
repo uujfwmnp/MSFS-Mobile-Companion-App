@@ -72,7 +72,8 @@
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseRadio" aria-expanded="false" aria-controls="collapseRadio">NAV</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseCOM" aria-expanded="false" aria-controls="collapseCOM">COM</button>
 	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseAP" aria-expanded="false" aria-controls="collapseAP">AP</button>
-	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseAP">Other</button>
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapsePanel" aria-expanded="false" aria-controls="collapseInstruments">Panel</button>
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">Other</button>
 	&nbsp;&nbsp;
 </nav>
 
@@ -90,6 +91,9 @@
 	<!-- Autopilot -->
 	{% include 'menu_ap.html' %}
 
+	<!-- Panel -->
+	{% include 'menu_panel.html' %}
+
 	<!-- Other -->
 	{% include 'menu_other.html' %}
 
@@ -99,6 +103,7 @@
 <!-- Create map object -->
 <script>
     let followPlane = true;
+    let trackGPS = true;
 
     // Create map options
     var mapOptions = {
@@ -115,6 +120,9 @@
     var openstreet = new L.tileLayer.provider('OpenStreetMap.Mapnik');
     var grayscale = new L.tileLayer.provider('Stadia.AlidadeSmoothDark');
     var basic = new L.tileLayer.provider('Stadia.Outdoors');
+    var topo = new L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+    });
 
     var openaip_cached_basemap = new L.TileLayer("http://{s}.tile.maps.openaip.net/geowebcache/service/tms/1.0.0/openaip_basemap@EPSG%3A900913@png/{z}/{x}/{y}.png", {
         maxZoom: 14,
@@ -133,6 +141,7 @@
         "Dark": grayscale,
         "Open Street": openstreet,
         "Pale": simple,
+        "Topo": topo,
         "Default": basic,
     }
     var overlays = {
@@ -165,6 +174,10 @@
 
     // Adding marker to the map
     marker.addTo(map);
+	
+	// Add GPS Trackline
+	var trackline;
+	trackline = L.polyline([], {color: 'red', smoothFactor: 3}).addTo(map);
 </script>
 
 <script>
@@ -215,7 +228,7 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Custom JS imports -->
-<script src="/static/js/custom/getSimData.js?v122"></script>
+<script src="/static/js/custom/getSimData.js?v13"></script>
 
 <!-- Sync Frequencies at Startup-->
 <script>

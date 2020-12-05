@@ -159,8 +159,8 @@ def simconnect_thread_func(threadname):
         try:
             ui_friendly_dictionary["LATITUDE"] = await aq.get("PLANE_LATITUDE")
             ui_friendly_dictionary["LONGITUDE"] = await aq.get("PLANE_LONGITUDE")
-            ui_friendly_dictionary["MAGNETIC_COMPASS"] = round(await aq.get("MAGNETIC_COMPASS"))
-            ui_friendly_dictionary["MAGVAR"] = round(await aq.get("MAGVAR"))
+            ui_friendly_dictionary["MAGNETIC_COMPASS"] = round(round(await aq.get("PLANE_HEADING_DEGREES_TRUE"),2) * 180/3.1416, 2)
+            #ui_friendly_dictionary["MAGVAR"] = round(await aq.get("MAGVAR"))
         except:
             None
 
@@ -256,25 +256,31 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(await aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
         ui_friendly_dictionary["AUTOPILOT_AUTOTHROTTLE"] = await aq.get("AUTOTHROTTLE_ACTIVE")
         # Placeholders - Not Actively Used for stress testing
-        ui_friendly_dictionary["AUTOPILOT_NAV_SELECTED"] = await aq.get("AUTOPILOT_NAV_SELECTED")
-        ui_friendly_dictionary["AUTOPILOT_WING_LEVELER"] = await aq.get("AUTOPILOT_WING_LEVELER")
-        ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD"] = await aq.get("AUTOPILOT_PITCH_HOLD")
-        ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD_REF"] = await aq.get("AUTOPILOT_PITCH_HOLD_REF")
+        #ui_friendly_dictionary["AUTOPILOT_NAV_SELECTED"] = await aq.get("AUTOPILOT_NAV_SELECTED")
+        #ui_friendly_dictionary["AUTOPILOT_WING_LEVELER"] = await aq.get("AUTOPILOT_WING_LEVELER")
+        #ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD"] = await aq.get("AUTOPILOT_PITCH_HOLD")
+        #ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD_REF"] = await aq.get("AUTOPILOT_PITCH_HOLD_REF")
         ui_friendly_dictionary["AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE"] = await aq.get("AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE")
         ui_friendly_dictionary["AUTOPILOT_ATTITUDE_HOLD"] = await aq.get("AUTOPILOT_ATTITUDE_HOLD")
-        ui_friendly_dictionary["LIGHT_STROBE"] = await aq.get("LIGHT_STROBE")
-        ui_friendly_dictionary["LIGHT_PANEL"] = await aq.get("LIGHT_PANEL")
+        # Lights
         ui_friendly_dictionary["LIGHT_LANDING"] = await aq.get("LIGHT_LANDING")
         ui_friendly_dictionary["LIGHT_TAXI"] = await aq.get("LIGHT_TAXI")
+        ui_friendly_dictionary["LIGHT_STROBE"] = await aq.get("LIGHT_STROBE")
+        ui_friendly_dictionary["LIGHT_NAV"] = await aq.get("LIGHT_NAV")
         ui_friendly_dictionary["LIGHT_BEACON"] = await aq.get("LIGHT_BEACON")
+        ui_friendly_dictionary["LIGHT_CABIN"] = await aq.get("LIGHT_CABIN")
+        ui_friendly_dictionary["LIGHT_LOGO"] = await aq.get("LIGHT_CABIN")
+        ui_friendly_dictionary["LIGHT_PANEL"] = await aq.get("LIGHT_PANEL")
         ui_friendly_dictionary["LIGHT_WING"] = await aq.get("LIGHT_WING")
-        ui_friendly_dictionary["LIGHT_CABIN"] = await aq.get("LIGHT_CABIN")        
+        ui_friendly_dictionary["LIGHT_RECOGNITION"] = await aq.get("LIGHT_RECOGNITION")
+        # Pitot Heat and Deice
         ui_friendly_dictionary["PITOT_HEAT"] = await aq.get("PITOT_HEAT")
-        ui_friendly_dictionary["PROP_DEICE_SWITCH1"] = await aq.get("PROP_DEICE_SWITCH:1")
-        ui_friendly_dictionary["ENG_ANTI_ICE1"] = await aq.get("ENG_ANTI_ICE:1")
-        ui_friendly_dictionary["ENG_ANTI_ICE2"] = await aq.get("ENG_ANTI_ICE:2")
-        ui_friendly_dictionary["ENG_ANTI_ICE3"] = await aq.get("ENG_ANTI_ICE:3")
-        ui_friendly_dictionary["ENG_ANTI_ICE4"] = await aq.get("ENG_ANTI_ICE:4")
+        #ui_friendly_dictionary["PROP_DEICE_SWITCH"] = await aq.get("PROP_DEICE_SWITCH:1")
+        ui_friendly_dictionary["ENG_ANTI_ICE"] = await aq.get("ENG_ANTI_ICE:1")
+        #ui_friendly_dictionary["GEN_ENG_ANTI_ICE"] = await aq.get("GENERAL_ENG_ANTI_ICE_POSITION:1")
+        ui_friendly_dictionary["STRUCTURAL_DEICE_SWITCH"] = await aq.get("STRUCTURAL_DEICE_SWITCH")
+        #ui_friendly_dictionary["PANEL_ANTI_ICE_SWITCH"] = await aq.get("PANEL_ANTI_ICE_SWITCH")
+        # Sim Rate
         ui_friendly_dictionary["SIMULATION_RATE"] = await aq.get("SIMULATION_RATE")
         
         

@@ -4,7 +4,8 @@
 				<div id = "map" style = "height: 100%; width: 100%;"></div>
 			</div>
 		</div>
-		<button id=followModeButton style="position:relative;z-index:2;top:-3px;" class="btn btn-primary btn-sm" type="button" onclick="toggleFollowPlane();$(this).blur();">
-			<i class="fas fa-location-arrow"></i> <span id=followMode>Unfollow Plane</span>
-		</button>
+		<div class="btn-group" role="group" aria-label="Map controls" style="position:relative;z-index:2;top:-3px;">
+			<button id="followModeButton" type="button" class="btn btn-primary btn-sm" onclick="toggleFollowPlane();$(this).blur();"><span id=followMode>Unfollow Plane</span></button>
+			<button id="GPStrackButton" type="button" class="btn btn-primary btn-sm" onclick="toggleGPStrack();$(this).blur();">GPS Track</button>
+		</div>
 	</div>
