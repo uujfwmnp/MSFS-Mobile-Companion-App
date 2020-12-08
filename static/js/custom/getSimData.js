@@ -67,6 +67,7 @@ let autopilot_pitch_hold_ref;
 let autopilot_flight_director_active;
 let autopilot_airspeed_hold;
 let autopilot_airspeed_hold_var;
+let airspeed_indicated;
 
 let gear_handle_position;
 let elevator_trim_pct;
@@ -633,8 +634,9 @@ function getSimulatorData() {
         autopilot_pitch_hold = data.AUTOPILOT_PITCH_HOLD;
         autopilot_pitch_hold_ref = data.AUTOPILOT_PITCH_HOLD_REF;
         autopilot_flight_director_active = data.AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE;
-        autopilot_airspeed_hold = data.AUTOPILOT_AIRSPEED_HOLD;
+        autopilot_airspeed_hold = data.AUTOPILOT_FLIGHT_LEVEL_CHANGE;
         autopilot_airspeed_hold_var = data.AUTOPILOT_AIRSPEED_HOLD_VAR;
+        airspeed_indicated = data.AIRSPEED_INDICATED;
 		
 		//NAV
 		nav1_obs_deg = Number(data.NAV1_OBS_DEG);

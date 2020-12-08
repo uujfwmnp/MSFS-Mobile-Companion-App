@@ -6,21 +6,21 @@
 				<div class="row" style="margin-top:-23px">
 					
 					<!-- Lights -->
-					<div class="col" style="margin-top:20px; max-width:250px; min-width:210px;">
+					<div class="col" style="margin-top:20px; max-width:290px; min-width:280px;">
 						<div class="lead">Lights</div>
 						<div class="row" style="margin-bottom:10px">
 							<div class="col">
-								<button onclick="triggerSimEvent('ALL_LIGHTS_TOGGLE');$(this).blur();" id="light-all" type="button" class="btn btn-sm btn-warning" style="width:204px">Toggle All Lights</button><br>
-								<button onclick="triggerSimEvent('TOGGLE_BEACON_LIGHTS');$(this).blur();" id="light-beacon" type="button" class="btn btn-sm btn-danger" style="width:100px">Beacon</button>
-								<button onclick="triggerSimEvent('LANDING_LIGHTS_TOGGLE');$(this).blur();" id="light-landing" type="button" class="btn btn-sm btn-danger" style="width:100px">Landing</button><br>
-								<button onclick="triggerSimEvent('TOGGLE_TAXI_LIGHTS');$(this).blur();" id="light-taxi" type="button" class="btn btn-sm btn-danger" style="width:100px">Taxi</button>
-								<button onclick="triggerSimEvent('TOGGLE_NAV_LIGHTS');$(this).blur();" id="light-nav" type="button" class="btn btn-sm btn-danger" style="width:100px">NAV</button><br>
-								<button onclick="triggerSimEvent('STROBES_TOGGLE');$(this).blur();" id="light-strobe" type="button" class="btn btn-sm btn-danger" style="width:100px">Strobe</button>
-								<button onclick="triggerSimEvent('TOGGLE_LOGO_LIGHTS');$(this).blur();" id="light-logo" type="button" class="btn btn-sm btn-danger" style="width:100px">Logo</button><br>
-								<button onclick="triggerSimEvent('TOGGLE_RECOGNITION_LIGHTS');$(this).blur();" id="light-recognition" type="button" class="btn btn-sm btn-danger" style="width:100px">Recognition</button>
-								<button onclick="triggerSimEvent('TOGGLE_WING_LIGHTS');$(this).blur();" id="light-wings" type="button" class="btn btn-sm btn-danger" style="width:100px">Wings</button><br>
-								<button onclick="triggerSimEvent('TOGGLE_CABIN_LIGHTS');$(this).blur();" id="light-cabin" type="button" class="btn btn-sm btn-danger" style="width:100px">Cabin</button>
-								<button onclick="triggerSimEvent('PANEL_LIGHTS_TOGGLE');$(this).blur();" id="light-panel" type="button" class="btn btn-sm btn-danger" style="width:100px">Panel</button>
+								<button onclick="triggerSimEvent('ALL_LIGHTS_TOGGLE');$(this).blur();" id="light-all" type="button" class="btn btn-warning" style="width:244px">Toggle All Lights</button><br>
+								<button onclick="triggerSimEvent('TOGGLE_BEACON_LIGHTS');$(this).blur();" id="light-beacon" type="button" class="btn btn-danger" style="width:120px">Beacon</button>
+								<button onclick="triggerSimEvent('LANDING_LIGHTS_TOGGLE');$(this).blur();" id="light-landing" type="button" class="btn btn-danger" style="width:120px">Landing</button><br>
+								<button onclick="triggerSimEvent('TOGGLE_TAXI_LIGHTS');$(this).blur();" id="light-taxi" type="button" class="btn btn-danger" style="width:120px">Taxi</button>
+								<button onclick="triggerSimEvent('TOGGLE_NAV_LIGHTS');$(this).blur();" id="light-nav" type="button" class="btn btn-danger" style="width:120px">NAV</button><br>
+								<button onclick="triggerSimEvent('STROBES_TOGGLE');$(this).blur();" id="light-strobe" type="button" class="btn btn-danger" style="width:120px">Strobe</button>
+								<button onclick="triggerSimEvent('TOGGLE_LOGO_LIGHTS');$(this).blur();" id="light-logo" type="button" class="btn btn-danger" style="width:120px">Logo</button><br>
+								<button onclick="triggerSimEvent('TOGGLE_RECOGNITION_LIGHTS');$(this).blur();" id="light-recognition" type="button" class="btn btn-danger" style="width:120px">Recognition</button>
+								<button onclick="triggerSimEvent('TOGGLE_WING_LIGHTS');$(this).blur();" id="light-wings" type="button" class="btn btn-danger" style="width:120px">Wings</button><br>
+								<button onclick="triggerSimEvent('TOGGLE_CABIN_LIGHTS');$(this).blur();" id="light-cabin" type="button" class="btn btn-danger" style="width:120px">Cabin</button>
+								<button onclick="triggerSimEvent('PANEL_LIGHTS_TOGGLE');$(this).blur();" id="light-panel" type="button" class="btn btn-danger" style="width:120px">Panel</button>
 							</div>
 						</div>
 					</div>
@@ -30,9 +30,9 @@
 						<div class="lead">Pitot Heat & Deicing</div>
 						<div class="row" style="margin-bottom:10px">
 							<div class="col">
-								<button onclick="if (pitot_heat == 0) {triggerSimEvent('PITOT_HEAT_SET', 1);} else {triggerSimEvent('PITOT_HEAT_SET', 2);};$(this).blur();" id="pitot-heat" type="button" class="btn btn-sm btn-danger" style="width:130px">Pitot Heat</button><br>
-								<button onclick="triggerSimEvent('ANTI_ICE_TOGGLE');$(this).blur();" id="anti-ice" type="button" class="btn btn-sm btn-danger" style="width:130px">General Anti-Ice</button><br>
-								<button onclick="triggerSimEvent('TOGGLE_STRUCTURAL_DEICE');$(this).blur();" id="structural-deice" type="button" class="btn btn-sm btn-danger" style="width:130px">Structural Deice</button>
+								<button onclick="if (pitot_heat == 0) {triggerSimEvent('PITOT_HEAT_SET', 1);} else {triggerSimEvent('PITOT_HEAT_SET', 2);};$(this).blur();" id="pitot-heat" type="button" class="btn btn-danger" style="width:170px">Pitot Heat</button><br>
+								<button onclick="triggerSimEvent('ANTI_ICE_TOGGLE');$(this).blur();" id="anti-ice" type="button" class="btn btn-danger" style="width:170px">General Anti-Ice</button><br>
+								<button onclick="triggerSimEvent('TOGGLE_STRUCTURAL_DEICE');$(this).blur();" id="structural-deice" type="button" class="btn btn-danger" style="width:170px">Structural Deice</button>
 							</div>
 						</div>
 					</div>

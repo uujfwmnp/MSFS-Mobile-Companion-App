@@ -133,7 +133,7 @@ def simconnect_thread_func(threadname):
             print("**************************************************\n\n")
             break
         except:
-            print("Could not find MSFS running. Please launch MSFS.")
+            print("Could not find MSFS running. Please launch MSFS first and then restart the MSFS 2020 Mobile Companion App.")
             sleep(5)
             
     ae = AircraftEvents(sm)
@@ -157,8 +157,8 @@ def simconnect_thread_func(threadname):
     async def ui_dictionary(ui_friendly_dictionary, previous_alt, landing_t1, landing_vs1, landing_t2, landing_vs2, landing_t3, landing_vs3):
         # Position
         try:
-            ui_friendly_dictionary["LATITUDE"] = await aq.get("PLANE_LATITUDE")
-            ui_friendly_dictionary["LONGITUDE"] = await aq.get("PLANE_LONGITUDE")
+            ui_friendly_dictionary["LATITUDE"] = round(await aq.get("PLANE_LATITUDE"),6)
+            ui_friendly_dictionary["LONGITUDE"] = round(await aq.get("PLANE_LONGITUDE"),6)
             ui_friendly_dictionary["MAGNETIC_COMPASS"] = round(round(await aq.get("PLANE_HEADING_DEGREES_TRUE"),2) * 180/3.1416, 2)
             #ui_friendly_dictionary["MAGVAR"] = round(await aq.get("MAGVAR"))
         except:
@@ -252,16 +252,16 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["AUTOPILOT_BACKCOURSE_HOLD"] = await aq.get("AUTOPILOT_BACKCOURSE_HOLD")
         ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD"] = await aq.get("AUTOPILOT_VERTICAL_HOLD")
         ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD_VAR"] = await aq.get("AUTOPILOT_VERTICAL_HOLD_VAR")
-        ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD"] = await aq.get("AUTOPILOT_AIRSPEED_HOLD")
+        ui_friendly_dictionary["AUTOPILOT_FLIGHT_LEVEL_CHANGE"] = await aq.get("AUTOPILOT_FLIGHT_LEVEL_CHANGE")
         ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(await aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
         ui_friendly_dictionary["AUTOPILOT_AUTOTHROTTLE"] = await aq.get("AUTOTHROTTLE_ACTIVE")
+        ui_friendly_dictionary["AIRSPEED_INDICATED"] = round(await aq.get("AIRSPEED_INDICATED"))
         # Placeholders - Not Actively Used for stress testing
         #ui_friendly_dictionary["AUTOPILOT_NAV_SELECTED"] = await aq.get("AUTOPILOT_NAV_SELECTED")
         #ui_friendly_dictionary["AUTOPILOT_WING_LEVELER"] = await aq.get("AUTOPILOT_WING_LEVELER")
         #ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD"] = await aq.get("AUTOPILOT_PITCH_HOLD")
         #ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD_REF"] = await aq.get("AUTOPILOT_PITCH_HOLD_REF")
         ui_friendly_dictionary["AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE"] = await aq.get("AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE")
-        ui_friendly_dictionary["AUTOPILOT_ATTITUDE_HOLD"] = await aq.get("AUTOPILOT_ATTITUDE_HOLD")
         # Lights
         ui_friendly_dictionary["LIGHT_LANDING"] = await aq.get("LIGHT_LANDING")
         ui_friendly_dictionary["LIGHT_TAXI"] = await aq.get("LIGHT_TAXI")
