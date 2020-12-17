@@ -2,7 +2,7 @@
 MSFS Mobile Companion App is a tool that allows you to control essential aircraft instruments such as NAV/COM frequencies, autopilot or lights using almost any mobile device. The MSFS Mobile Companion App is free to use.
 
 Screenshot of MSFS Mobile Companion App in action:
-![](images/MSFS_MCA_Screenshot_v1-3.png)
+![](images/MSFS_MCA_Screenshot_v1_3.png)
 
 ### MSFS Mobile Companion App features:
 
