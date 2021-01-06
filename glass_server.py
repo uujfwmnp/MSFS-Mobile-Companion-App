@@ -295,6 +295,19 @@ def simconnect_thread_func(threadname):
             except:
                 pass
         
+        # LOC and APPR Mode
+        try:
+            if (ui_friendly_dictionary["AUTOPILOT_APPROACH_HOLD"] == 1 and ui_friendly_dictionary["AUTOPILOT_GLIDESLOPE_HOLD"] == 1):
+                ui_friendly_dictionary["AUTOPILOT_APPR_MODE"] = 1
+            else:
+                ui_friendly_dictionary["AUTOPILOT_APPR_MODE"] = 0
+            if (ui_friendly_dictionary["AUTOPILOT_APPROACH_HOLD"] == 1 and ui_friendly_dictionary["AUTOPILOT_GLIDESLOPE_HOLD"] == 0):
+                ui_friendly_dictionary["AUTOPILOT_LOC_MODE"] = 1
+            else:
+                ui_friendly_dictionary["AUTOPILOT_LOC_MODE"] = 0     
+        except:
+            None
+        
         # Other
         
         current_landing = round(await aq.get("PLANE_TOUCHDOWN_NORMAL_VELOCITY") * 60)

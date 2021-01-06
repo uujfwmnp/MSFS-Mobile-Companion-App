@@ -68,6 +68,8 @@ let autopilot_flight_director_active;
 let autopilot_airspeed_hold;
 let autopilot_airspeed_hold_var;
 let airspeed_indicated;
+let autopilot_loc_mode;
+let autopilot_appr_mode;
 
 let gear_handle_position;
 let elevator_trim_pct;
@@ -637,6 +639,8 @@ function getSimulatorData() {
         autopilot_airspeed_hold = data.AUTOPILOT_FLIGHT_LEVEL_CHANGE;
         autopilot_airspeed_hold_var = data.AUTOPILOT_AIRSPEED_HOLD_VAR;
         airspeed_indicated = data.AIRSPEED_INDICATED;
+		autopilot_loc_mode = data.AUTOPILOT_LOC_MODE;
+		autopilot_appr_mode = data.AUTOPILOT_APPR_MODE;
 		
 		//NAV
 		nav1_obs_deg = Number(data.NAV1_OBS_DEG);
@@ -698,28 +702,35 @@ function displayData() {
     checkAndUpdateButton("#autopilot-vertical-hold", autopilot_vertical_hold);
     checkAndUpdateButton("#autopilot-autothrottle", autopilot_autothrottle);
     checkAndUpdateButton("#autopilot-glideslope-hold", autopilot_glideslope_hold);
-    checkAndUpdateButton("#com1-transmit", com1_transmit, "COM 1", "COM 1");
-    checkAndUpdateButton("#com2-transmit", com2_transmit, "COM 2", "COM 2");
-    checkAndUpdateButton("#com1-transmit-direct", com1_transmit, "Transmit COM 1", "Transmit COM 1");
-    checkAndUpdateButton("#com2-transmit-direct", com2_transmit, "Transmit COM 2", "Transmit COM 2");
-    checkAndUpdateButton("#light-beacon", light_beacon, "Beacon", "Beacon");
-    checkAndUpdateButton("#light-landing", light_landing, "Landing", "Landing");
-    checkAndUpdateButton("#light-taxi", light_taxi, "Taxi", "Taxi");
-    checkAndUpdateButton("#light-nav", light_nav, "NAV", "NAV");
-    checkAndUpdateButton("#light-strobe", light_strobe, "Strobe", "Strobe");
-    checkAndUpdateButton("#light-logo", light_logo, "Logo", "Logo");
-    checkAndUpdateButton("#light-recognition", light_recognition, "Recognition", "Recognition");
-    checkAndUpdateButton("#light-wings", light_wing, "Wings", "Wings");
-    checkAndUpdateButton("#light-cabin", light_cabin, "Cabin", "Cabin");
-    checkAndUpdateButton("#light-panel", light_panel, "Panel", "Panel");
-    checkAndUpdateButton("#pitot-heat", pitot_heat, "Pitot Heat", "Pitot Heat");
-    checkAndUpdateButton("#anti-ice", eng_anti_ice, "General Anti-Ice", "General Anti-Ice");
-    checkAndUpdateButton("#structural-deice", structural_deice, "Structural Deice", "Structural Deice");
+    checkAndUpdateButton("#com1-transmit", com1_transmit, "COM 1 (On)", "COM 1 (Off)");
+    checkAndUpdateButton("#com2-transmit", com2_transmit, "COM 2 (On)", "COM 2 (Off)");
+    checkAndUpdateButton("#com1-transmit-direct", com1_transmit, "Transmit COM 1 (On)", "Transmit COM 1 (Off)");
+    checkAndUpdateButton("#com2-transmit-direct", com2_transmit, "Transmit COM 2 (On)", "Transmit COM 2 (Off)");
+    checkAndUpdateButton("#light-beacon", light_beacon);
+    checkAndUpdateButton("#light-landing", light_landing);
+    checkAndUpdateButton("#light-taxi", light_taxi);
+    checkAndUpdateButton("#light-nav", light_nav);
+    checkAndUpdateButton("#light-strobe", light_strobe);
+    checkAndUpdateButton("#light-logo", light_logo);
+    checkAndUpdateButton("#light-recognition", light_recognition);
+    checkAndUpdateButton("#light-wings", light_wing);
+    checkAndUpdateButton("#light-cabin", light_cabin);
+    checkAndUpdateButton("#light-panel", light_panel);
+    checkAndUpdateButton("#pitot-heat", pitot_heat, "Pitot Heat (On)", "Pitot Heat (Off)");
+    checkAndUpdateButton("#anti-ice", eng_anti_ice, "General Anti-Ice (On)", "General Anti-Ice (Off)");
+    checkAndUpdateButton("#structural-deice", structural_deice, "Structural Deice (On)", "Structural Deice (Off)");
+	checkAndUpdateButton("#a320-autothrottle", autopilot_autothrottle);
+	checkAndUpdateButton("#a320-loc-ap", autopilot_loc_mode);
+	checkAndUpdateButton("#a320-appr-ap", autopilot_appr_mode);
 	
     $("#autopilot-heading-lock-dir").attr('placeholder', autopilot_heading_lock_dir);
     $("#autopilot-altitude-lock-var").attr('placeholder', autopilot_altitude_lock_var);
     $("#autopilot-airspeed-hold-var").attr('placeholder', autopilot_airspeed_hold_var);
     $("#autopilot-vertical-hold-var").attr('placeholder', autopilot_vertical_hold_var);
+	$("#a320-airspeed-hold-var").attr('placeholder', autopilot_airspeed_hold_var);
+	$("#a320-heading-lock-dir").attr('placeholder', autopilot_heading_lock_dir);
+	$("#a320-altitude-lock-var").attr('placeholder', autopilot_altitude_lock_var);
+	$("#a320-vertical-hold-var").attr('placeholder', autopilot_vertical_hold_var);
 	
 	//NAV Swap
 	$("#ADF_heading").attr('placeholder', adf_card_deg);

@@ -486,6 +486,12 @@ class AircraftEvents():
 			(b'FLY_BY_WIRE_SEC_TOGGLE', "Turn on or off the fly by wire Spoilers and Elevators computer.", "Shared Cockpit"),
 			(b'AP_VS_HOLD', "Toggle VS hold mode", "Shared Cockpit"),
 			(b'FLIGHT_LEVEL_CHANGE', "Toggle FLC mode", "Shared Cockpit"),
+            (b'SPEED_SLOT_INDEX_SET', "Toggle A320 Airspeed Mode (1 selected, 2 managed)", "Shared Cockpit"),
+            (b'HEADING_SLOT_INDEX_SET', "Toggle A320 Heading Mode (1 selected, 2 managed)", "Shared Cockpit"),
+            (b'ALTITUDE_SLOT_INDEX_SET', "Toggle A320 Altitude Mode (1 selected, 2 managed)", "Shared Cockpit"),
+            (b'VS_SLOT_INDEX_SET', "Toggle A320 VS Mode (1 managed)", "Shared Cockpit"),
+            (b'FLIGHT_LEVEL_CHANGE_ON', "Toggle A320 Altitude OP CLB AP On", "Shared Cockpit"),
+            (b'FLIGHT_LEVEL_CHANGE_OFF', "Toggle A320 Altitude OP CLB AP Off", "Shared Cockpit"),
 		]
 
 	class __Fuel_System(EventHelper):
