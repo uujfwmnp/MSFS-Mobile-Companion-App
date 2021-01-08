@@ -40,6 +40,7 @@ Screenshot of MSFS Mobile Companion App in action:
 *Notice: You can launch MSFS Mobile Companion App directly from your PC's browser. In that case, just type in localhost:4000 in your browser's url bar.* 
 
 ## Known issues:
+- Changes to COM frequencies in the A320 will not be shown in the cockpit but will work nevertheless. To force an update of the frequency in the cockpit switch from VHF1 to VHF2 and then back to VHF1 (this is for COM1 frequencies).
 - NAV/COM frequencies can get out of sync, especially when rapidly pressing frequency adjustment buttons. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
 - NAV/COM frequencies are not automatically synchronized when starting a second flight. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
 - You may see landings with a vertical speed between 0 and 5 fpm in the app. This is caused by the sim recording the plane loading on ground at the start of a flight as a landing.
