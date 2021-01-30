@@ -39,7 +39,10 @@ def flask_thread_func(threadname):
     @app.route('/')
     def index():
         return render_template('glass.html')
-    
+        
+    @app.route('/landscape')
+    def index_landscape():
+        return render_template('glass_landscape.html')
         
     def trigger_event(event_name, value_to_use=None):
         # This function actually does the work of triggering the event
