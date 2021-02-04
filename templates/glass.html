@@ -97,7 +97,14 @@
 <div class="container-fluid bg-secondary" id="myGroup" style="margin-bottom:0px">
 
 	<!-- Map -->
-	{% include 'menu_map.html' %}
+	<div class="collapse show" id="collapseMap" data-parent="#myGroup" style="margin-bottom:-30px">
+		<div class="row" id="map_row" style="height:calc(100vh - 90px);height:calc((var(--vh, 1vh) * 100) - 90px);margin-top:10px;margin-bottom:-30px;">
+			<div class="col"  id="map_column" style="position:relative; height=100%;z-index:1;">
+				<div id = "map" style = "height: 100%; width: 100%;"></div>
+			</div>
+		</div>
+		{% include 'menu_map.html' %}
+	</div>
 
 	<!-- NAV-->
 	{% include 'menu_nav.html' %}
@@ -196,6 +203,15 @@
 	// Add GPS Trackline
 	var trackline;
 	trackline = L.polyline([], {color: 'red', smoothFactor: 3}).addTo(map);
+	
+	// Add GPS Waypoints
+	var gpswp;
+	gpswp = L.polyline([], {color: '#c842f5', smoothFactor: 3, dashArray: '20, 10'}).addTo(map);
+	gpswp.setStyle({opacity: 0});
+	
+	// Add Flight Plan
+	var fltpln;
+	fltpln = L.polyline([], {color: '#f542bc', smoothFactor: 3}).addTo(map);
 </script>
 
 <script>
@@ -246,7 +262,7 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Custom JS imports -->
-<script src="/static/js/custom/getSimData.js?v14"></script>
+<script src="/static/js/custom/getSimData.js?v15"></script>
 
 <!-- Sync Frequencies at Startup-->
 <script>

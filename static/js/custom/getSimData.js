@@ -104,6 +104,13 @@ let pitot_heat;
 let eng_anti_ice;
 let structural_deice;
 
+let fltpln_arr;
+let gps_next_lat;
+let gps_next_lon;
+let gps_next_wp_arr = [[],[]];
+let loadfltpln_switch;
+loadfltpln_switch = 0;
+
 // Maps Size Fix Function
 let map_size_fix;
 let map_size_fix_mod;
@@ -683,6 +690,12 @@ function getSimulatorData() {
 		landing_vs3 = data.LANDING_VS3;
 		landing_t3 = data.LANDING_T3;
 		sim_rate = data.SIMULATION_RATE;
+		
+		//Flight Plan
+		fltpln_arr = data.FLT_PLN;
+		gps_next_lat = data.NEXT_WP_LAT;
+		gps_next_lon = data.NEXT_WP_LON;
+		gps_next_wp_arr = [[latitude, longitude],[gps_next_lat, gps_next_lon]]
     });
     return false;
 }
@@ -771,11 +784,11 @@ function checkAndUpdateButton(buttonName, variableToCheck, onText="On", offText=
 function toggleFollowPlane() {
     followPlane = !followPlane;
     if (followPlane === true) {
-        $("#followMode").text("Unfollow plane")
+        $("#followMode").text("Unfollow Plane")
         $("#followModeButton").removeClass("btn-danger").addClass("btn-primary")
     }
     if (followPlane === false) {
-        $("#followMode").text("Follow plane")
+        $("#followMode").text("Follow Plane")
         $("#followModeButton").removeClass("btn-primary").addClass("btn-danger")
     }
 }
@@ -811,8 +824,15 @@ function updateMap() {
     if (tracklinelen > 1) {
         if (trackline.getLatLngs()[tracklinelen - 1].distanceTo(trackline.getLatLngs()[tracklinelen - 2]) > 2000) {
             trackline.setLatLngs([]);
+            // Force Frequecy Sync
+            syncRadio();
         }
     };
+    
+    // GPS Next WP Polyline Update
+    if (gps_next_wp_arr[1] != null) {
+        gpswp.setLatLngs(gps_next_wp_arr);
+    }
 }
 
 function refreshMapSize() {
@@ -880,14 +900,14 @@ function triggerCustomEmergency(emergency_type) {
 }
 
 
-function temporaryAlert(title, message, icon) {
+function temporaryAlert(title, message, icon, timer = 1000) {
     let timerInterval
 
     Swal.fire({
         title: title,
         html: message,
         icon: icon,
-        timer: 1000,
+        timer: timer,
         timerProgressBar: true,
         onBeforeOpen: () => {
             Swal.showLoading()
@@ -899,7 +919,7 @@ function temporaryAlert(title, message, icon) {
                         b.textContent = Swal.getTimerLeft()
                     }
                 }
-            }, 1000)
+            }, timer)
         },
         onClose: () => {
             clearInterval(timerInterval)
@@ -913,5 +933,29 @@ function temporaryAlert(title, message, icon) {
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function updatePolylineFltPln() {
+    fltpln.setLatLngs(fltpln_arr);
+}
+
+function loadFltPln() {
+    loadfltpln_switch = (loadfltpln_switch + 1) % 2;
+
+    if (loadfltpln_switch === 1) {
+        temporaryAlert('', "Loading flight plan.", "success", 2500);
+        $("#FltPlnText").text("Hide Flight Plan");
+        $("#FltPlnButton").removeClass("btn-danger").addClass("btn-primary");
+        url_to_call = "/fltpln";
+        $.post (url_to_call);
+        setTimeout(updatePolylineFltPln, 2500);
+        gpswp.setStyle({opacity: 1.0});
+    } else {
+        $("#FltPlnText").text("Load Flight Plan");
+        $("#FltPlnButton").removeClass("btn-primary").addClass("btn-danger");
+        fltpln.setLatLngs([]);
+        gpswp.setStyle({opacity: 0});
+    }
+
 }
