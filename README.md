@@ -43,13 +43,13 @@ Screenshot of MSFS Mobile Companion App in action:
 *Notice: You can launch MSFS Mobile Companion App directly from your PC's browser. In that case, just type in localhost:4000 in your browser's url bar.* 
 
 ## Known issues:
--	Changes to COM frequencies in the A320 will not be shown in the cockpit but will work nevertheless. To force an update of the frequency in the cockpit switch from VHF1 to VHF2 and then back to VHF1 (this is for COM1 frequencies).
--	When using the Load Flight Plan button without having a waypoint programmed in your plane’s GPS, you might see a dashed violet line pointing towards 0,0 GPS coordinates or to your last GPS waypoint from your previous flight.
--	NAV frequencies can get out of sync, especially when rapidly pressing frequency adjustment buttons. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
--	NAV frequencies may not automatically synchronize when starting a second flight. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
--	You may see landings with a vertical speed between 0 and 5 fpm in the app. This is caused by the sim recording the plane loading on the ground at the start of a flight as a landing.
--	Not all deicing and light controls will work with every aircraft (eg TBM-930). Windshield deicing is currently not supported. This is caused by the current limitations of SimConnect.
--	The app may not work on a fresh Windows 10 installation. You may see a "Could not find MSFS running. Please launch MSFS first and then restart the MSFS 2020 Mobile Companion App." message even if MSFS is running. To fix this, please download and install the Microsoft Visual C++ 2015 Redistributable.
+- Changes to COM frequencies in the A320 will not be shown in the cockpit but will work nevertheless. To force an update of the frequency in the cockpit switch from VHF1 to VHF2 and then back to VHF1 (this is for COM1 frequencies).
+- When using the Load Flight Plan button without having a waypoint programmed in your plane’s GPS, you might see a dashed violet line pointing towards 0,0 GPS coordinates or to your last GPS waypoint from your previous flight.
+- NAV frequencies can get out of sync, especially when rapidly pressing frequency adjustment buttons. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
+- NAV frequencies may not automatically synchronize when starting a second flight. Use the "Force Sync Frequencies" button to synchronize frequencies with the sim.
+- You may see landings with a vertical speed between 0 and 5 fpm in the app. This is caused by the sim recording the plane loading on the ground at the start of a flight as a landing.
+- Not all deicing and light controls will work with every aircraft (eg TBM-930). Windshield deicing is currently not supported. This is caused by the current limitations of SimConnect.
+- The app may not work on a fresh Windows 10 installation. You may see a "Could not find MSFS running. Please launch MSFS first and then restart the MSFS 2020 Mobile Companion App." message even if MSFS is running. To fix this, please download and install the Microsoft Visual C++ 2015 Redistributable.
 
 ## Credits
 MSFS Mobile Companion App is based on the Python [SimConnect](https://pypi.org/project/SimConnect/) project.
