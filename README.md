@@ -20,6 +20,7 @@ Screenshot of MSFS Mobile Companion App in action:
 
 ## Update Feb/05/2021 Version 1.5 Changelog:
 
+- Fixed Load Flight Plan not working on Steam versions (v1.5.1 hot fix Feb/08/2021)
 - Added landscape mode (split-screen for map and controls).
 - Added option to load your current flight plan.
 - Switched active and stand-by NAV/COM displays.
@@ -30,13 +31,13 @@ Screenshot of MSFS Mobile Companion App in action:
 
 ## How do I run MSFS Mobile Companion App?
 **Don't install the app on your mobile device. Download and run it on your PC. This creates a local web server to which you connect from your mobile device via an IP address.**
-1. Open the settings.txt file, that you’ve unzipped together with the MSFS_MCA_v1-5.exe and this guide, and change the last line to reflect your Microsoft Flight Simulator installation folder. This step is only necessary if you wish to use the Load Flight Plan functionality. Hint:
+1. Open the settings.txt file, that you’ve unzipped together with the MSFS_MCA_v1-5-1.exe and this guide, and change the last line to reflect your Microsoft Flight Simulator installation folder. This step is only necessary if you wish to use the Load Flight Plan functionality. Hint:
    - MS Store users: C:\Users\YOURUSERNAME\AppData\Local\Packages\Microsoft.FlightSimulator_8wekyb3d8bbwe\
    - Steam users: C:\Users\YOURUSERNAME\AppData\Roaming\Microsoft Flight Simulator\
 2. Make sure your PC and your mobile device are connected to the same local network and that your home network is set to *Private* in your Network Profile settings. 
 3. Start a flight in Microsoft Flight Simulator.
-4. Run MSFS_MCA_v1-5.exe that you've unzipped previously.
-5. A Microsoft Defender security window may open when launching MSFS_MCA_v1-5.exe for the first time. Allow the "unrecognized app" to run. Additionally, a Windows Security Alert Window may open when you launch MSFS_MCA_v1-5.exe for the first time. Allow private network access for MSFS_MCA_v1-5.exe in the Windows Security Alert Window.
+4. Run MSFS_MCA_v1-5-1.exe that you've unzipped previously.
+5. A Microsoft Defender security window may open when launching MSFS_MCA_v1-5-1.exe for the first time. Allow the "unrecognized app" to run. Additionally, a Windows Security Alert Window may open when you launch MSFS_MCA_v1-5-1.exe for the first time. Allow private network access for MSFS_MCA_v1-5-1.exe in the Windows Security Alert Window.
 6. A command line window will open that will give you instructions on the IP-address where you can access the MSFS Mobile Companion App. Don't close the command line window.
 7. Open the IP-address in your mobile device's web browser. The IP address will most likely be something like *192.168.0.XXX:4000*.
 
