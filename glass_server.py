@@ -135,13 +135,13 @@ def flask_thread_func(threadname):
             
             try:
                 # MS Store
-                fltpln_dir = fltpln_dir + "\LocalState\MISSIONS\Custom\CustomFlight\CUSTOMFLIGHT.FLT"
-                with open(fltpln_dir, 'r') as fltpln:
+                fltpln_dir_full = fltpln_dir + "\LocalState\MISSIONS\Custom\CustomFlight\CUSTOMFLIGHT.FLT"
+                with open(fltpln_dir_full, 'r') as fltpln:
                     fltpln_lines = fltpln.readlines()
             except:
                 # Steam
-                fltpln_dir = fltpln_dir + "\MISSIONS\Custom\CustomFlight\CUSTOMFLIGHT.FLT"
-                with open(fltpln_dir, 'r') as fltpln:
+                fltpln_dir_full = fltpln_dir + "\MISSIONS\Custom\CustomFlight\CUSTOMFLIGHT.FLT"
+                with open(fltpln_dir_full, 'r') as fltpln:
                     fltpln_lines = fltpln.readlines()
 
             # Process Flight Plan Function
