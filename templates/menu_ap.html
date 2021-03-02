@@ -82,11 +82,11 @@
 									<td>
 										<div class="input-group sim-input-field" style="width:150px">
 											<div class="input-group-prepend">
-												<button onclick='document.getElementById("autopilot-vertical-hold-var").value = document.getElementById("autopilot-vertical-hold-var").value * (-1); $(this).blur();' class="btn btn-secondary" type="button" style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px;width:37px;" title="Set positive/negative value" id="AP_vs_pos_neg">+/-</button>
+												<button onclick='document.getElementById("autopilot-vertical-hold-var").value = document.getElementById("autopilot-vertical-hold-var").value * (-1); $(this).blur();' class="btn btn-secondary" type="button" style="margin-top:0px;margin-bottom:0px;padding:0px;width:37px;" title="Set positive/negative value" id="AP_vs_pos_neg">+/-</button>
 											</div>
 											<input id="autopilot-vertical-hold-var" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('AP_vs_set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2" style = "padding-left:10px;padding-right:0px">
 											<div class="input-group-append">
-												<button onclick='if (document.getElementById("autopilot-vertical-hold-var").value <= 10000 && document.getElementById("autopilot-vertical-hold-var").value >= -10000 && document.getElementById("autopilot-vertical-hold-var").value != "") {triggerSimEventFromField ("AP_VS_VAR_SET_ENGLISH", "autopilot-vertical-hold-var", "Setting AP VS");$("#autopilot-vertical-hold-var").val("");}; $(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:50px;" title="Set AP airspeed in knots" id="AP_vs_set">Set</button>
+												<button onclick='if (document.getElementById("autopilot-vertical-hold-var").value <= 10000 && document.getElementById("autopilot-vertical-hold-var").value >= -10000 && document.getElementById("autopilot-vertical-hold-var").value != "") {triggerSimEventFromField ("AP_VS_VAR_SET_ENGLISH", "autopilot-vertical-hold-var", "Setting AP VS");$("#autopilot-vertical-hold-var").val("");}; $(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;padding:0px;width:50px;" title="Set AP airspeed in knots" id="AP_vs_set">Set</button>
 											</div>
 										</div>
 									</td>
@@ -208,11 +208,11 @@
 									<td>
 									<div class="input-group sim-input-field" style="width:178px">
 										<div class="input-group-prepend">
-											<button onclick='document.getElementById("a320-vertical-hold-var").value = document.getElementById("a320-vertical-hold-var").value * (-1); $(this).blur();' class="btn btn-secondary" type="button" style="margin-top:0px;margin-bottom:0px;padding-left:0px;padding-right:0px;width:50px;" title="Set positive/negative value" id="AP_A320_vs_pos_neg">+/-</button>
+											<button onclick='document.getElementById("a320-vertical-hold-var").value = document.getElementById("a320-vertical-hold-var").value * (-1); $(this).blur();' class="btn btn-secondary" type="button" style="margin-top:0px;margin-bottom:0px;padding:0px;width:50px;" title="Set positive/negative value" id="AP_A320_vs_pos_neg">+/-</button>
 										</div>
 										<input id="a320-vertical-hold-var" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('a320_vs_set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2" style = "padding-left:10px;padding-right:0px">
 										<div class="input-group-append">
-											<button onclick='if (document.getElementById("a320-vertical-hold-var").value <= 10000 && document.getElementById("a320-vertical-hold-var").value >= -10000 && document.getElementById("a320-vertical-hold-var").value != "") {triggerSimEventFromField ("AP_VS_VAR_SET_ENGLISH", "a320-vertical-hold-var", "Setting AP VS");triggerSimEvent ("AP_PANEL_VS_ON", 1, true);$("#a320-vertical-hold-var").val("");}; $(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:50px;" title="Set AP airspeed in knots" id="a320_vs_set">Set</button>
+											<button onclick='if (document.getElementById("a320-vertical-hold-var").value <= 10000 && document.getElementById("a320-vertical-hold-var").value >= -10000 && document.getElementById("a320-vertical-hold-var").value != "") {triggerSimEventFromField ("AP_VS_VAR_SET_ENGLISH", "a320-vertical-hold-var", "Setting AP VS");triggerSimEvent ("AP_PANEL_VS_ON", 1, true);$("#a320-vertical-hold-var").val("");}; $(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;padding:0px;width:50px;" title="Set AP airspeed in knots" id="a320_vs_set">Set</button>
 										</div>
 									</div>
 									</td>
