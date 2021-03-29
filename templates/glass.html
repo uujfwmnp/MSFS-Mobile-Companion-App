@@ -86,11 +86,11 @@
 		<img src="/static/img/fs_mca_logo.png" style="height:32px;" alt="MSFS MCA">
 	</a>
 	<button class="btn btn-warning" onclick="$(this).blur();mapRefreshFix();setTimeout(function(){map.invalidateSize(true);},500);" style="margin-left:-8px;margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseMap" aria-expanded="true" aria-controls="collapseMap">Map</button>
-	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseRadio" aria-expanded="false" aria-controls="collapseRadio">NAV</button>
-	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseCOM" aria-expanded="false" aria-controls="collapseCOM">COM</button>
-	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseAP" aria-expanded="false" aria-controls="collapseAP">AP</button>
-	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapsePanel" aria-expanded="false" aria-controls="collapseInstruments">Panel</button>
-	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOther" aria-expanded="false" aria-controls="collapseOther">Other</button>
+	{% for tab in curr_plane %}
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapse{{ tab[1] }}" aria-expanded="false" aria-controls="collapse{{ tab[1] }}">{{ tab[0] }}</button>
+	{% endfor %}
+	<button class="btn btn-warning" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseData" aria-expanded="false" aria-controls="collapseData">Data</button>
+	<button class="btn btn-primary" onclick="$(this).blur();" style="margin-right:5px" type="button" data-toggle="collapse" data-target="#collapseOptions" aria-expanded="false" aria-controls="collapseOptions">Options</button>
 	&nbsp;&nbsp;
 </nav>
 
@@ -105,21 +105,18 @@
 		</div>
 		{% include 'menu_map.html' %}
 	</div>
-
-	<!-- NAV-->
-	{% include 'menu_nav.html' %}
 	
-	<!-- COM-->
-	{% include 'menu_com.html' %}
+	<!-- Load plane specific tabs -->
+	{% for tab in curr_plane %}
+		{% set post_loop = loop %}
+		{% include "menu_"+tab[1]+".html" %}
+	{% endfor %}
 	
-	<!-- Autopilot -->
-	{% include 'menu_ap.html' %}
-
-	<!-- Panel -->
-	{% include 'menu_panel.html' %}
-
-	<!-- Other -->
-	{% include 'menu_other.html' %}
+	<!-- Data -->
+	{% include 'menu_data.html' %}
+	
+	<!-- Options -->
+	{% include 'menu_options.html' %}
 
 </div>
 
@@ -262,7 +259,7 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Custom JS imports -->
-<script src="/static/js/custom/getSimData.js?v15"></script>
+<script src="/static/js/custom/getSimData.js?v16"></script>
 
 <!-- Sync Frequencies at Startup-->
 <script>

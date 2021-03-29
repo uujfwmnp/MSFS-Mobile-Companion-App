@@ -4,7 +4,7 @@ To compile an executable version of MSFS Mobile Companion App using pyinstaller 
 
 ## 1. Change glass_server.py:
 
-Change line 29 from:
+Change line 54 from:
 
 `app = Flask(__name__)`
 

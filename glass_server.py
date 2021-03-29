@@ -27,6 +27,30 @@ def flask_thread_func(threadname):
     global ae
     global fltpln
     
+    # Define Supported Aircraft
+    planes_list = [
+        "Default",
+        "Default GNS430",
+        "Default GNS530",
+        "Default G1000",
+        "A32NX (FlyByWire)",
+        "PA-28R Arrow III GPS100 (Just Flight)",
+        "PA-28R Arrow III GNS430 (Just Flight)",
+        "PA-28R Arrow III GNS530 (Just Flight)"
+        ]
+    planes_dict = {
+        "Default": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["Panel", "panel"]],
+        "Default GNS430": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["GPS", "gns430"],["Panel", "panel"]],
+        "Default GNS530": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["GPS", "gns530"],["Panel", "panel"]],
+        "Default G1000": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["PFD", "g1000_pfd"],["MFD", "g1000_mfd"],["Panel", "panel"]],
+        "A32NX (FlyByWire)":[["FCU", "ap_a32nx"],["EFIS", "efis_a32nx"],["COM", "com"],["Panel", "panel_a32nx"]],
+        "PA-28R Arrow III GPS100 (Just Flight)": [["NAV", "nav_jf_arrow_gps100"],["COM", "com_jf_arrow_gps100"],["AP", "ap_jf_arrow"],["GPS", "gps100_jf_arrow"],["Panel", "panel_jf_arrow"]],
+        "PA-28R Arrow III GNS430 (Just Flight)": [["NAV", "nav_jf_arrow_gns"],["COM", "com_jf_arrow_gns"],["AP", "ap_jf_arrow"],["GPS", "gns430"],["Panel", "panel_jf_arrow"]],
+        "PA-28R Arrow III GNS530 (Just Flight)": [["NAV", "nav_jf_arrow_gns"],["COM", "com_jf_arrow_gns"],["AP", "ap_jf_arrow"],["GPS", "gns530"],["Panel", "panel_jf_arrow"]]
+        }
+    global selected_plane
+    selected_plane = planes_list[0]
+    
     app = Flask(__name__)
     log = logging.getLogger('werkzeug')
     log.disabled = True
@@ -36,14 +60,22 @@ def flask_thread_func(threadname):
         # Initialise dictionaru
         ui_friendly_dictionary["STATUS"] = "success"
         return jsonify(ui_friendly_dictionary)
-
-    @app.route('/')
+    
+    @app.route('/', methods=["GET", "POST"])
     def index():
-        return render_template('glass.html')
-        
-    @app.route('/landscape')
+        global selected_plane
+        cur_plane_select = request.form.get("plane_selected")
+        if cur_plane_select != None:
+            selected_plane = cur_plane_select
+        return render_template('glass.html', planes_list = planes_list, selected_plane = selected_plane, curr_plane = planes_dict[selected_plane])
+    
+    @app.route('/landscape', methods=["GET", "POST"])
     def index_landscape():
-        return render_template('glass_landscape.html')
+        global selected_plane
+        cur_plane_select = request.form.get("plane_selected")
+        if cur_plane_select != None:
+            selected_plane = cur_plane_select
+        return render_template('glass_landscape.html', planes_list = planes_list, selected_plane = selected_plane, curr_plane = planes_dict[selected_plane])
         
     def trigger_event(event_name, value_to_use=None):
         # This function actually does the work of triggering the event
@@ -368,7 +400,9 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["AUTOPILOT_FLIGHT_LEVEL_CHANGE"] = await aq.get("AUTOPILOT_FLIGHT_LEVEL_CHANGE")
         ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(await aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
         ui_friendly_dictionary["AUTOPILOT_AUTOTHROTTLE"] = await aq.get("AUTOTHROTTLE_ACTIVE")
+        ui_friendly_dictionary["AUTOPILOT_YAW_DAMPER"] = await aq.get("AUTOPILOT_YAW_DAMPER")
         ui_friendly_dictionary["AIRSPEED_INDICATED"] = round(await aq.get("AIRSPEED_INDICATED"))
+        ui_friendly_dictionary["PLANE_HEADING_DEGREES"] = round(round(await aq.get("PLANE_HEADING_DEGREES_MAGNETIC"),2) * 180/3.1416, 0)
         # Placeholders - Not Actively Used for stress testing
         #ui_friendly_dictionary["AUTOPILOT_NAV_SELECTED"] = await aq.get("AUTOPILOT_NAV_SELECTED")
         #ui_friendly_dictionary["AUTOPILOT_WING_LEVELER"] = await aq.get("AUTOPILOT_WING_LEVELER")

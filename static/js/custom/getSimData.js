@@ -70,6 +70,8 @@ let autopilot_airspeed_hold_var;
 let airspeed_indicated;
 let autopilot_loc_mode;
 let autopilot_appr_mode;
+let autopilot_yaw_damper;
+let plane_heading_degrees;
 
 let gear_handle_position;
 let elevator_trim_pct;
@@ -275,6 +277,15 @@ function adfplus1() {
 	$("#adf_stby_1").text(adf_stby_1);
 }
 
+function adfplus1_use() {
+	// ADF plus 1 kHz
+	adf_use_1 = adf_use_1 + 1;
+	if (adf_use_1 > 9) {
+		adf_use_1 = 0;
+	}
+	$("#adf_act_1").text(adf_use_1);
+}
+
 function adfminus1() {
 	// ADF minus 1 kHz
 	adf_stby_1 = adf_stby_1 - 1;
@@ -282,6 +293,15 @@ function adfminus1() {
 		adf_stby_1 = 9;
 	}
 	$("#adf_stby_1").text(adf_stby_1);
+}
+
+function adfminus1_use() {
+	// ADF minus 1 kHz
+	adf_use_1 = adf_use_1 - 1;
+	if (adf_use_1 < 0) {
+		adf_use_1 = 9;
+	}
+	$("#adf_act_1").text(adf_use_1);
 }
 
 function adfplus10() {
@@ -293,6 +313,15 @@ function adfplus10() {
 	$("#adf_stby_10").text(adf_stby_10);
 }
 
+function adfplus10_use() {
+	// ADF plus 10 kHz
+	adf_use_10 = adf_use_10 + 1;
+	if (adf_use_10 > 9) {
+		adf_use_10 = 0;
+	}
+	$("#adf_act_10").text(adf_use_10);
+}
+
 function adfminus10() {
 	// ADF minus 10 kHz
 	adf_stby_10 = adf_stby_10 - 1;
@@ -300,6 +329,15 @@ function adfminus10() {
 		adf_stby_10 = 9;
 	}
 	$("#adf_stby_10").text(adf_stby_10);
+}
+
+function adfminus10_use() {
+	// ADF minus 10 kHz
+	adf_use_10 = adf_use_10 - 1;
+	if (adf_use_10 < 0) {
+		adf_use_10 = 9;
+	}
+	$("#adf_act_10").text(adf_use_10);
 }
 
 function adfplus100() {
@@ -322,6 +360,26 @@ function adfplus100() {
 	$("#adf_stby_100").text(adf_stby_100);
 }
 
+function adfplus100_use() {
+	// ADF plus 100 kHz
+	
+	if (adf_use_1000 == 0) {
+		adf_use_100 = adf_use_100 + 1;
+		if (adf_use_100 > 9) {
+			adf_use_100 = 0;
+			adf_use_1000 = 1;
+		}
+	} else {
+		adf_use_100 = adf_use_100 + 1;
+		if (adf_use_100 > 7) {
+			adf_use_100 = 1;
+			adf_use_1000 = 0;
+		}
+	}
+	$("#adf_act_1000").text(adf_use_1000);
+	$("#adf_act_100").text(adf_use_100);
+}
+
 function adfminus100() {
 	// ADF minus 100 kHz
 	if (adf_stby_1000 == 0) {
@@ -340,6 +398,26 @@ function adfminus100() {
 	$("#adf_stby_1000").text(adf_stby_1000);
 	$("#adf_stby_100").text(adf_stby_100);
 }
+
+function adfminus100_use() {
+	// ADF minus 100 kHz
+	if (adf_use_1000 == 0) {
+		adf_use_100 = adf_use_100 - 1;
+		if (adf_use_100 < 1) {
+			adf_use_100 = 7;
+			adf_use_1000 = 1;
+		}
+	} else {
+		adf_use_100 = adf_use_100 - 1;
+		if (adf_use_100 < 0) {
+			adf_use_100 = 9;
+			adf_use_1000 = 0;
+		}
+	}
+	$("#adf_act_1000").text(adf_use_1000);
+	$("#adf_act_100").text(adf_use_100);
+}
+
 
 function adfswitch() {
 	let dummy_adf_stby_1000 = adf_stby_1000;
@@ -374,6 +452,16 @@ function com1minus1() {
 	$("#com1_standby").text(com1_standby);
 }
 
+function com1minus1_act() {
+	// COM 1 minus 1 MHz
+	com1_active = Number(com1_active) - 1;
+	if (com1_active < 118) {
+		com1_active = com1_active + 19
+	};
+	com1_active = com1_active.toFixed(3);
+	$("#com1_active").text(com1_active);
+}
+
 function com1plus1() {
 	// COM 1 plus 1 MHz
 	com1_standby = Number(com1_standby) + 1;
@@ -382,6 +470,16 @@ function com1plus1() {
 	};
 	com1_standby = com1_standby.toFixed(3);
 	$("#com1_standby").text(com1_standby);
+}
+
+function com1plus1_act() {
+	// COM 1 plus 1 MHz
+	com1_active = Number(com1_active) + 1;
+	if (com1_active > 137) {
+		com1_active = com1_active - 19
+	};
+	com1_active = com1_active.toFixed(3);
+	$("#com1_active").text(com1_active);
 }
 
 function com1minus005() {
@@ -403,6 +501,20 @@ function com1minus005() {
 	$("#com1_standby").text(com1_standby);
 }
 
+function com1minus05_act() {
+	// COM 1 active minus 0.025 MHz
+	let com1_active_floor = Math.floor(com1_active);
+	let com1_active_decimal = com1_active - com1_active_floor;
+	com1_active_decimal = com1_active_decimal.toFixed(3);
+	com1_active_decimal = Number(com1_active_decimal) - 0.025;
+	if (com1_active_decimal < 0) {
+		com1_active_decimal = 0.975
+	};
+	com1_active = com1_active_floor + com1_active_decimal;
+	com1_active = com1_active.toFixed(3);
+	$("#com1_active").text(com1_active);
+}
+
 function com1plus005() {
 	// COM 1 plus 0.005 MHz
 	let com1_standby_floor = Math.floor(com1_standby);
@@ -420,6 +532,20 @@ function com1plus005() {
 	com1_standby = com1_standby_floor + com1_standby_decimal;
 	com1_standby = com1_standby.toFixed(3);
 	$("#com1_standby").text(com1_standby);
+}
+
+function com1plus05_act() {
+	// NAV 1 plus 0.025 MHz
+	let com1_active_floor = Math.floor(com1_active);
+	let com1_active_decimal = com1_active - com1_active_floor;
+	com1_active_decimal = com1_active_decimal.toFixed(3);
+	com1_active_decimal = Number(com1_active_decimal) + 0.025;
+	if (com1_active_decimal >= 1) {
+		com1_active_decimal = 0.0
+	};
+	com1_active = com1_active_floor + com1_active_decimal;
+	com1_active = com1_active.toFixed(3);
+	$("#com1_active").text(com1_active);
 }
 
 function com1switch() {
@@ -442,6 +568,16 @@ function com2minus1() {
 	$("#com2_standby").text(com2_standby);
 }
 
+function com2minus1_act() {
+	// COM 2 minus 1 MHz
+	com2_active = Number(com2_active) - 1;
+	if (com2_active < 118) {
+		com2_active = com2_active + 19
+	};
+	com2_active = com2_active.toFixed(3);
+	$("#com2_active").text(com2_active);
+}
+
 function com2plus1() {
 	// COM 2 plus 1 MHz
 	com2_standby = Number(com2_standby) + 1;
@@ -450,6 +586,16 @@ function com2plus1() {
 	};
 	com2_standby = com2_standby.toFixed(3);
 	$("#com2_standby").text(com2_standby);
+}
+
+function com2plus1_act() {
+	// COM 2 plus 1 MHz
+	com2_active = Number(com2_active) + 1;
+	if (com2_active > 137) {
+		com2_active = com2_active - 19
+	};
+	com2_active = com2_active.toFixed(3);
+	$("#com2_active").text(com2_active);
 }
 
 function com2minus005() {
@@ -471,6 +617,20 @@ function com2minus005() {
 	$("#com2_standby").text(com2_standby);
 }
 
+function com2minus05_act() {
+	// COM 2 active minus 0.05 MHz
+	let com2_active_floor = Math.floor(com2_active);
+	let com2_active_decimal = com2_active - com2_active_floor;
+	com2_active_decimal = com2_active_decimal.toFixed(3);
+	com2_active_decimal = Number(com2_active_decimal) - 0.025;
+	if (com2_active_decimal < 0) {
+		com2_active_decimal = 0.975
+	};
+	com2_active = com2_active_floor + com2_active_decimal;
+	com2_active = com2_active.toFixed(3);
+	$("#com2_active").text(com2_active);
+}
+
 function com2plus005() {
 	// COM 2 plus 0.005 MHz
 	let com2_standby_floor = Math.floor(com2_standby);
@@ -488,6 +648,20 @@ function com2plus005() {
 	com2_standby = com2_standby_floor + com2_standby_decimal;
 	com2_standby = com2_standby.toFixed(3);
 	$("#com2_standby").text(com2_standby);
+}
+
+function com2plus05_act() {
+	// COM 2 plus 0.05 MHz
+	let com2_active_floor = Math.floor(com2_active);
+	let com2_active_decimal = com2_active - com2_active_floor;
+	com2_active_decimal = com2_active_decimal.toFixed(3);
+	com2_active_decimal = Number(com2_active_decimal) + 0.025;
+	if (com2_active_decimal >= 1) {
+		com2_active_decimal = 0.0
+	};
+	com2_active = com2_active_floor + com2_active_decimal;
+	com2_active = com2_active.toFixed(3);
+	$("#com2_active").text(com2_active);
 }
 
 function com2switch() {
@@ -510,6 +684,16 @@ function nav1minus1() {
 	$("#nav1_standby").text(nav1_standby);
 }
 
+function nav1minus1_act() {
+	// NAV 1 active minus 1 MHz
+	nav1_active = Number(nav1_active) - 1;
+	if (nav1_active < 108) {
+		nav1_active = nav1_active + 10
+	};
+	nav1_active = nav1_active.toFixed(2);
+	$("#nav1_active").text(nav1_active);
+}
+
 function nav1plus1() {
 	// NAV 1 minus 1 MHz
 	nav1_standby = Number(nav1_standby) + 1;
@@ -518,6 +702,16 @@ function nav1plus1() {
 	};
 	nav1_standby = nav1_standby.toFixed(2);
 	$("#nav1_standby").text(nav1_standby);
+}
+
+function nav1plus1_act() {
+	// NAV 1 active minus 1 MHz
+	nav1_active = Number(nav1_active) + 1;
+	if (nav1_active > 118) {
+		nav1_active = nav1_active - 10
+	};
+	nav1_active = nav1_active.toFixed(2);
+	$("#nav1_active").text(nav1_active);
 }
 
 function nav1minus005() {
@@ -534,6 +728,20 @@ function nav1minus005() {
 	$("#nav1_standby").text(nav1_standby);
 }
 
+function nav1minus005_act() {
+	// NAV 1 active minus 0.05 MHz
+	let nav1_active_floor = Math.floor(nav1_active);
+	let nav1_active_decimal = nav1_active - nav1_active_floor;
+	nav1_active_decimal = nav1_active_decimal.toFixed(2);
+	nav1_active_decimal = Number(nav1_active_decimal) - 0.05;
+	if (nav1_active_decimal < 0) {
+		nav1_active_decimal = 0.95
+	};
+	nav1_active = nav1_active_floor + nav1_active_decimal;
+	nav1_active = nav1_active.toFixed(2);
+	$("#nav1_active").text(nav1_active);
+}
+
 function nav1plus005() {
 	// NAV 1 plus 0.05 MHz
 	let nav1_standby_floor = Math.floor(nav1_standby);
@@ -546,6 +754,20 @@ function nav1plus005() {
 	nav1_standby = nav1_standby_floor + nav1_standby_decimal;
 	nav1_standby = nav1_standby.toFixed(2);
 	$("#nav1_standby").text(nav1_standby);
+}
+
+function nav1plus005_act() {
+	// NAV 1 plus 0.05 MHz
+	let nav1_active_floor = Math.floor(nav1_active);
+	let nav1_active_decimal = nav1_active - nav1_active_floor;
+	nav1_active_decimal = nav1_active_decimal.toFixed(2);
+	nav1_active_decimal = Number(nav1_active_decimal) + 0.05;
+	if (nav1_active_decimal >= 1) {
+		nav1_active_decimal = 0.0
+	};
+	nav1_active = nav1_active_floor + nav1_active_decimal;
+	nav1_active = nav1_active.toFixed(2);
+	$("#nav1_active").text(nav1_active);
 }
 
 function nav1switch() {
@@ -568,6 +790,16 @@ function nav2minus1() {
 	$("#nav2_standby").text(nav2_standby);
 }
 
+function nav2minus1_act() {
+	// NAV 2 minus 1 MHz
+	nav2_active = Number(nav2_active) - 1;
+	if (nav2_active < 108) {
+		nav2_active = nav2_active + 10
+	};
+	nav2_active = nav2_active.toFixed(2);
+	$("#nav2_active").text(nav2_active);
+}
+
 function nav2plus1() {
 	// NAV 2 plus 1 MHz
 	nav2_standby = Number(nav2_standby) + 1;
@@ -576,6 +808,16 @@ function nav2plus1() {
 	};
 	nav2_standby = nav2_standby.toFixed(2);
 	$("#nav2_standby").text(nav2_standby);
+}
+
+function nav2plus1_act() {
+	// NAV 2 plus 1 MHz
+	nav2_active = Number(nav2_active) + 1;
+	if (nav2_active > 118) {
+		nav2_active = nav2_active - 10
+	};
+	nav2_active = nav2_active.toFixed(2);
+	$("#nav2_active").text(nav2_active);
 }
 
 function nav2minus005() {
@@ -592,6 +834,20 @@ function nav2minus005() {
 	$("#nav2_standby").text(nav2_standby);
 }
 
+function nav2minus005_act() {
+	// NAV 2 minus 0.05 MHz
+	let nav2_active_floor = Math.floor(nav2_active);
+	let nav2_active_decimal = nav2_active - nav2_active_floor;
+	nav2_active_decimal = nav2_active_decimal.toFixed(2);
+	nav2_active_decimal = Number(nav2_active_decimal) - 0.05;
+	if (nav2_active_decimal < 0) {
+		nav2_active_decimal = 0.95
+	};
+	nav2_active = nav2_active_floor + nav2_active_decimal;
+	nav2_active = nav2_active.toFixed(2);
+	$("#nav2_active").text(nav2_active);
+}
+
 function nav2plus005() {
 	// NAV 2 plus 0.05 MHz
 	let nav2_standby_floor = Math.floor(nav2_standby);
@@ -604,6 +860,20 @@ function nav2plus005() {
 	nav2_standby = nav2_standby_floor + nav2_standby_decimal;
 	nav2_standby = nav2_standby.toFixed(2);
 	$("#nav2_standby").text(nav2_standby);
+}
+
+function nav2plus005_act() {
+	// NAV 2 plus 0.05 MHz
+	let nav2_active_floor = Math.floor(nav2_active);
+	let nav2_active_decimal = nav2_active - nav2_active_floor;
+	nav2_active_decimal = nav2_active_decimal.toFixed(2);
+	nav2_active_decimal = Number(nav2_active_decimal) + 0.05;
+	if (nav2_active_decimal >= 1) {
+		nav2_active_decimal = 0.0
+	};
+	nav2_active = nav2_active_floor + nav2_active_decimal;
+	nav2_active = nav2_active.toFixed(2);
+	$("#nav2_active").text(nav2_active);
 }
 
 function nav2switch() {
@@ -648,6 +918,8 @@ function getSimulatorData() {
         airspeed_indicated = data.AIRSPEED_INDICATED;
 		autopilot_loc_mode = data.AUTOPILOT_LOC_MODE;
 		autopilot_appr_mode = data.AUTOPILOT_APPR_MODE;
+		autopilot_yaw_damper = data.AUTOPILOT_YAW_DAMPER;
+		plane_heading_degrees = data.PLANE_HEADING_DEGREES;
 		
 		//NAV
 		nav1_obs_deg = Number(data.NAV1_OBS_DEG);
@@ -711,10 +983,12 @@ function displayData() {
     checkAndUpdateButton("#autopilot-airspeed-hold", autopilot_airspeed_hold);
     checkAndUpdateButton("#autopilot-attitude-hold", autopilot_attitude_hold);
     checkAndUpdateButton("#autopilot-backcourse-hold", autopilot_backcourse_hold);
-    checkAndUpdateButton("#autopilot-approach-hold", autopilot_approach_hold);
+    checkAndUpdateButton("#autopilot-approach-hold", autopilot_appr_mode);
     checkAndUpdateButton("#autopilot-vertical-hold", autopilot_vertical_hold);
     checkAndUpdateButton("#autopilot-autothrottle", autopilot_autothrottle);
     checkAndUpdateButton("#autopilot-glideslope-hold", autopilot_glideslope_hold);
+    checkAndUpdateButton("#autopilot-yaw-damper", autopilot_yaw_damper);
+    checkAndUpdateButton("#autopilot-fd-active", autopilot_flight_director_active);
     checkAndUpdateButton("#com1-transmit", com1_transmit, "COM 1 (On)", "COM 1 (Off)");
     checkAndUpdateButton("#com2-transmit", com2_transmit, "COM 2 (On)", "COM 2 (Off)");
     checkAndUpdateButton("#com1-transmit-direct", com1_transmit, "Transmit COM 1 (On)", "Transmit COM 1 (Off)");
@@ -729,6 +1003,7 @@ function displayData() {
     checkAndUpdateButton("#light-wings", light_wing);
     checkAndUpdateButton("#light-cabin", light_cabin);
     checkAndUpdateButton("#light-panel", light_panel);
+    checkAndUpdateButton("#pitot-heat-on-of", pitot_heat);
     checkAndUpdateButton("#pitot-heat", pitot_heat, "Pitot Heat (On)", "Pitot Heat (Off)");
     checkAndUpdateButton("#anti-ice", eng_anti_ice, "General Anti-Ice (On)", "General Anti-Ice (Off)");
     checkAndUpdateButton("#structural-deice", structural_deice, "Structural Deice (On)", "Structural Deice (Off)");
@@ -763,7 +1038,10 @@ function displayData() {
 	$("#COM2_freq").attr('placeholder', com2_g3000_freq);
 	$("#XPNDR_g3000").attr('placeholder', xpndr_g3000);
 	
-	//Other
+	//Other/Data
+	$("#cur_ias").text(airspeed_indicated);
+	$("#cur_alt").text(altitude);
+	$("#cur_hdg").text(plane_heading_degrees);
 	$("#landing-vs1").text(landing_vs1);
 	$("#landing-t1").text(landing_t1);
 	$("#landing-vs2").text(landing_vs2);

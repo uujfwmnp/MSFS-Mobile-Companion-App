@@ -1,4 +1,4 @@
-	<div class="collapse" id="collapsePanel" data-parent="#myGroup">
+	<div class="collapse {% if (post_loop.first) and (request.path != "/") %}show{% endif %}" id="collapsepanel" data-parent="#myGroup">
 		<div class="card bg-dark text-white" style="margin-top:10px;margin-bottom:12px;">
 			<div class="card-body">
 			

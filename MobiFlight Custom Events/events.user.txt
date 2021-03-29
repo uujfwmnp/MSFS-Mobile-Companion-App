@@ -1,0 +1,68 @@
+// use this file to add your user-defined events
+// remove the .inactive extension
+// afterwards, the file will not be touched by the next MobiFlight update
+// JF Arrow
+JF_ARROW_AUTOPILOT_MODE_NAV#0 (>L:AUTOPILOT_mode)
+JF_ARROW_AUTOPILOT_MODE_OMNI#1 (>L:AUTOPILOT_mode)
+JF_ARROW_AUTOPILOT_MODE_HDG#2 (>L:AUTOPILOT_mode)
+JF_ARROW_AUTOPILOT_MODE_LOCNOMR#3 (>L:AUTOPILOT_mode)
+JF_ARROW_AUTOPILOT_MODE_LOCREV#4 (>L:AUTOPILOT_mode)
+JF_ARROW_AUTOPILOT_HDG_ON#1 (>L:AUTOPILOT_hdg)
+JF_ARROW_AUTOPILOT_HDG_OFF#2 (>L:AUTOPILOT_hdg)
+JF_ARROW_AUTOPILOT_HDG_Toggle#(L:AUTOPILOT_hdg,bool) ! (>L:AUTOPILOT_hdg,bool)
+JF_ARROW_AUTOPILOT_HDG_ToggleAlt#(L:AUTOPILOT_hdg) 1 == if{ 1 if{ 0 (>L:AUTOPILOT_hdg) } } els{ (L:AUTOPILOT_hdg) 0 == if{ 1 if{ 1 (>L:AUTOPILOT_hdg) } } }
+JF_ARROW_DME_NAV1#0 (>L:RIGHT_MISC_dme_nav)
+JF_ARROW_DME_NAV2#1 (>L:RIGHT_MISC_dme_nav)
+JF_ARROW_KX170_NAV1_OUTER_KNOB_PLUS#(L:KX170_NAV1_outer_knob) 100 < if{ 1 if{ (L:KX170_NAV1_outer_knob) ++ (>L:KX170_NAV1_outer_knob) } } els{ (L:KX170_NAV1_outer_knob) 100 >= if{ 1 if{ 0 (>L:KX170_NAV1_outer_knob) } } }
+JF_ARROW_KX170_NAV1_OUTER_KNOB_MINUS#(L:KX170_NAV1_outer_knob) 0 >= if{ 1 if{ (L:KX170_NAV1_outer_knob) -- (>L:KX170_NAV1_outer_knob) } } els{ (L:KX170_NAV1_outer_knob) 0 < if{ 1 if{ 99 (>L:KX170_NAV1_outer_knob) } } }
+JF_ARROW_KX170_NAV1_INNER_KNOB_PLUS#(L:KX170_NAV1_inner_knob) 100 < if{ 1 if{ (L:KX170_NAV1_inner_knob) ++ (>L:KX170_NAV1_inner_knob) } } els{ (L:KX170_NAV1_inner_knob) 100 >= if{ 1 if{ 0 (>L:KX170_NAV1_inner_knob) } } }
+JF_ARROW_KX170_NAV1_INNER_KNOB_MINUS#(L:KX170_NAV1_inner_knob) 0 >= if{ 1 if{ (L:KX170_NAV1_inner_knob) -- (>L:KX170_NAV1_inner_knob) } } els{ (L:KX170_NAV1_inner_knob) 0 < if{ 1 if{ 99 (>L:KX170_NAV1_inner_knob) } } }
+JF_ARROW_KX175_NAV2_OUTER_KNOB_PLUS#(L:KX175_NAV2_outer_knob) 100 < if{ 1 if{ (L:KX175_NAV2_outer_knob) ++ (>L:KX175_NAV2_outer_knob) } } els{ (L:KX175_NAV2_outer_knob) 100 >= if{ 1 if{ 0 (>L:KX175_NAV2_outer_knob) } } }
+JF_ARROW_KX175_NAV2_OUTER_KNOB_MINUS#(L:KX175_NAV2_outer_knob) 0 >= if{ 1 if{ (L:KX175_NAV2_outer_knob) -- (>L:KX175_NAV2_outer_knob) } } els{ (L:KX175_NAV2_outer_knob) 0 < if{ 1 if{ 99 (>L:KX175_NAV2_outer_knob) } } }
+JF_ARROW_KX175_NAV2_INNER_KNOB_PLUS#(L:KX175_NAV2_inner_knob) 100 < if{ 1 if{ (L:KX175_NAV2_inner_knob) ++ (>L:KX175_NAV2_inner_knob) } } els{ (L:KX175_NAV2_inner_knob) 100 >= if{ 1 if{ 0 (>L:KX175_NAV2_inner_knob) } } }
+JF_ARROW_KX175_NAV2_INNER_KNOB_MINUS#(L:KX175_NAV2_inner_knob) 0 >= if{ 1 if{ (L:KX175_NAV2_inner_knob) -- (>L:KX175_NAV2_inner_knob) } } els{ (L:KX175_NAV2_inner_knob) 0 < if{ 1 if{ 99 (>L:KX175_NAV2_inner_knob) } } }
+JF_ARROW_KX170_COMM1_OUTER_KNOB_PLUS#(L:KX170_COMM1_outer_knob) 100 < if{ 1 if{ (L:KX170_COMM1_outer_knob) ++ (>L:KX170_COMM1_outer_knob) } } els{ (L:KX170_COMM1_outer_knob) 100 >= if{ 1 if{ 0 (>L:KX170_COMM1_outer_knob) } } }
+JF_ARROW_KX170_COMM1_OUTER_KNOB_MINUS#(L:KX170_COMM1_outer_knob) 0 >= if{ 1 if{ (L:KX170_COMM1_outer_knob) -- (>L:KX170_COMM1_outer_knob) } } els{ (L:KX170_COMM1_outer_knob) 0 < if{ 1 if{ 99 (>L:KX170_COMM1_outer_knob) } } }
+JF_ARROW_KX170_COMM1_INNER_KNOB_PLUS#(L:KX170_COMM1_inner_knob) 100 < if{ 1 if{ (L:KX170_COMM1_inner_knob) ++ (>L:KX170_COMM1_inner_knob) } } els{ (L:KX170_COMM1_inner_knob) 100 >= if{ 1 if{ 0 (>L:KX170_COMM1_inner_knob) } } }
+JF_ARROW_KX170_COMM1_INNER_KNOB_MINUS#(L:KX170_COMM1_inner_knob) 0 >= if{ 1 if{ (L:KX170_COMM1_inner_knob) -- (>L:KX170_COMM1_inner_knob) } } els{ (L:KX170_COMM1_inner_knob) 0 < if{ 1 if{ 99 (>L:KX170_COMM1_inner_knob) } } }
+JF_ARROW_KX175_COMM2_OUTER_KNOB_PLUS#(L:KX175_COMM2_outer_knob) 100 < if{ 1 if{ (L:KX175_COMM2_outer_knob) ++ (>L:KX175_COMM2_outer_knob) } } els{ (L:KX175_COMM2_outer_knob) 100 >= if{ 1 if{ 0 (>L:KX175_COMM2_outer_knob) } } }
+JF_ARROW_KX175_COMM2_OUTER_KNOB_MINUS#(L:KX175_COMM2_outer_knob) 0 >= if{ 1 if{ (L:KX175_COMM2_outer_knob) -- (>L:KX175_COMM2_outer_knob) } } els{ (L:KX175_COMM2_outer_knob) 0 < if{ 1 if{ 99 (>L:KX175_COMM2_outer_knob) } } }
+JF_ARROW_KX175_COMM2_INNER_KNOB_PLUS#(L:KX175_COMM2_inner_knob) 100 < if{ 1 if{ (L:KX175_COMM2_inner_knob) ++ (>L:KX175_COMM2_inner_knob) } } els{ (L:KX175_COMM2_inner_knob) 100 >= if{ 1 if{ 0 (>L:KX175_COMM2_inner_knob) } } }
+JF_ARROW_KX175_COMM2_INNER_KNOB_MINUS#(L:KX175_COMM2_inner_knob) 0 >= if{ 1 if{ (L:KX175_COMM2_inner_knob) -- (>L:KX175_COMM2_inner_knob) } } els{ (L:KX175_COMM2_inner_knob) 0 < if{ 1 if{ 99 (>L:KX175_COMM2_inner_knob) } } }
+JF_ARROW_COM_TRANSMIT_toggle#(L:KMA20_knob) 1 == if{ 1 if{ 0 (>L:KMA20_knob) } } els{ (L:KMA20_knob) 0 == if{ 1 if{ 1 (>L:KMA20_knob) } } }
+JF_ARROW_COM1_TRANSMIT#0 (>L:KMA20_knob)
+JF_ARROW_COM2_TRANSMIT#1 (>L:KMA20_knob)
+JF_ARROW_AUTOPILOT_ROLL_30L#0 (>L:AUTOPILOT_roll) -30 (>L:AUTOPILOT_roll_tooltip)
+JF_ARROW_AUTOPILOT_ROLL_20L#10 (>L:AUTOPILOT_roll) -20 (>L:AUTOPILOT_roll_tooltip)
+JF_ARROW_AUTOPILOT_ROLL_10L#20 (>L:AUTOPILOT_roll) -10 (>L:AUTOPILOT_roll_tooltip)
+JF_ARROW_AUTOPILOT_ROLL_0#30 (>L:AUTOPILOT_roll) 0 (>L:AUTOPILOT_roll_tooltip
+JF_ARROW_AUTOPILOT_ROLL_10R#40 (>L:AUTOPILOT_roll) 10 (>L:AUTOPILOT_roll_tooltip))
+JF_ARROW_AUTOPILOT_ROLL_20R#50 (>L:AUTOPILOT_roll) 20 (>L:AUTOPILOT_roll_tooltip))
+JF_ARROW_AUTOPILOT_ROLL_30R#60 (>L:AUTOPILOT_roll) 30 (>L:AUTOPILOT_roll_tooltip))
+JF_ARROW_AUTOPILOT_SOURCE_NAV1#0 (>L:AUTOPILOT_nav)
+JF_ARROW_AUTOPILOT_SOURCE_NAV2#2 (>L:AUTOPILOT_nav)
+JF_ARROW_AUTOPILOT_SOURCE_OFF#1 (>L:AUTOPILOT_nav)
+JF_ARROW_FUEL_SELECT_cut#0 (>L:LEFT_MISC_fuel_sel)
+JF_ARROW_FUEL_SELECT_left#1 (>L:LEFT_MISC_fuel_sel)
+JF_ARROW_FUEL_SELECT_right#2 (>L:LEFT_MISC_fuel_sel)
+JF_ARROW_FLIGHT_BAG_toggle#(L:RIGHT_MISC_icomm,bool) ! (>L:RIGHT_MISC_icomm,bool)
+JF_ARROW_LIGHTS_BCN_toggle#(L:CENTRE_LOWER_bcn_light,bool) ! (>L:CENTRE_LOWER_bcn_light,bool)
+JF_ARROW_LIGHTS_BCN_on#1 (>L:CENTRE_LOWER_bcn_light)
+JF_ARROW_LIGHTS_BCN_off#0 (>L:CENTRE_LOWER_bcn_light)
+JF_ARROW_LIGHTS_PANEL_toggle#(L:CENTRE_LOWER_panel_light) 1 == if{ 1 if{ 0 (>L:CENTRE_LOWER_panel_light) } } els{ (L:CENTRE_LOWER_panel_light) 0 == if{ 1 if{ 1 (>L:CENTRE_LOWER_panel_light) } } } (L:CENTRE_LOWER_panel_light_on) 1 == if{ 1 if{ 0 (>L:CENTRE_LOWER_panel_light_on) } } els{ (L:CENTRE_LOWER_panel_light_on) 0 == if{ 1 if{ 1 (>L:CENTRE_LOWER_panel_light_on) } } } (L:Panel_light_scaler) 0.1 == if{ 1 if{ 0 (>L:Panel_light_scaler) } } els{ (L:Panel_light_scaler) 0 == if{ 1 if{ 0.1 (>L:Panel_light_scaler) } } }
+JF_ARROW_PITOT_HEAT_toggle#(L:CENTRE_LOWER_pitotheat,bool) ! (>L:CENTRE_LOWER_pitotheat,bool)
+JF_ARROW_GPS100_RTE_press#1 (>L:GPS100_RTE)
+JF_ARROW_GPS100_RTE_release#0 (>L:GPS100_RTE)
+JF_ARROW_GPS100_WPT_press#1 (>L:GPS100_WPT)
+JF_ARROW_GPS100_WPT_release#0 (>L:GPS100_WPT)
+JF_ARROW_GPS100_NAV_press#1 (>L:GPS100_NAV)
+JF_ARROW_GPS100_NAV_release#0 (>L:GPS100_NAV)
+JF_ARROW_GPS100_LEFT_press#0 (>L:GPS100_ARROWS)
+JF_ARROW_GPS100_CENTER#1 (>L:GPS100_ARROWS)
+JF_ARROW_GPS100_RIGHT_press#2 (>L:GPS100_ARROWS)
+// A32NX FBW
+A32NX_PROBE_WINDOW_HEAT_OFF#0 (>L:A32NX_MAN_PITOT_HEAT)
+A32NX_PROBE_WINDOW_HEAT_ON#1 (>L:A32NX_MAN_PITOT_HEAT)
+A32NX_PROBE_WINDOW_HEAT_toggle#(L:A32NX_MAN_PITOT_HEAT,bool) ! (>L:A32NX_MAN_PITOT_HEAT,bool)
+A32NX_AUTOPILOT_LOC_MODE_toggle#(L:A32NX_AUTOPILOT_LOC_MODE, bool) if{ 0 (>L:A32NX_AUTOPILOT_LOC_MODE) (>K:AP_LOC_HOLD_OFF) } els{ 0 (>L:A32NX_AUTOPILOT_APPR_MODE) 1 (>L:A32NX_AUTOPILOT_LOC_MODE) (>K:AP_APR_HOLD_OFF) (>K:AP_LOC_HOLD_ON) }
+A32NX_AUTOPILOT_APPR_MODE_toggle#(L:A32NX_AUTOPILOT_APPR_MODE, bool) if{ 0 (>L:A32NX_AUTOPILOT_APPR_MODE) (>K:AP_APR_HOLD_OFF) } els{ 1 (>L:A32NX_AUTOPILOT_APPR_MODE) 0 (>L:A32NX_AUTOPILOT_LOC_MODE) (>K:AP_LOC_HOLD_OFF) (>K:AP_APR_HOLD_ON) }

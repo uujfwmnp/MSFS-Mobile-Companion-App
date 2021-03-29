@@ -1,5 +1,5 @@
 	<!-- NAV-->
-	<div class="collapse {% if (post_loop.first) and (request.path != "/") %}show{% endif %}" id="collapsenav" data-parent="#myGroup">
+	<div class="collapse {% if (post_loop.first) and (request.path != "/") %}show{% endif %}" id="collapsenav_jf_arrow_gns" data-parent="#myGroup">
 		<div class="card bg-dark text-white" style="margin-top:10px; margin-bottom:12px;">
 			<div class="card-body">
 				
@@ -81,34 +81,19 @@
 					<!-- NAV 2 -->
 					<div class="col" style="margin-top:20px; max-width:332px; min-width:332px;">
 						<div class="lead">NAV 2</div>	
-
-						<!-- NAV 2 Frequency Swap Row-->
-						<div class="row" style="margin-bottom:10px">
-						<div class="col">
-							<div class="btn-group" role="group" aria-label="NAV2 USE">
-								<button type="button" class="btn btn-light" style="width:50px;;padding-left:0px;padding-right:0px" disabled>USE</button>
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:80px;opacity:1;padding:0px" disabled><strong><span style="color:red" id="nav2_active">?</span></strong></button>
-							</div>
-							<button onclick="triggerSimEvent ('NAV2_RADIO_SWAP', 0, true); $(this).blur(); nav2switch();" type="button" class="btn btn-secondary" title="Swap NAV2 Standby frequency" style="width:35px;height:37px;padding:0px;padding-bottom:1px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"></path></svg></button>
-							<div class="btn-group" role="group" aria-label="NAV2 STBY">
-								<button type="button" class="btn btn-light" style="width:50px;;padding-left:0px;padding-right:0px" disabled>STBY</button>
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:80px;opacity:1;padding:0px" disabled><strong><span style="color:red" id="nav2_standby">?</span></strong></button>
-							</div>
-						</div>
-						</div>
 						
 						<!-- NAV 2 Tuner Row-->
 						<div class="row align-items-center" style="margin-bottom:10px;margin-top:5px">
 						<div class="col-auto" style="padding-right:5px">
-							<button onclick="triggerSimEvent ('NAV2_RADIO_WHOLE_DEC', 1, true); $(this).blur(); nav2minus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
-							<button onclick="triggerSimEvent ('NAV2_RADIO_FRACT_DEC', 1, true); $(this).blur(); nav2minus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
+							<button onclick="triggerSimEvent ('MobiFlight.JF_ARROW_KX175_NAV2_OUTER_KNOB_MINUS',0,true); $(this).blur(); nav2minus1_act()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
+							<button onclick="triggerSimEvent ('MobiFlight.JF_ARROW_KX175_NAV2_INNER_KNOB_MINUS',0,true); $(this).blur(); nav2minus005_act()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
 						</div>
 						<div class="col" style="padding-left:0px;padding-right:0px;margin">	
-							<button type="button" class="btn btn-light btn-sm" style="width:100%" disabled>Tune NAV 2</button>
+							<button type="button" class="btn btn-secondary" style="background-color:#000000;width:100%;opacity:1;padding-left:0px;padding-right:0px" disabled><strong><span style="color:red" id="nav2_active">?</span></strong></button>
 						</div>
 						<div class="col-auto" style="padding-left:5px">	
-							<button onclick="triggerSimEvent ('NAV2_RADIO_FRACT_INC', 1, true); $(this).blur(); nav2plus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
-							<button onclick="triggerSimEvent ('NAV2_RADIO_WHOLE_INC', 1, true); $(this).blur(); nav2plus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
+							<button onclick="triggerSimEvent ('MobiFlight.JF_ARROW_KX175_NAV2_INNER_KNOB_PLUS',0,true); $(this).blur(); nav2plus005_act()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
+							<button onclick="triggerSimEvent ('MobiFlight.JF_ARROW_KX175_NAV2_OUTER_KNOB_PLUS',0,true); $(this).blur(); nav2plus1_act()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
 						</div>
 						</div>
 						
@@ -133,24 +118,6 @@
 						<div class="lead">ADF</div>	
 
 						<div class="row align-items-center" style="margin-bottom:10px;margin-left:0px;margin-right:0px">
-							
-							<!-- ADF Active -->
-							<div class="col">
-								<div class="row">
-								<span class="text-light">&nbsp;ADF USE:</span>
-								</div>
-								<div class="row">
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:75px;margin-bottom:26px;opacity:1;padding-left:0px;padding-right:0px" disabled><strong><span style="color:red" id="adf_act_1000">?</span> <span style="color:red" id="adf_act_100">?</span> <span style="color:red" id="adf_act_10">?</span> <span style="color:red" id="adf_act_1">?</span></strong></button>
-								</div>
-							</div>
-							
-							<!-- ADF Frequency Switch -->
-							<div class="col" style="margin-left:4px;">
-								<div class="row">
-								<button onclick="triggerSimEvent ('ADF1_RADIO_SWAP', 1, true); $(this).blur(); adfswitch();" type="button" class="btn btn-secondary" title="Swap ADF Standby frequency" style="width:35px;height:37px;padding:0px;padding-bottom:1px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"></path></svg></button>
-								</div>
-							</div>
-							
 							<div class="col" style="min-width:177px;max-width:177px;">
 							<div class="row">
 							<!-- ADF Standby Tuner-->
@@ -159,7 +126,7 @@
 								<button type="button" class="btn btn-secondary" style="width:40px;" disabled>&nbsp;</button>
 								</div>
 								<div class="row">
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:40px;opacity:1" disabled><strong><span style="color:red" id="adf_stby_1000">?</span></strong></button>
+								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:40px;opacity:1" disabled><strong><span style="color:red" id="adf_act_1000">?</span></strong></button>
 								</div>
 								<div class="row">
 								<button type="button" class="btn btn-secondary" style="width:40px;" disabled>&nbsp;</button>
@@ -167,35 +134,35 @@
 							</div>
 							<div class="col" style="margin-left:4px">
 								<div class="row">
-								<button onclick="triggerSimEvent ('ADF_100_INC', 1, true); $(this).blur(); adfplus100();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase ADF frequency by 100 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg></button>
+								<button onclick="triggerSimEvent ('ADF_100_INC', 1, true); $(this).blur(); adfplus100_use();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase ADF frequency by 100 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg></button>
 								</div>
 								<div class="row">
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:40px;opacity:1" disabled><strong><span style="color:red" id="adf_stby_100">?</span></strong></button>
+								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:40px;opacity:1" disabled><strong><span style="color:red" id="adf_act_100">?</span></strong></button>
 								</div>
 								<div class="row">
-								<button onclick="triggerSimEvent ('ADF_100_DEC', 1, true); $(this).blur(); adfminus100();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease ADF frequency by 100 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></button>
-								</div>
-							</div>
-							<div class="col" style="margin-left:4px">
-								<div class="row">
-								<button onclick="triggerSimEvent ('ADF_10_INC', 1, true); $(this).blur(); adfplus10();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase ADF frequency by 10 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg></button>
-								</div>
-								<div class="row">
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:40px;opacity:1" disabled><strong><span style="color:red" id="adf_stby_10">?</span></strong></button>
-								</div>
-								<div class="row">
-								<button onclick="triggerSimEvent ('ADF_10_DEC', 1, true); $(this).blur(); adfminus10();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease ADF frequency by 10 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></button>
+								<button onclick="triggerSimEvent ('ADF_100_DEC', 1, true); $(this).blur(); adfminus100_use();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease ADF frequency by 100 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></button>
 								</div>
 							</div>
 							<div class="col" style="margin-left:4px">
 								<div class="row">
-								<button onclick="triggerSimEvent ('ADF_1_INC', 1, true); $(this).blur(); adfplus1();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase ADF frequency by 1 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg></button>
+								<button onclick="triggerSimEvent ('ADF_10_INC', 1, true); $(this).blur(); adfplus10_use();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase ADF frequency by 10 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg></button>
 								</div>
 								<div class="row">
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:40px;opacity:1" disabled><strong><span style="color:red" id="adf_stby_1">?</span></strong></button>
+								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:40px;opacity:1" disabled><strong><span style="color:red" id="adf_act_10">?</span></strong></button>
 								</div>
 								<div class="row">
-								<button onclick="triggerSimEvent ('ADF_1_DEC', 1, true); $(this).blur(); adfminus1();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease ADF frequency by 1 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></button>
+								<button onclick="triggerSimEvent ('ADF_10_DEC', 1, true); $(this).blur(); adfminus10_use();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease ADF frequency by 10 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></button>
+								</div>
+							</div>
+							<div class="col" style="margin-left:4px">
+								<div class="row">
+								<button onclick="triggerSimEvent ('ADF_1_INC', 1, true); $(this).blur(); adfplus1_use();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase ADF frequency by 1 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg></button>
+								</div>
+								<div class="row">
+								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:40px;opacity:1" disabled><strong><span style="color:red" id="adf_act_1">?</span></strong></button>
+								</div>
+								<div class="row">
+								<button onclick="triggerSimEvent ('ADF_1_DEC', 1, true); $(this).blur(); adfminus1_use();" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease ADF frequency by 1 kHz" style="width:40px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg></button>
 								</div>
 							</div>
 							</div>
@@ -219,25 +186,28 @@
 						</div>
 						
 					</div>
-					
+
 					<!-- General -->
 					<div class="col" style="margin-top:20px">
-						<div class="lead">General</div>	
+						<div class="lead">DME Settings</div>	
+						<!-- Toggel Buttons Row-->
+						<div class="row"  style="width:260px">
+							<div class="col">
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_DME_NAV1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for DME">NAV1</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_DME_NAV2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for DME">NAV2</button>
+							</div>
+						</div>
+						<div class="lead" style="margin-top:10px">General</div>	
 						<!-- Toggel Buttons Row-->
 						<div class="row">
 							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('TOGGLE_GPS_DRIVES_NAV1', 0, true); $(this).blur();" class="btn btn-secondary" style="width:220px" title="Toggle between GPS and NAV 1 driving NAV 1 OBS display (and AP)">CDI GPS/NAV</button>
+								<button type="button" onclick="triggerSimEvent ('TOGGLE_GPS_DRIVES_NAV1', 0, true); $(this).blur();" class="btn btn-secondary" style="width:220px" title="Toggle between GPS and NAV 1 driving NAV 1 OBS display (and AP)">AP Source GPS/NAV</button>
 							</div>
 						</div>
 						<div class="row"  style="width:260px">
 							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('AP_NAV_SELECT_SET', 1, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for CDI/AP">CDI NAV1</button>
-								<button type="button" onclick="triggerSimEvent ('AP_NAV_SELECT_SET', 2, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for CDI/AP">CDI NAV2</button>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('TOGGLE_DME', 0, true); $(this).blur();" class="btn btn-secondary" style="width:220px" title="Toggle between NAV 1 and NAV 2">DME NAV1/NAV2</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for CDI/AP">AP NAV1</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for CDI/AP">AP NAV2</button>
 							</div>
 						</div>
 						<div class="row" style="margin-top:10px">
@@ -380,20 +350,27 @@
 						</div>
 						</div>
 					</div>
-					
+
 					<!-- General Direct Entry-->
 					<div class="col" style="margin-top:20px">
-						<div class="lead">General</div>	
+						<div class="lead">DME Settings</div>	
+						<div class="row"  style="width:260px">
+							<div class="col">
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_DME_NAV1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for DME">NAV1</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_DME_NAV2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for DME">NAV2</button>
+							</div>
+						</div>
+						<div class="lead" style="margin-top:10px">General</div>	
 						<!-- Toggel Buttons Row-->
 						<div class="row">
 							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('TOGGLE_GPS_DRIVES_NAV1', 0, true); $(this).blur();" class="btn btn-secondary" style="width:220px" title="Toggle between GPS and NAV 1 driving NAV 1 OBS display (and AP)">CDI GPS/NAV</button>
+								<button type="button" onclick="triggerSimEvent ('TOGGLE_GPS_DRIVES_NAV1', 0, true); $(this).blur();" class="btn btn-secondary" style="width:220px" title="Toggle between GPS and NAV 1 driving NAV 1 OBS display (and AP)">AP Source GPS/NAV</button>
 							</div>
 						</div>
 						<div class="row"  style="width:260px">
 							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('AP_NAV_SELECT_SET', 1, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for CDI/AP">CDI NAV1</button>
-								<button type="button" onclick="triggerSimEvent ('AP_NAV_SELECT_SET', 2, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for CDI/AP">CDI NAV2</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for CDI/AP">AP NAV1</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for CDI/AP">AP NAV2</button>
 							</div>
 						</div>
 						<div class="row" style="margin-top:10px;margin-bottom:10px">
@@ -409,12 +386,6 @@
 					
 				</div>
 				
-				<!-- Last Info -->
-				<div class="row" style="margin-top:15px">
-					<div class="col">
-						<p class="font-italic text-secondary">Intended for use with default 747, A320, CJ4, 350i, and C152 (for ADF).</p>
-					</div>
-				</div>
 				</div>
 				
 				
