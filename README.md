@@ -32,6 +32,7 @@ MSFS Mobile Companion App has built-in support for the following aircraft:
 - Added integration with Mobiflight WASM
 - Added Data tab with IAS, ALT, HDG data
 - Added Sync HDG bug to current heading
+- Added yaw damper AP controls
 - Fixed NAV frequency display UI for iOS (padding for NAV frequency display)
 
 ## How do I install MSFS Mobile Companion App?
