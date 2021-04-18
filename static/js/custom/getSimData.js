@@ -118,6 +118,9 @@ let map_size_fix;
 let map_size_fix_mod;
 map_size_fix = 0;
 
+//Press and Hold
+let btnhold;
+
 function mapRefreshFix() {
 	map_size_fix = map_size_fix + 1;
 	map_size_fix_mod = map_size_fix % 2;
@@ -1037,6 +1040,7 @@ function displayData() {
 	$("#COM1_freq").attr('placeholder', com1_g3000_freq);
 	$("#COM2_freq").attr('placeholder', com2_g3000_freq);
 	$("#XPNDR_g3000").attr('placeholder', xpndr_g3000);
+	$("#XPNDR_g3000_tune").attr('placeholder', xpndr_g3000);
 	
 	//Other/Data
 	$("#cur_ias").text(airspeed_indicated);
@@ -1236,4 +1240,31 @@ function loadFltPln() {
         gpswp.setStyle({opacity: 0});
     }
 
+}
+
+function presshold(action, start, speedup, minspeed) {
+
+    var repeat = function () {
+        action();
+        btnhold = setTimeout(repeat, start);
+        start = Math.max(start * speedup, minspeed);
+    }
+
+    repeat()
+};
+
+function presshold2(action, action2, start, speedup, minspeed) {
+
+    var repeat = function () {
+        action();
+        action2();
+        btnhold = setTimeout(repeat, start);
+        start = Math.max(start * speedup, minspeed);
+    }
+
+    repeat()
+};
+
+function releasehold() {
+    clearTimeout(btnhold);
 }
