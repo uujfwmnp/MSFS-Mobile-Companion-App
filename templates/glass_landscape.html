@@ -75,10 +75,11 @@
 		  -moz-appearance: textfield;
 		}
 		
-		/* Safari/iOS press and hold button fix */
+		/* Safari/iOS press and hold button fix and double-tap zoom*/
 		body {
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
+		touch-action: manipulation;
 		}
 	</style>
 
@@ -264,7 +265,7 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <!-- Custom JS imports -->
-<script src="/static/js/custom/getSimData.js?v16"></script>
+<script src="/static/js/custom/getSimData.js?v161"></script>
 
 <!-- Sync Frequencies at Startup-->
 <script>
