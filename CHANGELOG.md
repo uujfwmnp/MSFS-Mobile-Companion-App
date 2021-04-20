@@ -1,5 +1,10 @@
 # Change Log
 
+**v1.6.1 April 20, 2021:**
+- Added controls profile for CRJ-550/700 (Aerosoft). The profile includes controls for FCP, Side Panel, NAV, and COM and introduces press-and-hold button functionality for knobs.
+- Updated controls profile for PA-28R (Just Flight) to reflect v0.4.0 changes.
+- Fixed zoom when double-tapping on iOS.
+
 **v1.6 March 29, 2021:**
 - Added aircraft controls profile selection.
 - Added controls profiles for GNS430/530, G1000, A32NX (FBW), and PA-28R (Just Flight).
