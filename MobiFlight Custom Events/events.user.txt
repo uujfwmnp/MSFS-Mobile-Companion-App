@@ -60,6 +60,7 @@ JF_ARROW_GPS100_NAV_release#0 (>L:GPS100_NAV)
 JF_ARROW_GPS100_LEFT_press#0 (>L:GPS100_ARROWS)
 JF_ARROW_GPS100_CENTER#1 (>L:GPS100_ARROWS)
 JF_ARROW_GPS100_RIGHT_press#2 (>L:GPS100_ARROWS)
+JF_ARROW_NAVGPS#(L:LEFT_MISC_navgps,bool) ! (>L:LEFT_MISC_navgps,bool)
 // A32NX FBW
 A32NX_PROBE_WINDOW_HEAT_OFF#0 (>L:A32NX_MAN_PITOT_HEAT)
 A32NX_PROBE_WINDOW_HEAT_ON#1 (>L:A32NX_MAN_PITOT_HEAT)
@@ -163,3 +164,16 @@ ASCRJ_NAV2_OUTER_MINUS#1 (>L:ASCRJ_RTU2_LSK1L) 1 (>L:ASCRJ_RTU2_LSK2L) -1 (>L:AS
 ASCRJ_NAV2_OUTER_PLUS#1 (>L:ASCRJ_RTU2_LSK1L) 1 (>L:ASCRJ_RTU2_LSK2L) 1 (>L:ASCRJ_RTU2_KNOB_OUTER_CHANGE)
 ASCRJ_NAV2_INNER_MINUS#1 (>L:ASCRJ_RTU2_LSK1L) 1 (>L:ASCRJ_RTU2_LSK2L) -1 (>L:ASCRJ_RTU2_KNOB_INNER_CHANGE)
 ASCRJ_NAV2_INNER_PLUS#1 (>L:ASCRJ_RTU2_LSK1L) 1 (>L:ASCRJ_RTU2_LSK2L) 1 (>L:ASCRJ_RTU2_KNOB_INNER_CHANGE)
+// IFE MB-339
+IFE_MB339_LANDING_LIGHTS#(L:SwitchLandingTaxi) 1 == if{ 1 if{ 0 (>L:SwitchLandingTaxi) } } els{ (L:SwitchLandingTaxi) 1 != if{ 1 if{ 1 (>L:SwitchLandingTaxi) } } }
+IFE_MB339_TAXI_LIGHTS#(L:SwitchLandingTaxi) 2 == if{ 1 if{ 0 (>L:SwitchLandingTaxi) } } els{ (L:SwitchLandingTaxi) 2 != if{ 1 if{ 2 (>L:SwitchLandingTaxi) } } }
+IFE_MB339_HUD#(L:SwitchGeneric11,bool) ! (>L:SwitchGeneric11,bool)
+IFE_MB339_TACAN#(L:HSIMode) 2 == if{ 1 if{ 99 (>L:HSIMode) } } els{ (L:HSIMode) 2 != if{ 1 if{ 2 (>L:HSIMode) } } }
+IFE_MB339_VOR#(L:HSIMode) 0 == if{ 1 if{ 99 (>L:HSIMode) } } els{ (L:HSIMode) 0 != if{ 1 if{ 0 (>L:HSIMode) } } }
+IFE_MB339_RNAV#(L:HSIMode) 1 == if{ 1 if{ 99 (>L:HSIMode) } } els{ (L:HSIMode) 1 != if{ 1 if{ 1 (>L:HSIMode) } } }
+IFE_MB339_FLT_DIR_STBY#1 (>L:FDModeSTBY) 0 (>L:FDModeGS) 0 (>L:FDModeGSARM) 0 (>L:FDModeCD)
+IFE_MB339_FLT_DIR_GS#(L:FDModeGS) 1 == if{ (L:FDModeCD) 0 > if{ 0 (>L:FDModeGS) } els{ 0 (>L:FDModeGS) 1 (>L:FDModeSTBY) } } els{ 1 (>L:FDModeGS) 0 (>L:FDModeSTBY) 0 (>L:FDModeGSARM) }
+IFE_MB339_FLT_DIR_ALT_HOLD#(L:FDModeGS) 2 == if{ (L:FDModeGSARM) 1 == or (L:FDModeCD) 0 > if{ 0 (>L:FDModeGS) } els{ 0 (>L:FDModeGS) 1 (>L:FDModeSTBY) } } els{ 2 (>L:FDModeGS) 0 (>L:FDModeSTBY) }
+IFE_MB339_GSARM#(L:FDModeGSARM) 1 == if{ (L:FDModeCD) 0 == if{ 0 (>L:FDModeGSARM) 1 (>L:FDModeSTBY) 0 (>L:FDModeGS) } els{ 0 (>L:FDModeGSARM) 0 (>L:FDModeGS) } } els{ 1 (>L:FDModeGSARM) 0 (>L:FDModeSTBY) 0 (>L:FDModeGS) }
+IFE_MB339_RADIO_NAV#(L:FDModeCD) 2 == if{ (L:FDModeGSARM) 0 == (L:FDModeGS) == 0  and if{ 0 (>L:FDModeCD) 1 (>L:FDModeSTBY) } els{ 0 (>L:FDModeCD) } } els{ 2 (>L:FDModeCD) 0 (>L:FDModeSTBY) }
+IFE_MB339_HDG#(L:FDModeCD) 1 == if{ (L:FDModeGSARM) 0 == (L:FDModeGS) 0 == and if{ 0 (>L:FDModeCD) 1 (>L:FDModeSTBY) } els{ 0 (>L:FDModeCD) } } els{ 1 (>L:FDModeCD) 0 (>L:FDModeSTBY) }

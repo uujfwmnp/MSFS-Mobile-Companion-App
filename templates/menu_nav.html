@@ -49,15 +49,15 @@
 						<!-- NAV 1 Tuner Row-->
 						<div class="row align-items-center" style="margin-bottom:10px;margin-top:5px">
 						<div class="col-auto" style="padding-right:5px">
-							<button onclick="triggerSimEvent ('NAV1_RADIO_WHOLE_DEC', 1, true); $(this).blur(); nav1minus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
-							<button onclick="triggerSimEvent ('NAV1_RADIO_FRACT_DEC', 1, true); $(this).blur(); nav1minus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_WHOLE_DEC',0,true) },function(){ nav1minus1() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_FRACT_DEC',0,true) },function(){ nav1minus005() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
 						</div>
 						<div class="col" style="padding-left:0px;padding-right:0px;margin">
 							<button type="button" class="btn btn-light btn-sm" style="width:100%" disabled>Tune NAV 1</button>
 						</div>
 						<div class="col-auto" style="padding-left:5px">
-							<button onclick="triggerSimEvent ('NAV1_RADIO_FRACT_INC', 1, true); $(this).blur(); nav1plus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
-							<button onclick="triggerSimEvent ('NAV1_RADIO_WHOLE_INC', 1, true); $(this).blur(); nav1plus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_FRACT_INC',0,true) },function(){ nav1plus005() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_WHOLE_INC',0,true) },function(){ nav1plus1() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
 						</div>
 						</div>
 						
@@ -100,15 +100,15 @@
 						<!-- NAV 2 Tuner Row-->
 						<div class="row align-items-center" style="margin-bottom:10px;margin-top:5px">
 						<div class="col-auto" style="padding-right:5px">
-							<button onclick="triggerSimEvent ('NAV2_RADIO_WHOLE_DEC', 1, true); $(this).blur(); nav2minus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
-							<button onclick="triggerSimEvent ('NAV2_RADIO_FRACT_DEC', 1, true); $(this).blur(); nav2minus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_WHOLE_DEC',0,true) },function(){ nav2minus1() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_FRACT_DEC',0,true) },function(){ nav2minus005() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
 						</div>
 						<div class="col" style="padding-left:0px;padding-right:0px;margin">	
 							<button type="button" class="btn btn-light btn-sm" style="width:100%" disabled>Tune NAV 2</button>
 						</div>
 						<div class="col-auto" style="padding-left:5px">	
-							<button onclick="triggerSimEvent ('NAV2_RADIO_FRACT_INC', 1, true); $(this).blur(); nav2plus005()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
-							<button onclick="triggerSimEvent ('NAV2_RADIO_WHOLE_INC', 1, true); $(this).blur(); nav2plus1()" id="autopilot-com-freq" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_FRACT_INC',0,true) },function(){ nav2plus005() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_WHOLE_INC',0,true) },function(){ nav2plus1() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
 						</div>
 						</div>
 						
@@ -245,8 +245,8 @@
 							Gyro Drift:
 							</div>
 							<div class="col">
-							<button type="button" onclick="triggerSimEvent ('GYRO_DRIFT_DEC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px" title="Decrements heading indicator">-</button>
-							<button type="button" onclick="triggerSimEvent ('GYRO_DRIFT_INC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px" title="Increment heading indicator">+</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('GYRO_DRIFT_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:44px;" title="Decrements altimeter setting">-</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('GYRO_DRIFT_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:44px" title="Decrements altimeter setting">+</button>
 							</div>
 						</div>
 						<div class="row" style="margin-bottom:10px">
@@ -254,8 +254,8 @@
 							Altimeter:
 							</div>
 							<div class="col">
-							<button type="button" onclick="triggerSimEvent ('KOHLSMAN_DEC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px;" title="Decrements altimeter setting">-</button>
-							<button type="button" onclick="triggerSimEvent ('KOHLSMAN_INC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px" title="Decrements altimeter setting">+</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('KOHLSMAN_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:44px;" title="Decrements altimeter setting">-</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('KOHLSMAN_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:44px" title="Decrements altimeter setting">+</button>
 							</div>
 						</div>
 					</div>
@@ -401,8 +401,8 @@
 							Altimeter:
 							</div>
 							<div class="col">
-							<button type="button" onclick="triggerSimEvent ('KOHLSMAN_DEC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px;" title="Decrements altimeter setting">-</button>
-							<button type="button" onclick="triggerSimEvent ('KOHLSMAN_INC', 0, true); $(this).blur();" class="btn btn-secondary" style="width:44px" title="Decrements altimeter setting">+</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('KOHLSMAN_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:44px;" title="Decrements altimeter setting">-</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('KOHLSMAN_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:44px" title="Decrements altimeter setting">+</button>
 							</div>
 						</div>
 					</div>

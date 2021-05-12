@@ -373,8 +373,10 @@ class AircraftEvents():
 			(b'SPOILERS_ARM_SET', "Sets auto-spoiler arming (0,1),", "All aircraft"),
 			(b'AILERON_TRIM_LEFT', "Increments aileron trim left", "Shared Cockpit"),
 			(b'AILERON_TRIM_RIGHT', "Increments aileron trim right", "Shared Cockpit"),
+			(b'AILERON_TRIM_SET', "Sets aileron trim position (-100 to 100)", "Shared Cockpit"),
 			(b'RUDDER_TRIM_LEFT', "Increments rudder trim left", "Shared Cockpit"),
 			(b'RUDDER_TRIM_RIGHT', "Increments aileron trim right", "Shared Cockpit"),
+			(b'RUDDER_TRIM_SET', "Sets rudder trim position (-100 to 100)", "Shared Cockpit"),
 			(b'AXIS_SPOILER_SET', "Sets spoiler handle position (-16383 - +16383),", "All aircraft"),
 			(b'FLAPS_SET', "Sets flap handle to closest increment (0 to 16383),", "All aircraft"),
 			(b'ELEVATOR_TRIM_SET', "Sets elevator trim position (0 to 16383),", "Shared Cockpit"),
@@ -912,6 +914,7 @@ class AircraftEvents():
 			(b'MobiFlight.JF_ARROW_GPS100_LEFT_press', "-", "Shared Cockpit"),
 			(b'MobiFlight.JF_ARROW_GPS100_CENTER', "-", "Shared Cockpit"),
 			(b'MobiFlight.JF_ARROW_GPS100_RIGHT_press', "-", "Shared Cockpit"),
+			(b'MobiFlight.JF_ARROW_NAVGPS', "-", "Shared Cockpit"),
 			#MobiFlight AS CRJ
 			(b'MobiFlight.ASCRJ_LSP_BRG1', "-", "Shared Cockpit"),
 			(b'MobiFlight.ASCRJ_LSP_BRG1_rel', "-", "Shared Cockpit"),
@@ -1009,6 +1012,18 @@ class AircraftEvents():
 			(b'MobiFlight.ASCRJ_NAV2_INNER_MINUS', "-", "Shared Cockpit"),
 			(b'MobiFlight.ASCRJ_NAV2_INNER_PLUS', "-", "Shared Cockpit"),
 			(b'MobiFlight.ASCRJ_HGS_TOGGLE', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_LANDING_LIGHTS', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_TAXI_LIGHTS', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_HUD', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_FLT_DIR_STBY', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_FLT_DIR_ALT_HOLD', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_FLT_DIR_GS', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_GSARM', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_RADIO_NAV', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_HDG', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_TACAN', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_VOR', "-", "Shared Cockpit"),
+			(b'MobiFlight.IFE_MB339_RNAV', "-", "Shared Cockpit")
 		]
 
 	class __Instruments(EventHelper):

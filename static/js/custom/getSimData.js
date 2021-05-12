@@ -113,6 +113,10 @@ let gps_next_wp_arr = [[],[]];
 let loadfltpln_switch;
 loadfltpln_switch = 0;
 
+let gear;
+let flaps_position;
+let spoilers;
+
 // Maps Size Fix Function
 let map_size_fix;
 let map_size_fix_mod;
@@ -970,7 +974,12 @@ function getSimulatorData() {
 		fltpln_arr = data.FLT_PLN;
 		gps_next_lat = data.NEXT_WP_LAT;
 		gps_next_lon = data.NEXT_WP_LON;
-		gps_next_wp_arr = [[latitude, longitude],[gps_next_lat, gps_next_lon]]
+		gps_next_wp_arr = [[latitude, longitude],[gps_next_lat, gps_next_lon]];
+		
+		//Flight Controls
+		gear = data.GEAR_POSITION;
+		flaps_position = data.FLAPS_HANDLE_PERCENT;
+		spoilers = data.SPOILERS_ARMED
     });
     return false;
 }
@@ -1010,9 +1019,11 @@ function displayData() {
     checkAndUpdateButton("#pitot-heat", pitot_heat, "Pitot Heat (On)", "Pitot Heat (Off)");
     checkAndUpdateButton("#anti-ice", eng_anti_ice, "General Anti-Ice (On)", "General Anti-Ice (Off)");
     checkAndUpdateButton("#structural-deice", structural_deice, "Structural Deice (On)", "Structural Deice (Off)");
-	checkAndUpdateButton("#a320-autothrottle", autopilot_autothrottle);
-	checkAndUpdateButton("#a320-loc-ap", autopilot_loc_mode);
-	checkAndUpdateButton("#a320-appr-ap", autopilot_appr_mode);
+    checkAndUpdateButton("#a320-autothrottle", autopilot_autothrottle);
+    checkAndUpdateButton("#a320-loc-ap", autopilot_loc_mode);
+    checkAndUpdateButton("#a320-appr-ap", autopilot_appr_mode);
+    checkAndUpdateButton("#gear", gear, "Gear (Down)", "Gear (Up)");
+    checkAndUpdateButton("#spoilers", spoilers, "Spoilers (On)", "Spoilers (Off)");
 	
     $("#autopilot-heading-lock-dir").attr('placeholder', autopilot_heading_lock_dir);
     $("#autopilot-altitude-lock-var").attr('placeholder', autopilot_altitude_lock_var);
@@ -1046,6 +1057,7 @@ function displayData() {
 	$("#cur_ias").text(airspeed_indicated);
 	$("#cur_alt").text(altitude);
 	$("#cur_hdg").text(plane_heading_degrees);
+	$("#flaps-position").text(flaps_position + "%");
 	$("#landing-vs1").text(landing_vs1);
 	$("#landing-t1").text(landing_t1);
 	$("#landing-vs2").text(landing_vs2);
@@ -1267,4 +1279,49 @@ function presshold2(action, action2, start, speedup, minspeed) {
 
 function releasehold() {
     clearTimeout(btnhold);
+}
+
+function elevatorPlus() {
+	$("#TrimElevator").val(parseInt($("#TrimElevator").val())-100);
+	triggerSimEvent('AXIS_ELEV_TRIM_SET',$("#TrimElevator").val(),true);
+}
+
+function elevatorMinus() {
+	$("#TrimElevator").val(parseInt($("#TrimElevator").val())+100);
+	triggerSimEvent('AXIS_ELEV_TRIM_SET',$("#TrimElevator").val(),true);
+}
+
+function elevatorReset() {
+	$("#TrimElevator").val(0);
+	triggerSimEvent('AXIS_ELEV_TRIM_SET',$("#TrimElevator").val(),true);
+}
+
+function rudderPlus() {
+	$("#TrimRudder").val(parseInt($("#TrimRudder").val())+1);
+	triggerSimEvent('RUDDER_TRIM_SET',$("#TrimRudder").val(),true);
+}
+
+function rudderMinus() {
+	$("#TrimRudder").val(parseInt($("#TrimRudder").val())-1);
+	triggerSimEvent('RUDDER_TRIM_SET',$("#TrimRudder").val(),true);
+}
+
+function rudderReset() {
+	$("#TrimRudder").val(0);
+	triggerSimEvent('RUDDER_TRIM_SET',$("#TrimRudder").val(),true);
+}
+
+function aileronPlus() {
+	$("#TrimAileron").val(parseInt($("#TrimAileron").val())+1);
+	triggerSimEvent('AILERON_TRIM_SET',$("#TrimAileron").val(),true);
+}
+
+function aileronMinus() {
+	$("#TrimAileron").val(parseInt($("#TrimAileron").val())-1);
+	triggerSimEvent('AILERON_TRIM_SET',$("#TrimAileron").val(),true);
+}
+
+function aileronReset() {
+	$("#TrimAileron").val(0);
+	triggerSimEvent('AILERON_TRIM_SET',$("#TrimAileron").val(),true);
 }

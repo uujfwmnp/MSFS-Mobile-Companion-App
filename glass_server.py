@@ -35,20 +35,24 @@ def flask_thread_func(threadname):
         "Default G1000",
         "A32NX (FlyByWire)",
         "CRJ-550/700 (Aerosoft)",
+        "Long-EZ (IndiaFoxtEcho)",
+        "MB-339 (IndiaFoxtEcho)",
         "PA-28R Arrow III GPS100 (Just Flight)",
         "PA-28R Arrow III GNS530 (Just Flight)",
         "PA-28R Arrow III GNS Dual (Just Flight)"
         ]
     planes_dict = {
-        "Default": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["Panel", "panel"]],
-        "Default GNS430": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["GPS", "gns430"],["Panel", "panel"]],
-        "Default GNS530": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["GPS", "gns530"],["Panel", "panel"]],
-        "Default G1000": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["PFD", "g1000_pfd"],["MFD", "g1000_mfd"],["Panel", "panel"]],
-        "A32NX (FlyByWire)":[["FCU", "ap_a32nx"],["EFIS", "efis_a32nx"],["COM", "com"],["Panel", "panel_a32nx"]],
-        "CRJ-550/700 (Aerosoft)": [["FCP", "ap_as_crj"],["Side\xa0Panel", "side_panel_as_crj"],["NAV", "nav_as_crj"],["COM", "com_as_crj"]],
-        "PA-28R Arrow III GPS100 (Just Flight)": [["NAV", "nav_jf_arrow_gps100"],["COM", "com_jf_arrow_gps100"],["AP", "ap_jf_arrow"],["GPS", "gps100_jf_arrow"],["Panel", "panel_jf_arrow"]],
-        "PA-28R Arrow III GNS530 (Just Flight)": [["NAV", "nav_jf_arrow_gns"],["COM", "com_jf_arrow_gns"],["AP", "ap_jf_arrow"],["GPS", "gns530"],["Panel", "panel_jf_arrow"]],
-        "PA-28R Arrow III GNS Dual (Just Flight)": [["NAV", "nav_jf_arrow_gnsdual"],["COM", "com_jf_arrow_gnsdual"],["AP", "ap_jf_arrow"],["GPS", "gnsdual_jf_arrow"],["Panel", "panel_jf_arrow"]]
+        "Default": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["Panel", "panel"],["Other", "other"]],
+        "Default GNS430": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["GPS", "gns430"],["Panel", "panel"],["Other", "other"]],
+        "Default GNS530": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["GPS", "gns530"],["Panel", "panel"],["Other", "other"]],
+        "Default G1000": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["PFD", "g1000_pfd"],["MFD", "g1000_mfd"],["Panel", "panel"],["Other", "other"]],
+        "A32NX (FlyByWire)":[["FCU", "ap_a32nx"],["EFIS", "efis_a32nx"],["COM", "com"],["Panel", "panel_a32nx"],["Other", "other_a32nx"]],
+        "CRJ-550/700 (Aerosoft)": [["FCP", "ap_as_crj"],["Side\xa0Panel", "side_panel_as_crj"],["NAV", "nav_as_crj"],["COM", "com_as_crj"],["Other", "other_as_crj"]],
+        "Long-EZ (IndiaFoxtEcho)": [["COM", "com_ife_long_ez"],["Panel", "panel_ife_long_ez"],["Other", "other_ife_long_ez"]],
+        "MB-339 (IndiaFoxtEcho)": [["NAV", "nav_ife_mb339"],["COM", "com_ife_mb339"],["FLT\xa0DIR", "flt_dir_ife_mb339"],["AP", "ap_ife_mb339"],["Panel", "panel_ife_mb339"],["Other", "other"]],
+        "PA-28R Arrow III GPS100 (Just Flight)": [["NAV", "nav_jf_arrow_gps100"],["COM", "com_jf_arrow_gps100"],["AP", "ap_jf_arrow"],["GPS", "gps100_jf_arrow"],["Panel", "panel_jf_arrow"],["Other", "other_no_spd_ailr"]],
+        "PA-28R Arrow III GNS530 (Just Flight)": [["NAV", "nav_jf_arrow_gns"],["COM", "com_jf_arrow_gns"],["AP", "ap_jf_arrow"],["GPS", "gns530"],["Panel", "panel_jf_arrow"],["Other", "other_no_spd_ailr"]],
+        "PA-28R Arrow III GNS Dual (Just Flight)": [["NAV", "nav_jf_arrow_gnsdual"],["COM", "com_jf_arrow_gnsdual"],["AP", "ap_jf_arrow"],["GPS", "gnsdual_jf_arrow"],["Panel", "panel_jf_arrow"],["Other", "other_no_spd_ailr"]]
         }
     global selected_plane
     selected_plane = planes_list[0]
@@ -353,9 +357,9 @@ def simconnect_thread_func(threadname):
             None
 
         # NAV/ADF Compass Settings
-        ui_friendly_dictionary["NAV1_OBS_DEG"] = round(await aq.get("NAV_OBS:1"),0)
-        ui_friendly_dictionary["ADF_CARD_DEG"] = round(await aq.get("ADF_CARD"),0)
-        ui_friendly_dictionary["NAV2_OBS_DEG"] = round(await aq.get("NAV_OBS:2"),0)
+        #ui_friendly_dictionary["NAV1_OBS_DEG"] = round(await aq.get("NAV_OBS:1"),0)
+        #ui_friendly_dictionary["ADF_CARD_DEG"] = round(await aq.get("ADF_CARD"),0)
+        #ui_friendly_dictionary["NAV2_OBS_DEG"] = round(await aq.get("NAV_OBS:2"),0)
 
         # Comms
         ui_friendly_dictionary["COM1_STANDBY"] = round(await aq.get("COM_STANDBY_FREQUENCY:1"),3)
@@ -391,9 +395,9 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["AUTOPILOT_MASTER"] = await aq.get("AUTOPILOT_MASTER")
         ui_friendly_dictionary["AUTOPILOT_NAV1_LOCK"] = await aq.get("AUTOPILOT_NAV1_LOCK")
         ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK"] = await aq.get("AUTOPILOT_HEADING_LOCK")
-        ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"] = round(await aq.get("AUTOPILOT_HEADING_LOCK_DIR"))
+#        ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"] = round(await aq.get("AUTOPILOT_HEADING_LOCK_DIR"))
         ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK"] = await aq.get("AUTOPILOT_ALTITUDE_LOCK")
-        ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK_VAR"] = thousandify(round(await aq.get("AUTOPILOT_ALTITUDE_LOCK_VAR")))
+#        ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK_VAR"] = thousandify(round(await aq.get("AUTOPILOT_ALTITUDE_LOCK_VAR")))
         ui_friendly_dictionary["AUTOPILOT_GLIDESLOPE_HOLD"] = await aq.get("AUTOPILOT_GLIDESLOPE_HOLD")
         ui_friendly_dictionary["AUTOPILOT_APPROACH_HOLD"] = await aq.get("AUTOPILOT_APPROACH_HOLD")
         ui_friendly_dictionary["AUTOPILOT_BACKCOURSE_HOLD"] = await aq.get("AUTOPILOT_BACKCOURSE_HOLD")
@@ -408,9 +412,9 @@ def simconnect_thread_func(threadname):
         #ui_friendly_dictionary["AUTOPILOT_MACH_HOLD_VAR"] = round(await aq.get("AUTOPILOT_MACH_HOLD_VAR"),2)
         ui_friendly_dictionary["PLANE_HEADING_DEGREES"] = round(round(await aq.get("PLANE_HEADING_DEGREES_MAGNETIC"),2) * 180/3.1416, 0)
         # Placeholders - Not Actively Used for stress testing
-        #ui_friendly_dictionary["ATC_AIRLINE"] = await aq.get("ATC_AIRLINE")
-        #ui_friendly_dictionary["SMOKE_ENABLE"] = await aq.get("SMOKE_ENABLE")
-        #ui_friendly_dictionary["AUTOPILOT_MACH_HOLD"] = await aq.get("AUTOPILOT_MACH_HOLD")
+        #ui_friendly_dictionary["DA62_DEICE_PUMP"] = await aq.get("MobiFlight.DA62_DEICE_PUMP")
+        #ui_friendly_dictionary["DA62_ICE_LIGHT_MAX_STATE_ENABLED"] = await aq.get("MobiFlight.DA62_ICE_LIGHT_MAX_STATE_ENABLED")
+        #ui_friendly_dictionary["JFARROW_AP_HDG"] = await aq.get("MobiFlight.JFARROW_AP_HDG")
         #ui_friendly_dictionary["AUTOPILOT_WING_LEVELER"] = await aq.get("AUTOPILOT_WING_LEVELER")
         #ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD"] = await aq.get("AUTOPILOT_PITCH_HOLD")
         #ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD_REF"] = await aq.get("AUTOPILOT_PITCH_HOLD_REF")
@@ -422,7 +426,7 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["LIGHT_NAV"] = await aq.get("LIGHT_NAV")
         ui_friendly_dictionary["LIGHT_BEACON"] = await aq.get("LIGHT_BEACON")
         ui_friendly_dictionary["LIGHT_CABIN"] = await aq.get("LIGHT_CABIN")
-        ui_friendly_dictionary["LIGHT_LOGO"] = await aq.get("LIGHT_CABIN")
+        ui_friendly_dictionary["LIGHT_LOGO"] = await aq.get("LIGHT_LOGO")
         ui_friendly_dictionary["LIGHT_PANEL"] = await aq.get("LIGHT_PANEL")
         ui_friendly_dictionary["LIGHT_WING"] = await aq.get("LIGHT_WING")
         ui_friendly_dictionary["LIGHT_RECOGNITION"] = await aq.get("LIGHT_RECOGNITION")
@@ -438,6 +442,11 @@ def simconnect_thread_func(threadname):
         # GPS Next Waypoint
         ui_friendly_dictionary["NEXT_WP_LAT"] = await aq.get("GPS_WP_NEXT_LAT")
         ui_friendly_dictionary["NEXT_WP_LON"] = await aq.get("GPS_WP_NEXT_LON")
+        # Other
+        ui_friendly_dictionary["GEAR_POSITION"] = await aq.get("GEAR_POSITION:1")
+        ui_friendly_dictionary["FLAPS_HANDLE_PERCENT"] = round(await aq.get("FLAPS_HANDLE_PERCENT")*100)
+        ui_friendly_dictionary["SPOILERS_ARMED"] = await aq.get("SPOILERS_HANDLE_POSITION")
+
         
         # Current altitude
         current_alt = await aq.get("INDICATED_ALTITUDE")
@@ -490,12 +499,43 @@ def simconnect_thread_func(threadname):
         asyncio.run(ui_dictionary(ui_friendly_dictionary, previous_alt, ui_friendly_dictionary["LANDING_T1"], ui_friendly_dictionary["LANDING_VS1"], ui_friendly_dictionary["LANDING_T2"], ui_friendly_dictionary["LANDING_VS2"], ui_friendly_dictionary["LANDING_T3"], ui_friendly_dictionary["LANDING_VS3"]))
         #sleep(0.3)
        
+# SimConnect  App 2
+def simconnect_thread_func2(threadname):
+    
+    global ui_friendly_dictionary
+    
+    while True:
+        try:
+            sm = SimConnect()
+            break
+        except:
+            None
+            
+    ae = AircraftEvents(sm)
+    aq = AircraftRequests(sm)
+    
+    def thousandify(x):
+        return f"{x:,}"
 
-  
+    async def ui_dictionary(ui_friendly_dictionary):
+        # Additional for performance
+        ui_friendly_dictionary["LATITUDE"] = round(await aq.get("PLANE_LATITUDE"),6)
+        ui_friendly_dictionary["LONGITUDE"] = round(await aq.get("PLANE_LONGITUDE"),6)
+        ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"] = round(await aq.get("AUTOPILOT_HEADING_LOCK_DIR"))
+        ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK_VAR"] = thousandify(round(await aq.get("AUTOPILOT_ALTITUDE_LOCK_VAR")))
+        # NAV/ADF Compass Settings
+        ui_friendly_dictionary["NAV1_OBS_DEG"] = round(await aq.get("NAV_OBS:1"),0)
+        ui_friendly_dictionary["ADF_CARD_DEG"] = round(await aq.get("ADF_CARD"),0)
+        ui_friendly_dictionary["NAV2_OBS_DEG"] = round(await aq.get("NAV_OBS:2"),0)
+    while True:
+        asyncio.run(ui_dictionary(ui_friendly_dictionary))
+
 if __name__ == "__main__":
     thread1 = Thread(target = simconnect_thread_func, args=('Thread-1', ))
     thread2 = Thread(target = flask_thread_func, args=('Thread-2', ))
+    thread3 = Thread(target = simconnect_thread_func2, args=('Thread-3', ))
     thread1.start()
     thread2.start()
+    thread3.start()
     
     sleep(.5)
