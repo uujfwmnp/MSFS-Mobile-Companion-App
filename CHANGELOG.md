@@ -1,5 +1,12 @@
 # Change Log
 
+**v1.7 May 14, 2021:**
+- Added controls profile for MB-339 and Long-EZ by IndiaFoxtEcho.
+- Added gear, flaps, spoilers and trim (elevator, rudder and aileron) controls.
+- Added press-and-hold button functionality for frequency tune buttons.
+- Improved performance for map tracking (fixed jagged lines).
+- Fixed logo lights button status being mapped to cabin lights.
+
 **v1.6.1 April 20, 2021:**
 - Added controls profile for CRJ-550/700 (Aerosoft). The profile includes controls for FCP, Side Panel, NAV, and COM and introduces press-and-hold button functionality for knobs.
 - Updated controls profile for PA-28R (Just Flight) to reflect v0.4.0 changes.
