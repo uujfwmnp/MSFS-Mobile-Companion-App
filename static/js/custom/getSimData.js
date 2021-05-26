@@ -117,6 +117,15 @@ let gear;
 let flaps_position;
 let spoilers;
 
+// LVars Plane Specific
+let selected_plane;
+let JF_PA_28R_AP_HDG;
+let JF_PA_28R_AP_ROLL;
+let JF_PA_28R_AP_MODE;
+let JF_PA_28R_LIGHT_BCN;
+let JF_PA_28R_AP_NAV;
+let JF_PA_28R_FUEL_SEL;
+
 // Maps Size Fix Function
 let map_size_fix;
 let map_size_fix_mod;
@@ -979,7 +988,19 @@ function getSimulatorData() {
 		//Flight Controls
 		gear = data.GEAR_POSITION;
 		flaps_position = data.FLAPS_HANDLE_PERCENT;
-		spoilers = data.SPOILERS_ARMED
+		spoilers = data.SPOILERS_ARMED;
+		
+		//LVARs
+		selected_plane = data.selected_plane;
+		//JF PA-28R
+		if (selected_plane.substring(0, 6) == "PA-28R") {
+			JF_PA_28R_LIGHT_BCN = data.JF_PA_28R_LIGHT_BCN;
+			JF_PA_28R_AP_HDG = data.JF_PA_28R_AP_HDG;
+			JF_PA_28R_AP_NAV = data.JF_PA_28R_AP_NAV;
+			JF_PA_28R_AP_ROLL = data.JF_PA_28R_AP_ROLL;
+			JF_PA_28R_AP_MODE = data.JF_PA_28R_AP_MODE;
+			JF_PA_28R_FUEL_SEL = data.JF_PA_28R_FUEL_SEL;
+		}
     });
     return false;
 }
@@ -1024,7 +1045,31 @@ function displayData() {
     checkAndUpdateButton("#a320-appr-ap", autopilot_appr_mode);
     checkAndUpdateButton("#gear", gear, "Gear (Down)", "Gear (Up)");
     checkAndUpdateButton("#spoilers", spoilers, "Spoilers (On)", "Spoilers (Off)");
-	
+	//LVARs
+	//JF PA-28R
+	if (selected_plane.substring(0, 6) == "PA-28R") {
+		checkAndUpdateButton("#jf_pa28_bcn_light", JF_PA_28R_LIGHT_BCN);
+		checkAndUpdateButton("#jf_pa28_ap_hdg", JF_PA_28R_AP_HDG);
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_nav", JF_PA_28R_AP_MODE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="NAV", offText="NAV");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_omni", JF_PA_28R_AP_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="OMNI", offText="OMNI");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_hdg", JF_PA_28R_AP_MODE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="HDG", offText="HDG");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_locn", JF_PA_28R_AP_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="LOC-N", offText="LOC-N");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_locr", JF_PA_28R_AP_MODE, 4, onBtn="btn-light", offBtn="btn-secondary", onText="LOC-R", offText="LOC-R");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_roll_l30", JF_PA_28R_AP_ROLL, 0, onBtn="btn-light", offBtn="btn-secondary", onText="L30°", offText="L30°");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_roll_l20", JF_PA_28R_AP_ROLL, 10, onBtn="btn-light", offBtn="btn-secondary", onText="L20°", offText="L20°");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_roll_l10", JF_PA_28R_AP_ROLL, 20, onBtn="btn-light", offBtn="btn-secondary", onText="L10°", offText="L10°");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_roll_off", JF_PA_28R_AP_ROLL, 30, onBtn="btn-light", offBtn="btn-secondary", onText="OFF", offText="OFF");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_roll_r10", JF_PA_28R_AP_ROLL, 40, onBtn="btn-light", offBtn="btn-secondary", onText="R10°", offText="R10°");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_roll_r20", JF_PA_28R_AP_ROLL, 50, onBtn="btn-light", offBtn="btn-secondary", onText="R20°", offText="R20°");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_roll_r30", JF_PA_28R_AP_ROLL, 60, onBtn="btn-light", offBtn="btn-secondary", onText="R30°", offText="R30°");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_nav1", JF_PA_28R_AP_NAV, 0, onBtn="btn-light", offBtn="btn-secondary", onText="NAV1", offText="NAV1");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_nav2", JF_PA_28R_AP_NAV, 2, onBtn="btn-light", offBtn="btn-secondary", onText="NAV2", offText="NAV2");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_off", JF_PA_28R_AP_NAV, 1, onBtn="btn-light", offBtn="btn-secondary", onText="OFF", offText="OFF");
+		checkAndUpdateButtonCustom("#jf_pa28_fuel_cut", JF_PA_28R_FUEL_SEL, 0, onBtn="btn-light", offBtn="btn-secondary", onText="Cut", offText="Cut");
+		checkAndUpdateButtonCustom("#jf_pa28_fuel_left", JF_PA_28R_FUEL_SEL, 1, onBtn="btn-light", offBtn="btn-secondary", onText="Left", offText="Left");
+		checkAndUpdateButtonCustom("#jf_pa28_fuel_right", JF_PA_28R_FUEL_SEL, 2, onBtn="btn-light", offBtn="btn-secondary", onText="Right", offText="Right");
+	}
+
     $("#autopilot-heading-lock-dir").attr('placeholder', autopilot_heading_lock_dir);
     $("#autopilot-altitude-lock-var").attr('placeholder', autopilot_altitude_lock_var);
     $("#autopilot-airspeed-hold-var").attr('placeholder', autopilot_airspeed_hold_var);
@@ -1072,6 +1117,14 @@ function checkAndUpdateButton(buttonName, variableToCheck, onText="On", offText=
         $(buttonName).removeClass("btn-danger").addClass("btn-success").html(onText);
     } else {
         $(buttonName).removeClass("btn-success").addClass("btn-danger").html(offText);
+    }
+}
+
+function checkAndUpdateButtonCustom(buttonName, variableToCheck, variableTrue=1, onBtn="btn-light", offBtn="btn-secondary", onText="On", offText="Off") {
+    if (variableToCheck === variableTrue) {
+        $(buttonName).removeClass(offBtn).addClass(onBtn).html(onText);
+    } else {
+        $(buttonName).removeClass(onBtn).addClass(offBtn).html(offText);
     }
 }
 

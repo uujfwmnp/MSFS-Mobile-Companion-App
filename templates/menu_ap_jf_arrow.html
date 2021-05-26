@@ -24,13 +24,13 @@
 						<div class="lead">AP Roll Settings</div>
 						<div class="row" style="margin-bottom:10px">
 						<div class="col">
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_30L',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">L30°</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_20L',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">L20°</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_10L',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">L10°</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_0',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">OFF</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_10R',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">R10°</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_20R',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">R20°</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_30R',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">R30°</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_30L',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_roll_l30" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">L30°</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_20L',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_roll_l20" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">L20°</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_10L',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_roll_l10" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">L10°</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_0',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_roll_off" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">OFF</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_10R',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_roll_r10" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">R10°</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_20R',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_roll_r20" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">R20°</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_ROLL_30R',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_roll_r30" style="width:50px;padding-left:0px;padding-right:0px;text-align:center">R30°</button>
 						</div>
 						</div>
 						
@@ -41,7 +41,7 @@
 								<tr>
 									<td style="width:130px">Heading switch:</td>
 									<td>
-										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_HDG_Toggle',0,false);$(this).blur();" id="autopilot-heading-lock" type="button" class="btn btn-danger" style="width:55px">?</button>
+										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_HDG_Toggle',0,false);$(this).blur();" id="jf_pa28_ap_hdg" type="button" class="btn btn-danger" style="width:55px">?</button>
 									</td>
 								</tr>
 								<tr>
@@ -70,11 +70,11 @@
 						<div class="lead">AP Radio Coupler</div>
 						<div class="row" style="margin-bottom:10px">
 						<div class="col">
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_NAV',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">NAV</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_OMNI',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">OMNI</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_HDG',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">HDG</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_LOCNOMR',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">LOC-N</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_LOCREV',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">LOC-R</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_NAV',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_mode_nav" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">NAV</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_OMNI',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_mode_omni" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">OMNI</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_HDG',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_mode_hdg" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">HDG</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_LOCNOMR',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_mode_locn" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">LOC-N</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_MODE_LOCREV',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_mode_locr" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">LOC-R</button>
 							
 						</div>
 						</div>
@@ -82,9 +82,9 @@
 						<div class="lead">AP NAV Source</div>
 						<div class="row" style="margin-bottom:10px">
 						<div class="col">
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV1',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">NAV1</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_OFF',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">OFF</button>
-							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV2',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">NAV2</button><br>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV1',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_nav1" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">NAV1</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_OFF',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_off" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">OFF</button>
+							<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV2',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_ap_nav2" style="width:60px;padding-left:0px;padding-right:0px;text-align:center">NAV2</button><br>
 							<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_NAVGPS', 0, true); $(this).blur();" class="btn btn-secondary btn-sm" style="width:189px" title="Toggle between GPS and NAV 1 driving NAV 1 OBS display (and AP)">Toggle GPS/NAV</button>
 						</div>
 						</div>
