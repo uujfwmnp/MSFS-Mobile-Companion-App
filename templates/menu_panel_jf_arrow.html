@@ -22,10 +22,7 @@
 								</tr>
 								<tr>
 									<td>ROT BCN Lights:</td>
-									<td>
-										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_LIGHTS_BCN_off',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:55px;padding-left:0px;padding-right:0px">OFF</button>
-										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_LIGHTS_BCN_on',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:55px">ON</button>
-									</td>
+									<td><button onclick="triggerSimEvent('MobiFlight.JF_ARROW_LIGHTS_BCN_toggle');$(this).blur();" id="jf_pa28_bcn_light" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 								<tr>
 									<td>ANT COL Lights:</td>
@@ -53,9 +50,9 @@
 								<tr>
 									<td style="width:110px">Fuel Selector:</td>
 									<td>
-										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_FUEL_SELECT_cut',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px">Cut</button>
-										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_FUEL_SELECT_left',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px">Left</button>
-										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_FUEL_SELECT_right',0,true);$(this).blur();" type="button" class="btn btn-secondary" style="width:60px;padding-left:0px;padding-right:0px">Right</button>
+										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_FUEL_SELECT_cut',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_fuel_cut" style="width:60px;padding-left:0px;padding-right:0px">Cut</button>
+										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_FUEL_SELECT_left',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_fuel_left" style="width:60px;padding-left:0px;padding-right:0px">Left</button>
+										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_FUEL_SELECT_right',0,true);$(this).blur();" type="button" class="btn btn-secondary" id="jf_pa28_fuel_right" style="width:60px;padding-left:0px;padding-right:0px">Right</button>
 									</td>
 								</tr>
 								<tr>

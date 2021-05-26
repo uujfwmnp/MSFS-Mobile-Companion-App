@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 from SimConnect import *
+from SimConnect.simconnect_mobiflight import SimConnectMobiFlight
+from SimConnect.mobiflight_variable_requests import MobiFlightVariableRequests
 from time import sleep, localtime
 import random
 import logging
@@ -16,6 +18,7 @@ event_name = None
 value_to_use = None
 sm = None
 ae = None
+selected_plane = ""
 
 # Flask WebApp
 def flask_thread_func(threadname):
@@ -56,6 +59,7 @@ def flask_thread_func(threadname):
         }
     global selected_plane
     selected_plane = planes_list[0]
+    ui_friendly_dictionary["selected_plane"] = selected_plane
     
     app = Flask(__name__)
     log = logging.getLogger('werkzeug')
@@ -73,6 +77,7 @@ def flask_thread_func(threadname):
         cur_plane_select = request.form.get("plane_selected")
         if cur_plane_select != None:
             selected_plane = cur_plane_select
+            ui_friendly_dictionary["selected_plane"] = selected_plane
         return render_template('glass.html', planes_list = planes_list, selected_plane = selected_plane, curr_plane = planes_dict[selected_plane])
     
     @app.route('/landscape', methods=["GET", "POST"])
@@ -81,6 +86,7 @@ def flask_thread_func(threadname):
         cur_plane_select = request.form.get("plane_selected")
         if cur_plane_select != None:
             selected_plane = cur_plane_select
+            ui_friendly_dictionary["selected_plane"] = selected_plane
         return render_template('glass_landscape.html', planes_list = planes_list, selected_plane = selected_plane, curr_plane = planes_dict[selected_plane])
         
     def trigger_event(event_name, value_to_use=None):
@@ -395,16 +401,12 @@ def simconnect_thread_func(threadname):
         ui_friendly_dictionary["AUTOPILOT_MASTER"] = await aq.get("AUTOPILOT_MASTER")
         ui_friendly_dictionary["AUTOPILOT_NAV1_LOCK"] = await aq.get("AUTOPILOT_NAV1_LOCK")
         ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK"] = await aq.get("AUTOPILOT_HEADING_LOCK")
-#        ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"] = round(await aq.get("AUTOPILOT_HEADING_LOCK_DIR"))
         ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK"] = await aq.get("AUTOPILOT_ALTITUDE_LOCK")
-#        ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK_VAR"] = thousandify(round(await aq.get("AUTOPILOT_ALTITUDE_LOCK_VAR")))
         ui_friendly_dictionary["AUTOPILOT_GLIDESLOPE_HOLD"] = await aq.get("AUTOPILOT_GLIDESLOPE_HOLD")
         ui_friendly_dictionary["AUTOPILOT_APPROACH_HOLD"] = await aq.get("AUTOPILOT_APPROACH_HOLD")
         ui_friendly_dictionary["AUTOPILOT_BACKCOURSE_HOLD"] = await aq.get("AUTOPILOT_BACKCOURSE_HOLD")
         ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD"] = await aq.get("AUTOPILOT_VERTICAL_HOLD")
-        ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD_VAR"] = await aq.get("AUTOPILOT_VERTICAL_HOLD_VAR")
         ui_friendly_dictionary["AUTOPILOT_FLIGHT_LEVEL_CHANGE"] = await aq.get("AUTOPILOT_FLIGHT_LEVEL_CHANGE")
-        ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(await aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
         ui_friendly_dictionary["AUTOPILOT_AUTOTHROTTLE"] = await aq.get("AUTOTHROTTLE_ACTIVE")
         ui_friendly_dictionary["AUTOPILOT_YAW_DAMPER"] = await aq.get("AUTOPILOT_YAW_DAMPER")
         ui_friendly_dictionary["AIRSPEED_INDICATED"] = round(await aq.get("AIRSPEED_INDICATED"))
@@ -523,6 +525,8 @@ def simconnect_thread_func2(threadname):
         ui_friendly_dictionary["LONGITUDE"] = round(await aq.get("PLANE_LONGITUDE"),6)
         ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"] = round(await aq.get("AUTOPILOT_HEADING_LOCK_DIR"))
         ui_friendly_dictionary["AUTOPILOT_ALTITUDE_LOCK_VAR"] = thousandify(round(await aq.get("AUTOPILOT_ALTITUDE_LOCK_VAR")))
+        ui_friendly_dictionary["AUTOPILOT_VERTICAL_HOLD_VAR"] = await aq.get("AUTOPILOT_VERTICAL_HOLD_VAR")
+        ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"] = round(await aq.get("AUTOPILOT_AIRSPEED_HOLD_VAR"))
         # NAV/ADF Compass Settings
         ui_friendly_dictionary["NAV1_OBS_DEG"] = round(await aq.get("NAV_OBS:1"),0)
         ui_friendly_dictionary["ADF_CARD_DEG"] = round(await aq.get("ADF_CARD"),0)
@@ -530,12 +534,38 @@ def simconnect_thread_func2(threadname):
     while True:
         asyncio.run(ui_dictionary(ui_friendly_dictionary))
 
+# SimConnect LVAR Reading
+def simconnect_thread_func3(threadname):
+    
+    global ui_friendly_dictionary
+    global selected_plane
+
+    sm = SimConnectMobiFlight()
+    vr = MobiFlightVariableRequests(sm)
+    vr.clear_sim_variables()
+    
+    def thousandify(x):
+        return f"{x:,}"
+
+    while True:
+        # PA-28R L-Vars
+        if selected_plane[:6] == "PA-28R":
+            ui_friendly_dictionary["JF_PA_28R_AP_HDG"] = vr.get("(L:AUTOPILOT_hdg)")
+            ui_friendly_dictionary["JF_PA_28R_AP_ROLL"] = vr.get("(L:AUTOPILOT_roll)")
+            ui_friendly_dictionary["JF_PA_28R_AP_MODE"] = vr.get("(L:AUTOPILOT_mode)")
+            ui_friendly_dictionary["JF_PA_28R_AP_NAV"] = vr.get("(L:AUTOPILOT_nav)")
+            ui_friendly_dictionary["JF_PA_28R_LIGHT_BCN"] = vr.get("(L:CENTRE_LOWER_bcn_light)")
+            ui_friendly_dictionary["JF_PA_28R_FUEL_SEL"] = vr.get("(L:LEFT_MISC_fuel_sel)")
+
+
 if __name__ == "__main__":
     thread1 = Thread(target = simconnect_thread_func, args=('Thread-1', ))
     thread2 = Thread(target = flask_thread_func, args=('Thread-2', ))
     thread3 = Thread(target = simconnect_thread_func2, args=('Thread-3', ))
+    thread4 = Thread(target = simconnect_thread_func3, args=('Thread-4', ))
     thread1.start()
     thread2.start()
     thread3.start()
+    thread4.start()
     
     sleep(.5)
