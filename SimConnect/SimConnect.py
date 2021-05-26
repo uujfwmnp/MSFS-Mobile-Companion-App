@@ -69,7 +69,7 @@ class SimConnect:
 				LOGGER.warn("%s: in %s" % (_exception, _request.definitions[0]))
 				return
 
-		LOGGER.warn(_exception)
+		#LOGGER.warn(_exception)
 
 	def handle_state_event(self, pData):
 		print("I:", pData.dwInteger, "F:", pData.fFloat, "S:", pData.szString)
