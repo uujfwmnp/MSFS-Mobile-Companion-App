@@ -1,5 +1,10 @@
 # Change Log
 
+**v1.8 June 14, 2021:**
+- Added controls profile for the FG-1D Corsair by MilViz.
+- Improved UI especially for the default AP and the PA-28R.
+- Added ability to read L:vars thanks to https://github.com/Koseng/MSFSPythonSimConnectMobiFlightExtension
+
 **v1.7 May 14, 2021:**
 - Added controls profile for MB-339 and Long-EZ by IndiaFoxtEcho.
 - Added gear, flaps, spoilers and trim (elevator, rudder and aileron) controls.
