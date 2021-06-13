@@ -50,7 +50,7 @@
 										<div class="input-group sim-input-field" style="width:185px">
 										<input id="autopilot-heading-lock-dir" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('AP_hdg_set').click()" inputmode="numeric" pattern="[0-9]*" class="form-control" placeholder="?" aria-describedby="basic-addon2">
 										<div class="input-group-append">
-											<button onclick='if (document.getElementById("autopilot-heading-lock-dir").value <= 360 && document.getElementById("autopilot-heading-lock-dir").value >= 0 && document.getElementById("autopilot-heading-lock-dir").value != "") {triggerSimEventFromField ("HEADING_BUG_SET", "autopilot-heading-lock-dir", "Setting Heading Bug");$("#autopilot-heading-lock-dir").val("");}; $(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP heading in degrees" id="AP_hdg_set">Set</button>
+											<button onclick='if (document.getElementById("autopilot-heading-lock-dir").value <= 360 && document.getElementById("autopilot-heading-lock-dir").value >= 0 && document.getElementById("autopilot-heading-lock-dir").value != "") {triggerSimEventFromField ("HEADING_BUG_SET", "autopilot-heading-lock-dir");$("#autopilot-heading-lock-dir").val("");}; $(this).blur();' class="btn btn-warning" type="button" style="margin-top:0px;margin-bottom:0px;width:70px;" title="Set AP heading in degrees" id="AP_hdg_set">Set</button>
 										</div>
 										</div>
 									</td>

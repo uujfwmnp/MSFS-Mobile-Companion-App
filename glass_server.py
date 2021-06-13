@@ -38,6 +38,7 @@ def flask_thread_func(threadname):
         "Default G1000",
         "A32NX (FlyByWire)",
         "CRJ-550/700 (Aerosoft)",
+        "FG-1D Corsair (MilViz)",
         "Long-EZ (IndiaFoxtEcho)",
         "MB-339 (IndiaFoxtEcho)",
         "PA-28R Arrow III GPS100 (Just Flight)",
@@ -51,6 +52,7 @@ def flask_thread_func(threadname):
         "Default G1000": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["PFD", "g1000_pfd"],["MFD", "g1000_mfd"],["Panel", "panel"],["Other", "other"]],
         "A32NX (FlyByWire)":[["FCU", "ap_a32nx"],["EFIS", "efis_a32nx"],["COM", "com"],["Panel", "panel_a32nx"],["Other", "other_a32nx"]],
         "CRJ-550/700 (Aerosoft)": [["FCP", "ap_as_crj"],["Side\xa0Panel", "side_panel_as_crj"],["NAV", "nav_as_crj"],["COM", "com_as_crj"],["Other", "other_as_crj"]],
+        "FG-1D Corsair (MilViz)": [["NAV", "nav_milviz_corsair"],["COM", "com_milviz_corsair"],["Engine", "engine_milviz_corsair"],["Panel", "panel_milviz_corsair"],["Other", "other_milviz_corsair"]],
         "Long-EZ (IndiaFoxtEcho)": [["COM", "com_ife_long_ez"],["Panel", "panel_ife_long_ez"],["Other", "other_ife_long_ez"]],
         "MB-339 (IndiaFoxtEcho)": [["NAV", "nav_ife_mb339"],["COM", "com_ife_mb339"],["FLT\xa0DIR", "flt_dir_ife_mb339"],["AP", "ap_ife_mb339"],["Panel", "panel_ife_mb339"],["Other", "other"]],
         "PA-28R Arrow III GPS100 (Just Flight)": [["NAV", "nav_jf_arrow_gps100"],["COM", "com_jf_arrow_gps100"],["AP", "ap_jf_arrow"],["GPS", "gps100_jf_arrow"],["Panel", "panel_jf_arrow"],["Other", "other_no_spd_ailr"]],
@@ -556,6 +558,34 @@ def simconnect_thread_func3(threadname):
             ui_friendly_dictionary["JF_PA_28R_AP_NAV"] = vr.get("(L:AUTOPILOT_nav)")
             ui_friendly_dictionary["JF_PA_28R_LIGHT_BCN"] = vr.get("(L:CENTRE_LOWER_bcn_light)")
             ui_friendly_dictionary["JF_PA_28R_FUEL_SEL"] = vr.get("(L:LEFT_MISC_fuel_sel)")
+        # FG-1D L-Vars
+        if selected_plane[:5] == "FG-1D":
+            ui_friendly_dictionary["MILVIZ_CORSAIR_OIL_COOLER"] = vr.get("(L:FG1D105)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_INTERCOOLER"] = vr.get("(L:FG1D106)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_SUPERCHARGER"] = vr.get("(L:FG1D021)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_FUEL_SELECT"] = vr.get("(L:FG1D013)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_LOCK_TAILWHEEL"] = vr.get("(L:FG1D005)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_GUN_LIGHT"] = vr.get("(L:FG1D085)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_FUEL_PUMP"] = vr.get("(L:FG1D118)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_EXT_LIGHTS"] = vr.get("(L:FG1D124)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_WING_LIGHTS"] = vr.get("(L:FG1D125)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_TAIL_LIGHTS"] = vr.get("(L:FG1D126)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_FORM_LIGHTS"] = vr.get("(L:FG1D127)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_SECTION_LIGHTS"] = vr.get("(L:FG1D128)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_SECSEL_LIGHTS"] = vr.get("(L:FG1D129)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_APP_LIGHTS"] = vr.get("(L:FG1D130)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_COCKPIT_LIGHTS"] = vr.get("(L:FG1D131)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_CHART_LIGHTS"] = vr.get("(L:FG1D132)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_LPANEL_LIGHTS"] = vr.get("(L:FG1D133)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_RPANEL_LIGHTS"] = vr.get("(L:FG1D134)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_LINST_LIGHTS"] = vr.get("(L:FG1D135)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_RINST_LIGHTS"] = vr.get("(L:FG1D136)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_DEFROST"] = vr.get("(L:FG1D137)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_PITOT_HEAT"] = vr.get("(L:FG1D138)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_RECPT"] = vr.get("(L:FG1D139)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_BNC_LIGHTS"] = vr.get("(L:FG1D110)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_RECOGN_LIGHTS"] = vr.get("(L:FG1D111)")
+            ui_friendly_dictionary["MILVIZ_CORSAIR_LANDING_LIGHTS"] = vr.get("(L:FG1D196)")
 
 
 if __name__ == "__main__":
