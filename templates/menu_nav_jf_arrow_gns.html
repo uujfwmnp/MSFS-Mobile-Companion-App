@@ -70,7 +70,7 @@
 								</div>
 								<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS_1_Set').click()" inputmode="numeric" pattern="[0-9]*" id="OBS_1_heading" aria-label="OBS 1 Deg" aria-describedby="OBS_1_Deg" placeholder="-">
 								<div class="input-group-append">
-									<button onclick='if (document.getElementById("OBS_1_heading").value <= 360 && document.getElementById("OBS_1_heading").value >= 0 && document.getElementById("OBS_1_heading").value % 1 === 0 && document.getElementById("OBS_1_heading").value != "") {triggerSimEventFromField ("VOR1_SET", "OBS_1_heading", "Setting OBS 1");$("#OBS_1_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS_1_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS 1 heading in degrees">Set</button>
+									<button onclick='if (document.getElementById("OBS_1_heading").value <= 360 && document.getElementById("OBS_1_heading").value >= 0 && document.getElementById("OBS_1_heading").value % 1 === 0 && document.getElementById("OBS_1_heading").value != "") {triggerSimEventFromField ("VOR1_SET", "OBS_1_heading");$("#OBS_1_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS_1_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS 1 heading in degrees">Set</button>
 								</div>
 							</div>
 							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR1_OBI_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:77px;margin-left:96px">-1°</button>
@@ -108,7 +108,7 @@
 								</div>
 								<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS_2_Set').click()" inputmode="numeric" pattern="[0-9]*" id="OBS_2_heading" aria-label="OBS 2 Deg" aria-describedby="OBS_2_Deg" placeholder="-">
 								<div class="input-group-append">
-									<button onclick='if (document.getElementById("OBS_2_heading").value <= 360 && document.getElementById("OBS_2_heading").value >= 0 && document.getElementById("OBS_2_heading").value % 1 === 0 && document.getElementById("OBS_2_heading").value != "") {triggerSimEventFromField ("VOR2_SET", "OBS_2_heading", "Setting OBS 1");$("#OBS_2_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS_2_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS 1 heading in degrees">Set</button>
+									<button onclick='if (document.getElementById("OBS_2_heading").value <= 360 && document.getElementById("OBS_2_heading").value >= 0 && document.getElementById("OBS_2_heading").value % 1 === 0 && document.getElementById("OBS_2_heading").value != "") {triggerSimEventFromField ("VOR2_SET", "OBS_2_heading");$("#OBS_2_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS_2_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS 1 heading in degrees">Set</button>
 								</div>
 							</div>
 							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR2_OBI_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:77px;margin-left:96px">-1°</button>
