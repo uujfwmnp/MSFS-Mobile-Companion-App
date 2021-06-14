@@ -549,7 +549,7 @@ def simconnect_thread_func3(threadname):
     def thousandify(x):
         return f"{x:,}"
 
-    while False:
+    while True:
         # PA-28R L-Vars
         if selected_plane[:6] == "PA-28R":
             ui_friendly_dictionary["JF_PA_28R_AP_HDG"] = vr.get("(L:AUTOPILOT_hdg)")
