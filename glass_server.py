@@ -38,6 +38,7 @@ def flask_thread_func(threadname):
         "Default G1000",
         "A32NX (FlyByWire)",
         "CRJ-550/700 (Aerosoft)",
+        "DC-6 (PMDG)",
         "FG-1D Corsair (MilViz)",
         "Long-EZ (IndiaFoxtEcho)",
         "MB-339 (IndiaFoxtEcho)",
@@ -52,6 +53,7 @@ def flask_thread_func(threadname):
         "Default G1000": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["PFD", "g1000_pfd"],["MFD", "g1000_mfd"],["Panel", "panel"],["Other", "other"]],
         "A32NX (FlyByWire)":[["FCU", "ap_a32nx"],["EFIS", "efis_a32nx"],["COM", "com"],["Panel", "panel_a32nx"],["Other", "other_a32nx"]],
         "CRJ-550/700 (Aerosoft)": [["FCP", "ap_as_crj"],["Side\xa0Panel", "side_panel_as_crj"],["NAV", "nav_as_crj"],["COM", "com_as_crj"],["Other", "other_as_crj"]],
+        "DC-6 (PMDG)": [["NAV", "nav_pmdg_dc6"],["COM", "com_pmdg_dc6"],["AFE", "afe_pmdg_dc6"],["AP", "ap_pmdg_dc6"],["GPS", "gns430"],["Other", "other_pmdg_dc6"]],
         "FG-1D Corsair (MilViz)": [["NAV", "nav_milviz_corsair"],["COM", "com_milviz_corsair"],["Engine", "engine_milviz_corsair"],["Panel", "panel_milviz_corsair"],["Other", "other_milviz_corsair"]],
         "Long-EZ (IndiaFoxtEcho)": [["COM", "com_ife_long_ez"],["Panel", "panel_ife_long_ez"],["Other", "other_ife_long_ez"]],
         "MB-339 (IndiaFoxtEcho)": [["NAV", "nav_ife_mb339"],["COM", "com_ife_mb339"],["FLT\xa0DIR", "flt_dir_ife_mb339"],["AP", "ap_ife_mb339"],["Panel", "panel_ife_mb339"],["Other", "other"]],
@@ -586,7 +588,60 @@ def simconnect_thread_func3(threadname):
             ui_friendly_dictionary["MILVIZ_CORSAIR_BNC_LIGHTS"] = vr.get("(L:FG1D110)")
             ui_friendly_dictionary["MILVIZ_CORSAIR_RECOGN_LIGHTS"] = vr.get("(L:FG1D111)")
             ui_friendly_dictionary["MILVIZ_CORSAIR_LANDING_LIGHTS"] = vr.get("(L:FG1D196)")
-        sleep(0.25)
+        # DC-6 L-Vars
+        if selected_plane[:4] == "DC-6":
+            ui_friendly_dictionary["PMDG_DC6_AFE_BEFORE_START"] = vr.get("(L:AfeBeforeStart)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_AFTER_START"] = vr.get("(L:AfeAfterStart)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_BEFORE_TAKEOFF"] = vr.get("(L:AfeBeforeTakeoff)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_TAKEOFF_DRY"] = vr.get("(L:AfeTakeoffDry)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_TAKEOFF_WET"] = vr.get("(L:AfeTakeoffWet)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_CRUISE"] = vr.get("(L:AfeCruise)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_DESCENT"] = vr.get("(L:AfeDescent)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_INRANGE"] = vr.get("(L:AfeInrange)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_BEFORE_LANDING"] = vr.get("(L:AfeBeforeLanding)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_AFTER_LANDING"] = vr.get("(L:AfeAfterLanding)")
+            ui_friendly_dictionary["PMDG_DC6_AFE_PARKING"] = vr.get("(L:AfeParking)")
+            ui_friendly_dictionary["PMDG_DC6_ADF_ACTIVE"] = vr.get("(L:ADFActiveFreq)")
+            ui_friendly_dictionary["PMDG_DC6_ADF_STBY"] = vr.get("(L:ADFStbyFreq)")
+            ui_friendly_dictionary["PMDG_DC6_DME_MODE"] = vr.get("(L:dc6_271_obj)")
+            ui_friendly_dictionary["PMDG_DC6_GYRO_PILOT"] = vr.get("(L:dc6_434_obj)")
+            ui_friendly_dictionary["PMDG_DC6_ALTITUDE_CONTROL"] = vr.get("(L:dc6_436_obj)")
+            ui_friendly_dictionary["PMDG_DC6_GYRO_PILOT_MODE"] = vr.get("(L:dc6_445_obj)")
+            ui_friendly_dictionary["PMDG_DC6_AP_MECHANICAL"] = vr.get("(L:dc6_404_obj)")
+            ui_friendly_dictionary["PMDG_DC6_GUST_LOCK"] = vr.get("(L:dc6_398_obj)")
+            ui_friendly_dictionary["PMDG_DC6_COM1_SPACING"] = vr.get("(A:COM SPACING MODE:1, Enum)")
+            ui_friendly_dictionary["PMDG_DC6_COM2_SPACING"] = vr.get("(A:COM SPACING MODE:2, Enum)")
+            try:
+                ui_friendly_dictionary["PMDG_DC6_COM1_STANDBY"] = round(vr.get("(A:COM STANDBY FREQUENCY:1, Enum)")/1000000,3)
+                ui_friendly_dictionary["PMDG_DC6_COM1_ACTIVE"] = round(vr.get("(A:COM ACTIVE FREQUENCY:1, Enum)")/1000000,3)
+                ui_friendly_dictionary["PMDG_DC6_COM2_STANDBY"] = round(vr.get("(A:COM STANDBY FREQUENCY:2, Enum)")/1000000,3)
+                ui_friendly_dictionary["PMDG_DC6_COM2_ACTIVE"] = round(vr.get("(A:COM ACTIVE FREQUENCY:2, Enum)")/1000000,3)
+            except:
+                None
+            # Gyropilot Settings
+            try:
+                ui_friendly_dictionary["PMDG_DC6_AP_TURN"] = int(vr.get("(L:dc6_442_obj)")) - 20
+                ui_friendly_dictionary["PMDG_DC6_AP_CLIMB_WHEEL"] = int(vr.get("(L:dc6_440_obj)")) - 50
+                ui_friendly_dictionary["PMDG_DC6_AP_AILERON_TRIM"] = int(vr.get("(L:dc6_435_obj)")) - 50
+            except:
+                None
+            # Gyro Pilot Mode Adjustments
+            if ui_friendly_dictionary["PMDG_DC6_GYRO_PILOT_MODE"] == 0:
+                ui_friendly_dictionary["PMDG_DC6_GYRO_PILOT_MODE"] = "GYROPILOT"
+            if ui_friendly_dictionary["PMDG_DC6_GYRO_PILOT_MODE"] == 1:
+                ui_friendly_dictionary["PMDG_DC6_GYRO_PILOT_MODE"] = "LOCALIZER"
+            if ui_friendly_dictionary["PMDG_DC6_GYRO_PILOT_MODE"] == 2:
+                ui_friendly_dictionary["PMDG_DC6_GYRO_PILOT_MODE"] = "APPROACH"
+            # COM Spacing
+            if ui_friendly_dictionary["PMDG_DC6_COM1_SPACING"] == 0:
+                ui_friendly_dictionary["PMDG_DC6_COM1_SPACING"] = "Toggle COM1 Spacing: 25KHz"
+            else:
+                ui_friendly_dictionary["PMDG_DC6_COM1_SPACING"] = "Toggle COM1 Spacing: 8.33KHz"
+            if ui_friendly_dictionary["PMDG_DC6_COM2_SPACING"] == 0:
+                ui_friendly_dictionary["PMDG_DC6_COM2_SPACING"] = "Toggle COM2 Spacing: 25KHz"
+            else:
+                ui_friendly_dictionary["PMDG_DC6_COM2_SPACING"] = "Toggle COM2 Spacing: 8.33KHz"
+        sleep(0.15)
 
 
 if __name__ == "__main__":
