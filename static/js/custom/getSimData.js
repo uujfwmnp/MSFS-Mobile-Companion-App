@@ -163,6 +163,35 @@ let MILVIZ_CORSAIR_DEFROST;
 let MILVIZ_CORSAIR_PITOT_HEAT;
 let MILVIZ_CORSAIR_RECPT;
 
+//PMDG DC-6
+let PMDG_DC6_AFE_BEFORE_START;
+let PMDG_DC6_AFE_AFTER_START;
+let PMDG_DC6_AFE_BEFORE_TAKEOFF;
+let PMDG_DC6_AFE_TAKEOFF_DRY;
+let PMDG_DC6_AFE_TAKEOFF_WET;
+let PMDG_DC6_AFE_CRUISE;
+let PMDG_DC6_AFE_DESCENT;
+let PMDG_DC6_AFE_INRANGE;
+let PMDG_DC6_AFE_BEFORE_LANDING;
+let PMDG_DC6_AFE_AFTER_LANDING;
+let PMDG_DC6_AFE_PARKING;
+let PMDG_DC6_ADF_ACTIVE;
+let PMDG_DC6_ADF_STBY;
+let PMDG_DC6_DME_MODE;
+let PMDG_DC6_GYRO_PILOT;
+let PMDG_DC6_ALTITUDE_CONTROL;
+let PMDG_DC6_GYRO_PILOT_MODE;
+let PMDG_DC6_AP_MECHANICAL;
+let PMDG_DC6_GUST_LOCK;
+let PMDG_DC6_AP_TURN;
+let PMDG_DC6_AP_CLIMB_WHEEL;
+let PMDG_DC6_AP_AILERON_TRIM;
+let PMDG_DC6_COM1_STANDBY;
+let PMDG_DC6_COM1_ACTIVE;
+let PMDG_DC6_COM2_STANDBY;
+let PMDG_DC6_COM2_ACTIVE;
+let PMDG_DC6_COM1_SPACING;
+let PMDG_DC6_COM2_SPACING;
 
 function mapRefreshFix() {
 	map_size_fix = map_size_fix + 1;
@@ -1060,6 +1089,37 @@ function getSimulatorData() {
 			MILVIZ_CORSAIR_RECOGN_LIGHTS = data.MILVIZ_CORSAIR_RECOGN_LIGHTS;
 			MILVIZ_CORSAIR_LANDING_LIGHTS = data.MILVIZ_CORSAIR_LANDING_LIGHTS;
 		}
+		//PMDG DC-6
+		if (selected_plane.substring(0, 4) == "DC-6") {
+			PMDG_DC6_AFE_BEFORE_START = data.PMDG_DC6_AFE_BEFORE_START;
+			PMDG_DC6_AFE_AFTER_START = data.PMDG_DC6_AFE_AFTER_START;
+			PMDG_DC6_AFE_BEFORE_TAKEOFF = data.PMDG_DC6_AFE_BEFORE_TAKEOFF;
+			PMDG_DC6_AFE_TAKEOFF_DRY = data.PMDG_DC6_AFE_TAKEOFF_DRY;
+			PMDG_DC6_AFE_TAKEOFF_WET = data.PMDG_DC6_AFE_TAKEOFF_WET;
+			PMDG_DC6_AFE_CRUISE = data.PMDG_DC6_AFE_CRUISE;
+			PMDG_DC6_AFE_DESCENT = data.PMDG_DC6_AFE_DESCENT;
+			PMDG_DC6_AFE_INRANGE = data.PMDG_DC6_AFE_INRANGE;
+			PMDG_DC6_AFE_BEFORE_LANDING = data.PMDG_DC6_AFE_BEFORE_LANDING;
+			PMDG_DC6_AFE_AFTER_LANDING = data.PMDG_DC6_AFE_AFTER_LANDING;
+			PMDG_DC6_AFE_PARKING = data.PMDG_DC6_AFE_PARKING;
+			PMDG_DC6_ADF_ACTIVE = Number(data.PMDG_DC6_ADF_ACTIVE).toFixed(2);
+			PMDG_DC6_ADF_STBY = Number(data.PMDG_DC6_ADF_STBY).toFixed(2);
+			PMDG_DC6_DME_MODE = data.PMDG_DC6_DME_MODE;
+			PMDG_DC6_GYRO_PILOT = data.PMDG_DC6_GYRO_PILOT;
+			PMDG_DC6_ALTITUDE_CONTROL = data.PMDG_DC6_ALTITUDE_CONTROL;
+			PMDG_DC6_GYRO_PILOT_MODE = data.PMDG_DC6_GYRO_PILOT_MODE;
+			PMDG_DC6_AP_MECHANICAL = data.PMDG_DC6_AP_MECHANICAL;
+			PMDG_DC6_GUST_LOCK = data.PMDG_DC6_GUST_LOCK;
+			PMDG_DC6_AP_TURN = Number(data.PMDG_DC6_AP_TURN).toFixed(0);
+			PMDG_DC6_AP_CLIMB_WHEEL = Number(data.PMDG_DC6_AP_CLIMB_WHEEL).toFixed(0);
+			PMDG_DC6_AP_AILERON_TRIM = Number(data.PMDG_DC6_AP_AILERON_TRIM).toFixed(0);
+			PMDG_DC6_COM1_STANDBY = Number(data.PMDG_DC6_COM1_STANDBY).toFixed(3);
+			PMDG_DC6_COM2_STANDBY = Number(data.PMDG_DC6_COM2_STANDBY).toFixed(3);
+			PMDG_DC6_COM1_ACTIVE = Number(data.PMDG_DC6_COM1_ACTIVE).toFixed(3);
+			PMDG_DC6_COM2_ACTIVE = Number(data.PMDG_DC6_COM2_ACTIVE).toFixed(3);
+			PMDG_DC6_COM1_SPACING = data.PMDG_DC6_COM1_SPACING;
+			PMDG_DC6_COM2_SPACING = data.PMDG_DC6_COM2_SPACING;
+		}
 
 	});
 	return false;
@@ -1224,6 +1284,41 @@ function displayData() {
 		checkAndUpdateButtonCustom("#milviz_corsair_app_off", MILVIZ_CORSAIR_APP_LIGHTS, 0, onBtn="btn-light", offBtn="btn-secondary", onText="Off", offText="Off");
 		checkAndUpdateButtonCustom("#milviz_corsair_app_on", MILVIZ_CORSAIR_APP_LIGHTS, 1, onBtn="btn-light", offBtn="btn-secondary", onText="On", offText="On");
 		
+	}
+	
+	//PMDG DC-6
+	if (selected_plane.substring(0, 4) == "DC-6") {
+		$("#pmdg_dc6_adf1_active").text(PMDG_DC6_ADF_ACTIVE);
+		$("#pmdg_dc6_adf1_standby").text(PMDG_DC6_ADF_STBY);
+		$("#pmdg-dc6-ap-gyropilot-settings").text(PMDG_DC6_GYRO_PILOT_MODE);
+		$("#pmdg-dc6-ap-turn").text(PMDG_DC6_AP_TURN);
+		$("#pmdg-dc6-ap-glide-climb").text(PMDG_DC6_AP_CLIMB_WHEEL);
+		$("#pmdg-dc6-ap-aileron").text(PMDG_DC6_AP_AILERON_TRIM);
+		$("#pmdg-dc6-com1-spacing").text(PMDG_DC6_COM1_SPACING);
+		$("#pmdg-dc6-com2-spacing").text(PMDG_DC6_COM2_SPACING);
+		$("#pmdg-dc6-com1-active").text(PMDG_DC6_COM1_ACTIVE);
+		$("#pmdg-dc6-com1-standby").text(PMDG_DC6_COM1_STANDBY);
+		$("#pmdg-dc6-com2-active").text(PMDG_DC6_COM2_ACTIVE);
+		$("#pmdg-dc6-com2-standby").text(PMDG_DC6_COM2_STANDBY);
+		checkAndUpdateButton("#pmdg-dc6-ap-mechnical", PMDG_DC6_AP_MECHANICAL, "Gyropilot Lever Enganged", "Gyropilot Lever Disenganged");
+		checkAndUpdateButton("#pmdg-dc6-ap-gyropilot", PMDG_DC6_GYRO_PILOT, "Gyropilot (On)", "Gyropilot (Off)");
+		checkAndUpdateButton("#pmdg-dc6-ap-altitude-controls", PMDG_DC6_ALTITUDE_CONTROL, "Altitude (On)", "Altitude (Off)");
+		checkAndUpdateButton("#pmdg-dc6-afe-before-start", PMDG_DC6_AFE_BEFORE_START);
+		checkAndUpdateButton("#pmdg-dc6-afe-after-start", PMDG_DC6_AFE_AFTER_START);
+		checkAndUpdateButton("#pmdg-dc6-afe-before-takeoff", PMDG_DC6_AFE_BEFORE_TAKEOFF);
+		checkAndUpdateButton("#pmdg-dc6-afe-takeoff-dry", PMDG_DC6_AFE_TAKEOFF_DRY);
+		checkAndUpdateButton("#pmdg-dc6-afe-takeoff-wet", PMDG_DC6_AFE_TAKEOFF_WET);
+		checkAndUpdateButton("#pmdg-dc6-afe-cruise", PMDG_DC6_AFE_CRUISE);
+		checkAndUpdateButton("#pmdg-dc6-afe-descent", PMDG_DC6_AFE_DESCENT);
+		checkAndUpdateButton("#pmdg-dc6-afe-in-range", PMDG_DC6_AFE_INRANGE);
+		checkAndUpdateButton("#pmdg-dc6-afe-before-landing", PMDG_DC6_AFE_BEFORE_LANDING);
+		checkAndUpdateButton("#pmdg-dc6-afe-after-landing", PMDG_DC6_AFE_AFTER_LANDING);
+		checkAndUpdateButton("#pmdg-dc6-afe-parking", PMDG_DC6_AFE_PARKING);
+		checkAndUpdateButtonCustom("#pmdg-dc6-gust-lock", PMDG_DC6_GUST_LOCK, 0, onBtn="btn-success", offBtn="btn-danger", onText="Gust Lock (On)", offText="Gust Lock (Off)");
+		checkAndUpdateButtonCustom("#pmdg-dc6-dme1", PMDG_DC6_DME_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="DME NAV1", offText="DME NAV1");
+		checkAndUpdateButtonCustom("#pmdg-dc6-dme2", PMDG_DC6_DME_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="DME NAV2", offText="DME NAV2");
+		checkAndUpdateButtonCustom("#pmdg-dc6-dme1-direct", PMDG_DC6_DME_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="DME NAV1", offText="DME NAV1");
+		checkAndUpdateButtonCustom("#pmdg-dc6-dme2-direct", PMDG_DC6_DME_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="DME NAV2", offText="DME NAV2");
 	}
 }
 
