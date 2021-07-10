@@ -1,5 +1,12 @@
 # Change Log
 
+**v1.8.2 July 9, 2021:**
+- Added controls profile for the DC-6 by PMDG. Supports NAV, ADF, COM, XPNDR, Gyropilot and the Artificial Flight Engineer.
+- Minor UI improvements.
+
+**v1.8.1 June 14, 2021:**
+- CPU performance issue hotfix.
+
 **v1.8 June 14, 2021:**
 - Added controls profile for the FG-1D Corsair by MilViz.
 - Improved UI especially for the default AP and the PA-28R.
