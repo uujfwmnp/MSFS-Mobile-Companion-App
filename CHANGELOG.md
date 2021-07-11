@@ -1,6 +1,6 @@
 # Change Log
 
-**v1.8.2 July 9, 2021:**
+**v1.8.2 July 11, 2021:**
 - Added controls profile for the DC-6 by PMDG. Supports NAV, ADF, COM, XPNDR, Gyropilot and the Artificial Flight Engineer.
 - Minor UI improvements.
 
