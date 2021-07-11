@@ -25,16 +25,16 @@ MSFS Mobile Companion App has built-in support for the following aircraft:
 - Default GNS430/530 and G1000 (to be used with default MSFS planes and other third-party planes without dedicated controls profiles)
 - A32NX by FlyByWire
 - CRJ-550/700 by Aerosoft
+- DC-6 by PMDG
 - FG-1D Corsair by MilViz
 - Long-EZ by IndiaFoxtEcho
 - MB-339 by IndiaFoxtEcho
 - PA-28R Arrow III (GPS100, GNS530, GNS Dual) by Just Flight
 
-## Update 06/14/2021 Version 1.8 Changelog:
+## Update 07/11/2021 Version 1.8.2 Changelog:
 
-- Added controls profile for the FG-1D Corsair by MilViz.
-- Improved UI especially for the default AP and the PA-28R.
-- Added ability to read L:vars thanks to https://github.com/Koseng/MSFSPythonSimConnectMobiFlightExtension
+- Added controls profile for the DC-6 by PMDG. Supports NAV, ADF, COM, XPNDR, Gyropilot and the Artificial Flight Engineer.
+- Minor UI improvements.
 
 ## How do I install MSFS Mobile Companion App?
 1. Download the latest build [here](https://github.com/mracko/MSFS-Mobile-Companion-App/releases/).
@@ -45,13 +45,13 @@ MSFS Mobile Companion App has built-in support for the following aircraft:
 1. Copy the **mobiflight-event-module** folder into the Community folder of Microsoft Flight Simulator. The MobiFlight WASM Module allows the app to access additional cockpit switches. You will find the Community folder under:
    - MS Store users: C:\Users\YOURUSERNAME\AppData\Local\Packages\Microsoft.FlightSimulator_8wekyb3d8bbwe\LocalCache\Packages
    - Steam users: C:\Users\YOURUSERNAME\AppData\Roaming\Microsoft Flight Simulator\Packages\
-2. Open the **settings.txt** file, that you’ve unzipped together with the MSFS_MCA_v1-8.exe and this guide, and change the last line to reflect your Microsoft Flight Simulator installation folder. This step is only necessary if you wish to use the Load Flight Plan functionality. Hint:
+2. Open the **settings.txt** file, that you’ve unzipped together with the MSFS_MCA_v1-8-2.exe and this guide, and change the last line to reflect your Microsoft Flight Simulator installation folder. This step is only necessary if you wish to use the Load Flight Plan functionality. Hint:
    - MS Store users: C:\Users\YOURUSERNAME\AppData\Local\Packages\Microsoft.FlightSimulator_8wekyb3d8bbwe\
    - Steam users: C:\Users\YOURUSERNAME\AppData\Roaming\Microsoft Flight Simulator\
 3. Make sure your PC and your mobile device are connected to the same local network and that your home network is set to *Private* in your Network Profile settings. You can find a short guide on how to set your network to private [here](https://support.microsoft.com/en-us/windows/make-a-wi-fi-network-public-or-private-in-windows-10-0460117d-8d3e-a7ac-f003-7a0da607448d). 
 4. Start a flight in Microsoft Flight Simulator.
-5. Run MSFS_MCA_v1-8.exe that you've unzipped previously. You can place this file where you wish. Just make sure that the MSFS_MCA_v1-8.exe and the settings.txt file are in the same folder.
-6. A Microsoft Defender security window may open when launching MSFS_MCA_v1-8.exe for the first time. Allow the "unrecognized app" to run. Additionally, a Windows Security Alert Window may open when you launch MSFS_MCA_v1-8.exe for the first time. Allow private network access for MSFS_MCA_v1-8.exe in the Windows Security Alert Window.
+5. Run MSFS_MCA_v1-8-2.exe that you've unzipped previously. You can place this file where you wish. Just make sure that the MSFS_MCA_v1-8-2.exe and the settings.txt file are in the same folder.
+6. A Microsoft Defender security window may open when launching MSFS_MCA_v1-8-2.exe for the first time. Allow the "unrecognized app" to run. Additionally, a Windows Security Alert Window may open when you launch MSFS_MCA_v1-8-2.exe for the first time. Allow private network access for MSFS_MCA_v1-8-2.exe in the Windows Security Alert Window.
 7. A command line window will open that will give you instructions on the IP-address where you can access the MSFS Mobile Companion App. Don't close the command line window.
 8. Open the IP-address in your mobile device's web browser. The IP address will most likely be something like *192.168.0.XXX:4000*.
 
@@ -68,7 +68,7 @@ MSFS Mobile Companion App has built-in support for the following aircraft:
 - The app may not work on a fresh Windows 10 installation. You may see a "Could not find MSFS running. Please launch MSFS first and then restart the MSFS 2020 Mobile Companion App." message even if MSFS is running. To fix this, please download and install the Microsoft Visual C++ 2015 Redistributable.
 
 ## Credits
-MSFS Mobile Companion App is based on the Python [SimConnect](https://pypi.org/project/SimConnect/) project. The app uses [MobiFlight’s](https://www.mobiflight.com/en/index.html) WASM Event Module and the [MSFS Python SimConnect MobiFlight Extension](https://github.com/Koseng/MSFSPythonSimConnectMobiFlightExtension) by Koseng to access additional switches and buttons which aren’t accessible via standard SimConnect. I would like to thank [Just Flight](https://www.justflight.com/), [Aerosoft](https://www.aerosoft.com/en/), [IndiaFoxtEcho](http://indiafoxtecho.blogspot.com/), and [MilViz](https://milviz.com/flight/) for providing a copy of their aircraft.
+MSFS Mobile Companion App is based on the Python [SimConnect](https://pypi.org/project/SimConnect/) project. The app uses [MobiFlight’s](https://www.mobiflight.com/en/index.html) WASM Event Module and the [MSFS Python SimConnect MobiFlight Extension](https://github.com/Koseng/MSFSPythonSimConnectMobiFlightExtension) by Koseng to access additional switches and buttons which aren’t accessible via standard SimConnect. I would like to thank [Just Flight](https://www.justflight.com/), [Aerosoft](https://www.aerosoft.com/en/), [IndiaFoxtEcho](http://indiafoxtecho.blogspot.com/), [MilViz](https://milviz.com/flight/), and [PMDG](https://pmdg.com/) for providing a copy of their aircraft.
 
 ## Donation
 If you like this tool and would like to support the development, please consider donating by clicking on the link below.
