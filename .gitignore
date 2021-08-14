@@ -1,0 +1,9 @@
+# Directories to ignore
+__pycache__
+build
+dist
+
+# Files to ignore
+.gitignore
+SimConnect/SimConnect.dllc
+glass_server.spec
