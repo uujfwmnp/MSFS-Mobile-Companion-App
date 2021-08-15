@@ -1156,7 +1156,7 @@ function displayData() {
     checkAndUpdateButton("#light-wings", light_wing);
     checkAndUpdateButton("#light-cabin", light_cabin);
     checkAndUpdateButton("#light-panel", light_panel);
-    checkAndUpdateButton("#pitot-heat-on-of", pitot_heat);
+    checkAndUpdateButton("#pitot-heat-on-off", pitot_heat);
     checkAndUpdateButton("#pitot-heat", pitot_heat, "Pitot Heat (On)", "Pitot Heat (Off)");
     checkAndUpdateButton("#anti-ice", eng_anti_ice, "General Anti-Ice (On)", "General Anti-Ice (Off)");
     checkAndUpdateButton("#structural-deice", structural_deice, "Structural Deice (On)", "Structural Deice (Off)");
