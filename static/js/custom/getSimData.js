@@ -128,6 +128,16 @@ let btnhold;
 //General Data
 let selected_plane
 
+//JF PA-28 Warrior II Vars
+let JF_PA_28_WARRIOR_AP_HDG;
+let JF_PA_28_WARRIOR_AP_ROLL;
+let JF_PA_28_WARRIOR_AP_MODE;
+let JF_PA_28_WARRIOR_LIGHT_BCN;
+let JF_PA_28_WARRIOR_AP_NAV;
+let JF_PA_28_WARRIOR_FUEL_PUMP;
+let JF_PA_28_WARRIOR_FUEL_SEL;
+let JF_PA_28_WARRIOR_EFB;
+
 //JF PA-28R Vars
 let JF_PA_28R_AP_HDG;
 let JF_PA_28R_AP_ROLL;
@@ -1066,6 +1076,7 @@ function getSimulatorData() {
 		light_panel = data.LIGHT_PANEL;
 		light_wing = data.LIGHT_WING;
 		light_recognition = data.LIGHT_RECOGNITION;
+        fuel_pump = data.FUEL_PUMP;
 		pitot_heat = data.PITOT_HEAT;
 		eng_anti_ice = data.ENG_ANTI_ICE;
 		structural_deice = data.STRUCTURAL_DEICE_SWITCH;
@@ -1089,7 +1100,18 @@ function getSimulatorData() {
 		gear = data.GEAR_POSITION;
 		flaps_position = data.FLAPS_HANDLE_PERCENT;
 		spoilers = data.SPOILERS_ARMED;
-		
+	
+		//JF PA-28 Warrior II
+		if (selected_plane.substring(0, 7) == "PA-28-1") {
+			JF_PA_28_WARRIOR_LIGHT_BCN = data.JF_PA_28_WARRIOR_LIGHT_BCN;
+			JF_PA_28_WARRIOR_AP_HDG = data.JF_PA_28_WARRIOR_AP_HDG;
+			JF_PA_28_WARRIOR_AP_NAV = data.JF_PA_28_WARRIOR_AP_NAV;
+			JF_PA_28_WARRIOR_AP_ROLL = data.JF_PA_28_WARRIOR_AP_ROLL;
+			JF_PA_28_WARRIOR_AP_MODE = data.JF_PA_28_WARRIOR_AP_MODE;
+            JF_PA_28_WARRIOR_FUEL_PUMP = data.FUEL_PUMP;
+			JF_PA_28_WARRIOR_FUEL_SEL = data.JF_PA_28_WARRIOR_FUEL_SEL;
+            JF_PA_28_WARRIOR_EFB = data.JF_PA_28_WARRIOR_EFB;
+		}
 		//JF PA-28R
 		if (selected_plane.substring(0, 6) == "PA-28R") {
 			JF_PA_28R_LIGHT_BCN = data.JF_PA_28R_LIGHT_BCN;
@@ -1287,6 +1309,34 @@ function displayData() {
 	$("#landing-vs3").text(landing_vs3);
 	$("#landing-t3").text(landing_t3);
 	$("#sim-rate").text(sim_rate);
+
+	//JF PA-28 Warrior
+	if (selected_plane.substring(0, 7) == "PA-28-1") {
+        checkAndUpdateButton("#jf_pa28_fuel-pump-on-off", JF_PA_28_WARRIOR_FUEL_PUMP);
+        checkAndUpdateButton("#jf_pa28_efb-on-off", JF_PA_28_WARRIOR_EFB);
+        //checkAndUpdateButton("#pitot-heat-on-of", pitot_heat_toggle);
+		checkAndUpdateButton("#jf_pa28_bcn_light", JF_PA_28_WARRIOR_LIGHT_BCN);
+		checkAndUpdateButton("#jf_pa28_ap_hdg", JF_PA_28_WARRIOR_AP_HDG);
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_nav", JF_PA_28_WARRIOR_AP_MODE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="NAV", offText="NAV");
+		//checkAndUpdateButtonCustom("#jf_pa28_ap_mode_omni", JF_PA_28_WARRIOR_AP_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="OMNI", offText="OMNI");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_hdg", JF_PA_28_WARRIOR_AP_MODE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="HDG", offText="HDG");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_apr", JF_PA_28_WARRIOR_AP_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="APR", offText="APR");
+		//checkAndUpdateButtonCustom("#jf_pa28_ap_mode_locn", JF_PA_28_WARRIOR_AP_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="LOC-N", offText="LOC-N");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_locr", JF_PA_28_WARRIOR_AP_MODE, 4, onBtn="btn-light", offBtn="btn-secondary", onText="LOC-R", offText="LOC-R");
+		//checkAndUpdateButtonCustom("#jf_pa28_ap_roll_l30", JF_PA_28_WARRIOR_AP_ROLL, 0, onBtn="btn-light", offBtn="btn-secondary", onText="L30°", offText="L30°");
+		//checkAndUpdateButtonCustom("#jf_pa28_ap_roll_l20", JF_PA_28_WARRIOR_AP_ROLL, 10, onBtn="btn-light", offBtn="btn-secondary", onText="L20°", offText="L20°");
+		//checkAndUpdateButtonCustom("#jf_pa28_ap_roll_l10", JF_PA_28_WARRIOR_AP_ROLL, 20, onBtn="btn-light", offBtn="btn-secondary", onText="L10°", offText="L10°");
+		//checkAndUpdateButtonCustom("#jf_pa28_ap_roll_off", JF_PA_28_WARRIOR_AP_ROLL, 30, onBtn="btn-light", offBtn="btn-secondary", onText="OFF", offText="OFF");
+		//checkAndUpdateButtonCustom("#jf_pa28_ap_roll_r10", JF_PA_28_WARRIOR_AP_ROLL, 40, onBtn="btn-light", offBtn="btn-secondary", onText="R10°", offText="R10°");
+		//checkAndUpdateButtonCustom("#jf_pa28_ap_roll_r20", JF_PA_28_WARRIOR_AP_ROLL, 50, onBtn="btn-light", offBtn="btn-secondary", onText="R20°", offText="R20°");
+		//checkAndUpdateButtonCustom("#jf_pa28_ap_roll_r30", JF_PA_28_WARRIOR_AP_ROLL, 60, onBtn="btn-light", offBtn="btn-secondary", onText="R30°", offText="R30°");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_nav1", JF_PA_28_WARRIOR_AP_NAV, 0, onBtn="btn-light", offBtn="btn-secondary", onText="NAV1", offText="NAV1");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_nav2", JF_PA_28_WARRIOR_AP_NAV, 2, onBtn="btn-light", offBtn="btn-secondary", onText="NAV2", offText="NAV2");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_off", JF_PA_28_WARRIOR_AP_NAV, 1, onBtn="btn-light", offBtn="btn-secondary", onText="OFF", offText="OFF");
+		checkAndUpdateButtonCustom("#jf_pa28_fuel_cut", JF_PA_28_WARRIOR_FUEL_SEL, 0, onBtn="btn-light", offBtn="btn-secondary", onText="Cut", offText="Cut");
+		checkAndUpdateButtonCustom("#jf_pa28_fuel_left", JF_PA_28_WARRIOR_FUEL_SEL, 1, onBtn="btn-light", offBtn="btn-secondary", onText="Left", offText="Left");
+		checkAndUpdateButtonCustom("#jf_pa28_fuel_right", JF_PA_28_WARRIOR_FUEL_SEL, 2, onBtn="btn-light", offBtn="btn-secondary", onText="Right", offText="Right");
+	}
 	
 	//JF PA-28R
 	if (selected_plane.substring(0, 6) == "PA-28R") {

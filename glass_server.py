@@ -56,33 +56,36 @@ def flask_thread_func(threadname):
         "FG-1D Corsair (MilViz)",
         "Long-EZ (IndiaFoxtEcho)",
         "MB-339 (IndiaFoxtEcho)",
+        "PA-28-161 Warrior II GPS100 (Just Flight)",
         "PA-28R Arrow III GPS100 (Just Flight)",
         "PA-28R Arrow III GNS530 (Just Flight)",
         "PA-28R Arrow III GNS Dual (Just Flight)"
     ]
     planes_dict = {
-        "Default": [["NAV", "nav"], ["COM", "com"], ["AP", "ap"], ["Panel", "panel"], ["Other", "other"]],
-        "Default GNS430": [["NAV", "nav"], ["COM", "com"], ["AP", "ap"], ["GPS", "gns430"], ["Panel", "panel"], ["Other", "other"]],
-        "Default GNS530": [["NAV", "nav"], ["COM", "com"], ["AP", "ap"], ["GPS", "gns530"], ["Panel", "panel"], ["Other", "other"]],
-        "Default G1000": [["NAV", "nav"], ["COM", "com"], ["AP", "ap"], ["PFD", "g1000_pfd"], ["MFD", "g1000_mfd"], ["Panel", "panel"], ["Other", "other"]],
-        "A320 (Asobo)": [["FCU", "ap_a320"], ["EFIS", "efis_a320"], ["COM", "com"], ["Panel", "panel_a320"], ["Other", "other_a32nx"]],
-        "A32NX Dev (FlyByWire)": [["FCU", "ap_a32nx_dev"], ["EFIS", "efis_a32nx_dev"], ["COM", "com"], ["Panel", "panel_a32nx_dev"], ["Other", "other_a32nx"]],
-        "A32NX Stable 0.6.3 (FlyByWire)": [["FCU", "ap_a32nx_stable"], ["EFIS", "efis_a32nx_stable"], ["COM", "com"], ["Panel", "panel_a32nx_stable"], ["Other", "other_a32nx"]],
-        "CRJ-550/700 (Aerosoft)": [["FCP", "ap_as_crj"], ["Side\xa0Panel", "side_panel_as_crj"], ["NAV", "nav_as_crj"], ["COM", "com_as_crj"], ["Other", "other_as_crj"]],
-        "DC-6 (PMDG)": [["NAV", "nav_pmdg_dc6"], ["COM", "com_pmdg_dc6"], ["AFE", "afe_pmdg_dc6"], ["AP", "ap_pmdg_dc6"], ["GPS", "gns430"], ["Other", "other_pmdg_dc6"]],
-        "FG-1D Corsair (MilViz)": [["NAV", "nav_milviz_corsair"], ["COM", "com_milviz_corsair"], ["Engine", "engine_milviz_corsair"], ["Panel", "panel_milviz_corsair"], ["Other", "other_milviz_corsair"]],
-        "Long-EZ (IndiaFoxtEcho)": [["COM", "com_ife_long_ez"], ["Panel", "panel_ife_long_ez"], ["Other", "other_ife_long_ez"]],
-        "MB-339 (IndiaFoxtEcho)": [["NAV", "nav_ife_mb339"], ["COM", "com_ife_mb339"], ["FLT\xa0DIR", "flt_dir_ife_mb339"], ["AP", "ap_ife_mb339"], ["Panel", "panel_ife_mb339"], ["Other", "other"]],
-        "PA-28R Arrow III GPS100 (Just Flight)": [["NAV", "nav_jf_arrow_gps100"], ["COM", "com_jf_arrow_gps100"], ["AP", "ap_jf_arrow"], ["GPS", "gps100_jf_arrow"], ["Panel", "panel_jf_arrow"], ["Other", "other_no_spd_ailr"]],
-        "PA-28R Arrow III GNS530 (Just Flight)": [["NAV", "nav_jf_arrow_gns"], ["COM", "com_jf_arrow_gns"], ["AP", "ap_jf_arrow"], ["GPS", "gns530"], ["Panel", "panel_jf_arrow"], ["Other", "other_no_spd_ailr"]],
-        "PA-28R Arrow III GNS Dual (Just Flight)": [["NAV", "nav_jf_arrow_gnsdual"], ["COM", "com_jf_arrow_gnsdual"], ["AP", "ap_jf_arrow"], ["GPS", "gnsdual_jf_arrow"], ["Panel", "panel_jf_arrow"], ["Other", "other_no_spd_ailr"]]
-    }
-
+        "Default": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["Panel", "panel"],["Other", "other"]],
+        "Default GNS430": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["GPS", "gns430"],["Panel", "panel"],["Other", "other"]],
+        "Default GNS530": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["GPS", "gns530"],["Panel", "panel"],["Other", "other"]],
+        "Default G1000": [["NAV", "nav"],["COM", "com"],["AP", "ap"],["PFD", "g1000_pfd"],["MFD", "g1000_mfd"],["Panel", "panel"],["Other", "other"]],
+        "A32NX (FlyByWire)":[["FCU", "ap_a32nx"],["EFIS", "efis_a32nx"],["COM", "com"],["Panel", "panel_a32nx"],["Other", "other_a32nx"]],
+        "CRJ-550/700 (Aerosoft)": [["FCP", "ap_as_crj"],["Side\xa0Panel", "side_panel_as_crj"],["NAV", "nav_as_crj"],["COM", "com_as_crj"],["Other", "other_as_crj"]],
+        "DC-6 (PMDG)": [["NAV", "nav_pmdg_dc6"],["COM", "com_pmdg_dc6"],["AFE", "afe_pmdg_dc6"],["AP", "ap_pmdg_dc6"],["GPS", "gns430"],["Other", "other_pmdg_dc6"]],
+        "FG-1D Corsair (MilViz)": [["NAV", "nav_milviz_corsair"],["COM", "com_milviz_corsair"],["Engine", "engine_milviz_corsair"],["Panel", "panel_milviz_corsair"],["Other", "other_milviz_corsair"]],
+        "Long-EZ (IndiaFoxtEcho)": [["COM", "com_ife_long_ez"],["Panel", "panel_ife_long_ez"],["Other", "other_ife_long_ez"]],
+        "MB-339 (IndiaFoxtEcho)": [["NAV", "nav_ife_mb339"],["COM", "com_ife_mb339"],["FLT\xa0DIR", "flt_dir_ife_mb339"],["AP", "ap_ife_mb339"],["Panel", "panel_ife_mb339"],["Other", "other"]],
+        "PA-28-161 Warrior II GPS100 (Just Flight)": [["NAV", "nav_jf_warrior_gps100"],["COM", "com_jf_warrior_gps100"],["AP", "ap_jf_warrior"],["GPS", "gps100_jf_warrior"],["Panel", "panel_jf_warrior"],["Other", "other_jf_warrior"]],
+        "PA-28R Arrow III GPS100 (Just Flight)": [["NAV", "nav_jf_arrow_gps100"],["COM", "com_jf_arrow_gps100"],["AP", "ap_jf_arrow"],["GPS", "gps100_jf_arrow"],["Panel", "panel_jf_arrow"],["Other", "other_no_spd_ailr"]],
+        "PA-28R Arrow III GNS530 (Just Flight)": [["NAV", "nav_jf_arrow_gns"],["COM", "com_jf_arrow_gns"],["AP", "ap_jf_arrow"],["GPS", "gns530"],["Panel", "panel_jf_arrow"],["Other", "other_no_spd_ailr"]],
+        "PA-28R Arrow III GNS Dual (Just Flight)": [["NAV", "nav_jf_arrow_gnsdual"],["COM", "com_jf_arrow_gnsdual"],["AP", "ap_jf_arrow"],["GPS", "gnsdual_jf_arrow"],["Panel", "panel_jf_arrow"],["Other", "other_no_spd_ailr"]]
+        }
     global selected_plane
     selected_plane = planes_list[0]
     ui_friendly_dictionary["selected_plane"] = selected_plane
-
-    app = Flask(__name__)
+    if getattr(sys, 'frozen', False):
+        template_folder = os.path.join(sys._MEIPASS, 'templates')
+        static_folder = os.path.join(sys._MEIPASS, 'static')
+        app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+    else:
+        app = Flask(__name__)
     log = logging.getLogger('werkzeug')
     log.disabled = True
 
@@ -587,6 +590,16 @@ def simconnect_thread_func3(threadname):
         return f"{x:,}"
 
     while True:
+        # PA-28 Warrior II L-Vars
+        if selected_plane[:7] == "PA-28-1":
+            ui_friendly_dictionary["JF_PA_28_WARRIOR_AP_HDG"] = vr.get("(L:AUTOPILOT_hdg)")
+            ui_friendly_dictionary["JF_PA_28_WARRIOR_AP_ROLL"] = vr.get("(L:AUTOPILOT_roll)")
+            ui_friendly_dictionary["JF_PA_28_WARRIOR_AP_MODE"] = vr.get("(L:AUTOPILOT_mode)")
+            ui_friendly_dictionary["JF_PA_28_WARRIOR_AP_NAV"] = vr.get("(L:AUTOPILOT_nav)")
+            ui_friendly_dictionary["JF_PA_28_WARRIOR_LIGHT_BCN"] = vr.get("(L:CENTRE_LOWER_bcn_light)")
+            ui_friendly_dictionary["JF_PA_28_WARRIOR_FUEL_SEL"] = vr.get("(L:LEFT_MISC_fuel_sel)")
+            ui_friendly_dictionary["JF_PA_28_WARRIOR_FUEL_PUMP"] = vr.get("(L:CENTRE_LOWER_fuelpump)")
+
         # PA-28R L-Vars
         if selected_plane[:6] == "PA-28R":
             ui_friendly_dictionary["JF_PA_28R_AP_HDG"] = vr.get(
@@ -914,5 +927,4 @@ if __name__ == "__main__":
     thread2.start()
     thread3.start()
     thread4.start()
-
     sleep(.5)
