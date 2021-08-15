@@ -1259,7 +1259,7 @@ function displayData() {
     checkAndUpdateButton("#light-wings", light_wing);
     checkAndUpdateButton("#light-cabin", light_cabin);
     checkAndUpdateButton("#light-panel", light_panel);
-    checkAndUpdateButton("#pitot-heat-on-of", pitot_heat);
+    checkAndUpdateButton("#pitot-heat-on-off", pitot_heat);
     checkAndUpdateButton("#pitot-heat", pitot_heat, "Pitot Heat (On)", "Pitot Heat (Off)");
     checkAndUpdateButton("#anti-ice", eng_anti_ice, "General Anti-Ice (On)", "General Anti-Ice (Off)");
     checkAndUpdateButton("#structural-deice", structural_deice, "Structural Deice (On)", "Structural Deice (Off)");
@@ -1314,7 +1314,6 @@ function displayData() {
 	if (selected_plane.substring(0, 7) == "PA-28-1") {
         checkAndUpdateButton("#jf_pa28_fuel-pump-on-off", JF_PA_28_WARRIOR_FUEL_PUMP);
         checkAndUpdateButton("#jf_pa28_efb-on-off", JF_PA_28_WARRIOR_EFB);
-        //checkAndUpdateButton("#pitot-heat-on-of", pitot_heat_toggle);
 		checkAndUpdateButton("#jf_pa28_bcn_light", JF_PA_28_WARRIOR_LIGHT_BCN);
 		checkAndUpdateButton("#jf_pa28_ap_hdg", JF_PA_28_WARRIOR_AP_HDG);
 		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_nav", JF_PA_28_WARRIOR_AP_MODE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="NAV", offText="NAV");
