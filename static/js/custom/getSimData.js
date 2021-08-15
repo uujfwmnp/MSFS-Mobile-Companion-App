@@ -1316,10 +1316,10 @@ function displayData() {
         checkAndUpdateButton("#jf_pa28_efb-on-off", JF_PA_28_WARRIOR_EFB);
 		checkAndUpdateButton("#jf_pa28_bcn_light", JF_PA_28_WARRIOR_LIGHT_BCN);
 		checkAndUpdateButton("#jf_pa28_ap_hdg", JF_PA_28_WARRIOR_AP_HDG);
-		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_hdg", JF_PA_28_WARRIOR_AP_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="HDG", offText="HDG");
-		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_nav", JF_PA_28_WARRIOR_AP_MODE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="NAV", offText="NAV");
-		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_apr", JF_PA_28_WARRIOR_AP_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="APR", offText="APR");
-		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_locr", JF_PA_28_WARRIOR_AP_MODE, 4, onBtn="btn-light", offBtn="btn-secondary", onText="LOC-R", offText="LOC-R");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_hdg", JF_PA_28_WARRIOR_AP_MODE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="HDG", offText="HDG");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_nav", JF_PA_28_WARRIOR_AP_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="NAV", offText="NAV");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_apr", JF_PA_28_WARRIOR_AP_MODE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="APR", offText="APR");
+		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_locr", JF_PA_28_WARRIOR_AP_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="LOC-R", offText="LOC-R");
 		checkAndUpdateButtonCustom("#jf_pa28_ap_nav1", JF_PA_28_WARRIOR_AP_NAV, 0, onBtn="btn-light", offBtn="btn-secondary", onText="NAV1", offText="NAV1");
 		checkAndUpdateButtonCustom("#jf_pa28_ap_nav2", JF_PA_28_WARRIOR_AP_NAV, 2, onBtn="btn-light", offBtn="btn-secondary", onText="NAV2", offText="NAV2");
 		checkAndUpdateButtonCustom("#jf_pa28_ap_off", JF_PA_28_WARRIOR_AP_NAV, 1, onBtn="btn-light", offBtn="btn-secondary", onText="OFF", offText="OFF");
