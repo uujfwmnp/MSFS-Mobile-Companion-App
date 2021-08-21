@@ -5,6 +5,6 @@ dist/
 SimConnect/__pycache__/
 
 # Files to ignore
-.gitignore
+.*
 SimConnect/SimConnect.dllc
 glass_server.spec
