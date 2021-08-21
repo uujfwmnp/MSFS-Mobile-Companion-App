@@ -1,7 +1,8 @@
 # Directories to ignore
-__pycache__
-build
-dist
+__pycache__/
+build/
+dist/
+SimConnect/__pycache__/
 
 # Files to ignore
 .gitignore
