@@ -1,8 +1,9 @@
 # Directories to ignore
-__pycache__/
+__pycache__
 build/
 dist/
 SimConnect/__pycache__/
+mobiflight-event-module/
 
 # Files to ignore
 .*
