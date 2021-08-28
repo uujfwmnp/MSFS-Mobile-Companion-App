@@ -598,6 +598,7 @@ def simconnect_thread_func3(threadname):
             ui_friendly_dictionary["JF_PA_28_WARRIOR_LIGHT_BCN"] = vr.get("(L:CENTRE_LOWER_bcn_light)")
             ui_friendly_dictionary["JF_PA_28_WARRIOR_FUEL_SEL"] = vr.get("(L:LEFT_MISC_fuel_sel)")
             ui_friendly_dictionary["JF_PA_28_WARRIOR_FUEL_PUMP"] = vr.get("(L:CENTRE_LOWER_fuelpump)")
+            ui_friendly_dictionary["JF_PA_28_WARRIOR_COM_TRANSMIT"] = vr.get("(L:KMA20_knob)")
 
         # PA-28R L-Vars
         if selected_plane[:6] == "PA-28R":
