@@ -26,11 +26,9 @@
 								</tr>
 								<tr>
 									<td style="width:150px">Panel Lights:</td>
-									<td><button onclick="triggerSimEvent('PANEL_LIGHTS_TOGGLE');$(this).blur();" id="light-panel" type="button" class="btn btn-danger" style="width:55px">?</button></td>
-								</tr>								<!--<tr>
-									<td>Panel Lights:</td>
-									<td><button onclick="triggerSimEvent('MobiFlight.JF_WARRIOR_LIGHTS_PANEL_toggle',0,false);$(this).blur();" id="light-panel" type="button" class="btn btn-danger" style="width:55px">?</button></td>
-								</tr>-->
+									<!--<td><button onclick="triggerSimEvent('PANEL_LIGHTS_TOGGLE');$(this).blur();" id="light-panel" type="button" class="btn btn-danger" style="width:55px">?</button></td>-->
+                                    <td><button onclick="triggerSimEvent('MobiFlight.JF_WARRIOR_LIGHTS_PANEL_toggle',0,false);$(this).blur();" id="light-panel" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+								</tr>
 							</table>
 						</div>
 						</div>
@@ -44,7 +42,7 @@
 								<table style="width:370px">
 								<tr>
 									<td style="width:150px">Fuel Pump:</td>
-									<td><button onclick="triggerSimEvent('FUEL_PUMP');$(this).blur();" id="jf_pa28_fuel-pump-on-off" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+                                    <td><button onclick="triggerSimEvent('MobiFlight.JF_WARRIOR_FUEL_PUMP_toggle',0,false);$(this).blur();" id="jf_pa28_fuel-pump-on-off" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 								<tr>
 									<td>Pitot Heat:</td>

@@ -912,7 +912,6 @@ class AircraftEvents():
 			(b'MobiFlight.JF_WARRIOR_GPS100_CENTER', "-", "Shared Cockpit"),
 			(b'MobiFlight.JF_WARRIOR_GPS100_RIGHT_press', "-", "Shared Cockpit"),
 			(b'MobiFlight.JF_WARRIOR_NAVGPS', "-", "Shared Cockpit"),
-			(b'MobiFlight.JF_WARRIOR_EFB', "-", "Shared Cockpit"),
 
             # Mobiflight Custom
 			(b'MobiFlight.A32NX_PROBE_WINDOW_HEAT_OFF', "-", "Shared Cockpit"),
