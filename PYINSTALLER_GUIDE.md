@@ -31,4 +31,10 @@ Use the following pyinstaller settings to compile MSFS Mobile Companion App:
 pyinstaller -F --onefile --add-data "templates;templates" --add-data "static;static" --add-data "SimConnect;SimConnect" glass_server.py
 ```
 
-## 4. Enjoy and have fun!
+## 4. Install the MobiFlight Event Module
+* If you have not yet installed the MobiFlight Event module, download it from https://www.mobiflight.com/en/download.html
+
+## 5. Copy your modified events.user.txt file (optional)
+* If you've added a new supported plane, or otherwise have modified the events.user.txt file inside the "MobiFlight Custom Events" folder, copy it into the MSFS "Packages\Community\mobiflight-event-module\modules" folder
+
+## 6. Enjoy and have fun!
