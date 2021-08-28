@@ -592,8 +592,7 @@ def simconnect_thread_func3(threadname):
     while True:
         # PA-28 Warrior II L-Vars
         if selected_plane[:7] == "PA-28-1":
-            ui_friendly_dictionary["JF_PA_28_WARRIOR_AP_HDG"] = vr.get("(L:AUTOPILOT_hdg)")
-            ui_friendly_dictionary["JF_PA_28_WARRIOR_AP_ROLL"] = vr.get("(L:AUTOPILOT_roll)")
+            #ui_friendly_dictionary["JF_PA_28_WARRIOR_AP_HDG"] = vr.get("(L:AUTOPILOT_hdg)")
             ui_friendly_dictionary["JF_PA_28_WARRIOR_AP_MODE"] = vr.get("(L:AUTOPILOT_mode)")
             ui_friendly_dictionary["JF_PA_28_WARRIOR_AP_NAV"] = vr.get("(L:AUTOPILOT_nav)")
             ui_friendly_dictionary["JF_PA_28_WARRIOR_LIGHT_BCN"] = vr.get("(L:CENTRE_LOWER_bcn_light)")
