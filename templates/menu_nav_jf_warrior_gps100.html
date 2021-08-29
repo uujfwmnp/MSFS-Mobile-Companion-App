@@ -192,11 +192,10 @@
 						<!-- Toggle Buttons Row-->
 						<div class="row"  style="width:260px">
 							<div class="col">
-                                <button type="button" onclick="triggerSimEvent ('TOGGLE_DME', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:220px" title="DME Source NAV1/NAV2">DME Source NAV1/NAV2</button>
-								<!--<button type="button" onclick="triggerSimEvent ('DME1_TOGGLE');$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for DME">NAV1</button>
-								<button type="button" onclick="triggerSimEvent ('DME2_TOGGLE');$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for DME">NAV2</button>-->
-								<!--<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_WARRIOR_DME_NAV1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for DME">NAV1</button>
-								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_WARRIOR_DME_NAV2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for DME">NAV2</button>-->
+                                <!--<button type="button" onclick="triggerSimEvent ('TOGGLE_DME');$(this).blur();" class="btn btn-secondary btn-sm" style="width:220px" title="DME Source NAV1/NAV2">DME Source NAV1/NAV2</button>-->
+								
+                                <button type="button" onclick="triggerSimEvent ('MobiFlight.JF_WARRIOR_DME_NAV1', 0, false);$(this).blur();" id="jf_pa28_dme_nav1" class="btn btn-secondary btn-sm" style="width:110px" title="Set NAV1 for DME">NAV1</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_WARRIOR_DME_NAV2', 0, false);$(this).blur();" id="jf_pa28_dme_nav2" class="btn btn-secondary btn-sm" style="width:110px" title="Set NAV2 for DME">NAV2</button>
 
 							</div>
 						</div>

@@ -138,6 +138,7 @@ let JF_PA_28_WARRIOR_FUEL_PUMP;
 let JF_PA_28_WARRIOR_FUEL_SEL;
 //let JF_PA_28_WARRIOR_EFB;
 let JF_PA_28_WARRIOR_COM_TRANSMIT;
+let JF_PA_28_WARRIOR_DME_NAV;
 
 //JF PA-28R Vars
 let JF_PA_28R_AP_HDG;
@@ -1113,6 +1114,7 @@ function getSimulatorData() {
 			JF_PA_28_WARRIOR_FUEL_SEL = data.JF_PA_28_WARRIOR_FUEL_SEL;
             //JF_WARRIOR_FLIGHT_BAG_toggle = data.JF_WARRIOR_FLIGHT_BAG_toggle;
             JF_PA_28_WARRIOR_COM_TRANSMIT = data.JF_PA_28_WARRIOR_COM_TRANSMIT;
+            JF_PA_28_WARRIOR_DME_NAV = data.JF_PA_28_WARRIOR_DME_NAV;
 
 		}
 		//JF PA-28R
@@ -1321,6 +1323,10 @@ function displayData() {
 		//checkAndUpdateButton("#jf_pa28_ap_hdg", JF_PA_28_WARRIOR_AP_HDG);
 		checkAndUpdateButtonCustom("#jf_pa28_com1-transmit", JF_PA_28_WARRIOR_COM_TRANSMIT, 0, onBtn="btn-light", offBtn="btn-secondary", onText="COM1 (On)", offText="COM1 (Off)");
 		checkAndUpdateButtonCustom("#jf_pa28_com2-transmit", JF_PA_28_WARRIOR_COM_TRANSMIT, 1, onBtn="btn-light", offBtn="btn-secondary", onText="COM2 (On)", offText="COM1 (Off)");
+
+		checkAndUpdateButtonCustom("#jf_pa28_dme_nav1", JF_PA_28_WARRIOR_DME_NAV, 0, onBtn="btn-light", offBtn="btn-secondary", onText="NAV1 (On)", offText="NAV1 (Off)");
+		checkAndUpdateButtonCustom("#jf_pa28_dme_nav2", JF_PA_28_WARRIOR_DME_NAV, 1, onBtn="btn-light", offBtn="btn-secondary", onText="NAV2 (On)", offText="NAV2 (Off)");
+
 		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_hdg", JF_PA_28_WARRIOR_AP_MODE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="HDG", offText="HDG");
 		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_nav", JF_PA_28_WARRIOR_AP_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="NAV", offText="NAV");
 		checkAndUpdateButtonCustom("#jf_pa28_ap_mode_apr", JF_PA_28_WARRIOR_AP_MODE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="APR", offText="APR");

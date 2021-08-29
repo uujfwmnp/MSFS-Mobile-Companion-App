@@ -869,6 +869,7 @@ class AircraftEvents():
 			(b'MobiFlight.JF_WARRIOR_AUTOPILOT_MODE_APR', "-", "Shared Cockpit"),
 			(b'MobiFlight.JF_WARRIOR_AUTOPILOT_MODE_LOCREV', "-", "Shared Cockpit"),
 			#(b'MobiFlight.JF_WARRIOR_AUTOPILOT_HDG_Toggle', "-", "Shared Cockpit"),
+			(b'MobiFlight.JF_WARRIOR_DME_toggle', "-", "Shared Cockpit"),
 			(b'MobiFlight.JF_WARRIOR_DME_NAV1', "-", "Shared Cockpit"),
 			(b'MobiFlight.JF_WARRIOR_DME_NAV2', "-", "Shared Cockpit"),
 			(b'MobiFlight.JF_WARRIOR_KX170_NAV1_OUTER_KNOB_PLUS', "-", "Shared Cockpit"),

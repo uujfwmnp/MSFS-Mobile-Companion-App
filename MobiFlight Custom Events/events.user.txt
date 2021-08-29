@@ -10,6 +10,7 @@ JF_WARRIOR_AUTOPILOT_MODE_LOCREV#(L:AUTOPILOT_rev)
 //JF_WARRIOR_AUTOPILOT_HDG_OFF#2 (>L:AUTOPILOT_hdg)
 //JF_WARRIOR_AUTOPILOT_HDG_Toggle#(L:AUTOPILOT_hdg,bool) ! (>L:AUTOPILOT_hdg,bool)
 JF_WARRIOR_AUTOPILOT_HDG_ToggleAlt#(L:AUTOPILOT_hdg) 1 == if{ 1 if{ 0 (>L:AUTOPILOT_hdg) } } els{ (L:AUTOPILOT_hdg) 0 == if{ 1 if{ 1 (>L:AUTOPILOT_hdg) } } }
+//JF_WARRIOR_DME_toggle#(L:RIGHT_MISC_dme_nav, bool) ! (>L:RIGHT_MISC_dme_nav, bool)
 JF_WARRIOR_DME_NAV1#0 (>L:RIGHT_MISC_dme_nav)
 JF_WARRIOR_DME_NAV2#1 (>L:RIGHT_MISC_dme_nav)
 JF_WARRIOR_KX170_NAV1_OUTER_KNOB_PLUS#(L:KX170_NAV1_outer_knob) 100 < if{ 1 if{ (L:KX170_NAV1_outer_knob) ++ (>L:KX170_NAV1_outer_knob) } } els{ (L:KX170_NAV1_outer_knob) 100 >= if{ 1 if{ 0 (>L:KX170_NAV1_outer_knob) } } }
