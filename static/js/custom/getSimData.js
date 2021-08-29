@@ -192,6 +192,45 @@ let PMDG_DC6_COM2_STANDBY;
 let PMDG_DC6_COM2_ACTIVE;
 let PMDG_DC6_COM1_SPACING;
 let PMDG_DC6_COM2_SPACING;
+let PMDG_DC6_ADF_MODE;
+
+//FBW A32NX
+let FBW_A32NX_EFIS_CSTR;
+let FBW_A32NX_EFIS_WPT;
+let FBW_A32NX_EFIS_VORD;
+let FBW_A32NX_EFIS_NDB;
+let FBW_A32NX_EFIS_ARPT;
+let FBW_A32NX_EFIS_NAV_MODE;
+let FBW_A32NX_EFIS_RANGE;
+let FBW_A32NX_EFIS_NAV_AID_L1;
+let FBW_A32NX_EFIS_NAV_AID_L2;
+let FBW_A32NX_EFIS_LS;
+let FBW_A32NX_EFIS_FD;
+let FBW_A32NX_AP_SPD_INDICATOR;
+let FBW_A32NX_AP_HDG_INDICATOR;
+let FBW_A32NX_AP_SPD_SLOT;
+let FBW_A32NX_AP_HDG_SLOT;
+let FBW_A32NX_AP_VS_SLOT;
+let FBW_A32NX_AP_ALT_SLOT;
+let FBW_A32NX_AP_LOC_MODE;
+let FBW_A32NX_AP_ATHR_MODE;
+let FBW_A32NX_AP_EXPED_MODE;
+let FBW_A32NX_AP_APPR_MODE;
+let FBW_A32NX_AP_VS_FPA_INDICATOR;
+let FBW_A32NX_AP_ALT_INC_MODE;
+let FBW_A32NX_AP_ALT_INDICATOR;
+let FBW_A32NX_AP_ACTIVE;
+let FBW_A32NX_AP_HDG_UNIT;
+let FBW_A32NX_AP_VS_UNIT;
+let FBW_A32NX_AP_SPD_UNIT;
+let FBW_A32NX_OVHD_ANTIICE_ENG1;
+let FBW_A32NX_OVHD_ANTIICE_ENG2;
+let FBW_A32NX_OVHD_ANTIICE_WING;
+let FBW_A32NX_OVHD_PROBESWINDOW;
+let FBW_A32NX_OVHD_STROBE;
+let FBW_A32NX_OVHD_NOSE;
+let FBW_A32NX_OVHD_RWY;
+let FBW_A32NX_OVHD_LAND;
 
 function mapRefreshFix() {
 	map_size_fix = map_size_fix + 1;
@@ -1104,6 +1143,8 @@ function getSimulatorData() {
 			PMDG_DC6_AFE_PARKING = data.PMDG_DC6_AFE_PARKING;
 			PMDG_DC6_ADF_ACTIVE = Number(data.PMDG_DC6_ADF_ACTIVE).toFixed(2);
 			PMDG_DC6_ADF_STBY = Number(data.PMDG_DC6_ADF_STBY).toFixed(2);
+			PMDG_DC6_ADF2_ACTIVE = Number(data.PMDG_DC6_ADF2_ACTIVE).toFixed(2);
+			PMDG_DC6_ADF2_STBY = Number(data.PMDG_DC6_ADF2_STBY).toFixed(2);
 			PMDG_DC6_DME_MODE = data.PMDG_DC6_DME_MODE;
 			PMDG_DC6_GYRO_PILOT = data.PMDG_DC6_GYRO_PILOT;
 			PMDG_DC6_ALTITUDE_CONTROL = data.PMDG_DC6_ALTITUDE_CONTROL;
@@ -1119,6 +1160,46 @@ function getSimulatorData() {
 			PMDG_DC6_COM2_ACTIVE = Number(data.PMDG_DC6_COM2_ACTIVE).toFixed(3);
 			PMDG_DC6_COM1_SPACING = data.PMDG_DC6_COM1_SPACING;
 			PMDG_DC6_COM2_SPACING = data.PMDG_DC6_COM2_SPACING;
+			PMDG_DC6_ADF_MODE = data.PMDG_DC6_ADF_MODE;
+		}
+		//FBW A32NX
+		if (selected_plane.substring(0, 5) == "A32NX") {
+			FBW_A32NX_EFIS_CSTR = data.FBW_A32NX_EFIS_CSTR;
+			FBW_A32NX_EFIS_WPT = data.FBW_A32NX_EFIS_WPT;
+			FBW_A32NX_EFIS_VORD = data.FBW_A32NX_EFIS_VORD;
+			FBW_A32NX_EFIS_NDB = data.FBW_A32NX_EFIS_NDB;
+			FBW_A32NX_EFIS_ARPT = data.FBW_A32NX_EFIS_ARPT;
+			FBW_A32NX_EFIS_NAV_MODE = data.FBW_A32NX_EFIS_NAV_MODE;
+			FBW_A32NX_EFIS_RANGE = data.FBW_A32NX_EFIS_RANGE;
+			FBW_A32NX_EFIS_NAV_AID_L1 = data.FBW_A32NX_EFIS_NAV_AID_L1;
+			FBW_A32NX_EFIS_NAV_AID_L2 = data.FBW_A32NX_EFIS_NAV_AID_L2;
+			FBW_A32NX_EFIS_LS = data.FBW_A32NX_EFIS_LS;
+			FBW_A32NX_EFIS_FD = data.FBW_A32NX_EFIS_FD;
+			FBW_A32NX_AP_SPD_INDICATOR = data.FBW_A32NX_AP_SPD_INDICATOR;
+			FBW_A32NX_AP_HDG_INDICATOR = data.FBW_A32NX_AP_HDG_INDICATOR;
+			FBW_A32NX_AP_SPD_SLOT = data.FBW_A32NX_AP_SPD_SLOT;
+			FBW_A32NX_AP_HDG_SLOT = data.FBW_A32NX_AP_HDG_SLOT;
+			FBW_A32NX_AP_VS_SLOT = data.FBW_A32NX_AP_VS_SLOT;
+			FBW_A32NX_AP_ALT_SLOT = data.FBW_A32NX_AP_ALT_SLOT;
+			FBW_A32NX_AP_LOC_MODE = data.FBW_A32NX_AP_LOC_MODE;
+			FBW_A32NX_AP_ATHR_MODE = data.FBW_A32NX_AP_ATHR_MODE;
+			FBW_A32NX_AP_EXPED_MODE = data.FBW_A32NX_AP_EXPED_MODE;
+			FBW_A32NX_AP_APPR_MODE = data.FBW_A32NX_AP_APPR_MODE;
+			FBW_A32NX_AP_VS_FPA_INDICATOR = data.FBW_A32NX_AP_VS_FPA_INDICATOR;
+			FBW_A32NX_AP_ALT_INC_MODE = data.FBW_A32NX_AP_ALT_INC_MODE;
+			FBW_A32NX_AP_ALT_INDICATOR = data.FBW_A32NX_AP_ALT_INDICATOR;
+			FBW_A32NX_AP_ACTIVE = data.FBW_A32NX_AP_ACTIVE;
+			FBW_A32NX_AP_HDG_UNIT = data.FBW_A32NX_AP_HDG_UNIT;
+			FBW_A32NX_AP_VS_UNIT = data.FBW_A32NX_AP_VS_UNIT;
+			FBW_A32NX_AP_SPD_UNIT = data.FBW_A32NX_AP_SPD_UNIT;
+			FBW_A32NX_OVHD_ANTIICE_ENG1 = data.FBW_A32NX_OVHD_ANTIICE_ENG1;
+			FBW_A32NX_OVHD_ANTIICE_ENG2 = data.FBW_A32NX_OVHD_ANTIICE_ENG2;
+			FBW_A32NX_OVHD_ANTIICE_WING = data.FBW_A32NX_OVHD_ANTIICE_WING;
+			FBW_A32NX_OVHD_PROBESWINDOW = data.FBW_A32NX_OVHD_PROBESWINDOW;
+			FBW_A32NX_OVHD_STROBE = data.FBW_A32NX_OVHD_STROBE;
+			FBW_A32NX_OVHD_NOSE = data.FBW_A32NX_OVHD_NOSE;
+			FBW_A32NX_OVHD_RWY = data.FBW_A32NX_OVHD_RWY;
+			FBW_A32NX_OVHD_LAND = data.FBW_A32NX_OVHD_LAND;
 		}
 
 	});
@@ -1290,6 +1371,8 @@ function displayData() {
 	if (selected_plane.substring(0, 4) == "DC-6") {
 		$("#pmdg_dc6_adf1_active").text(PMDG_DC6_ADF_ACTIVE);
 		$("#pmdg_dc6_adf1_standby").text(PMDG_DC6_ADF_STBY);
+		$("#pmdg_dc6_adf2_active").text(PMDG_DC6_ADF2_ACTIVE);
+		$("#pmdg_dc6_adf2_standby").text(PMDG_DC6_ADF2_STBY);
 		$("#pmdg-dc6-ap-gyropilot-settings").text(PMDG_DC6_GYRO_PILOT_MODE);
 		$("#pmdg-dc6-ap-turn").text(PMDG_DC6_AP_TURN);
 		$("#pmdg-dc6-ap-glide-climb").text(PMDG_DC6_AP_CLIMB_WHEEL);
@@ -1319,6 +1402,76 @@ function displayData() {
 		checkAndUpdateButtonCustom("#pmdg-dc6-dme2", PMDG_DC6_DME_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="DME NAV2", offText="DME NAV2");
 		checkAndUpdateButtonCustom("#pmdg-dc6-dme1-direct", PMDG_DC6_DME_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="DME NAV1", offText="DME NAV1");
 		checkAndUpdateButtonCustom("#pmdg-dc6-dme2-direct", PMDG_DC6_DME_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="DME NAV2", offText="DME NAV2");
+		checkAndUpdateButtonCustom("#PMDG_DC6_ADF1_SELECT", PMDG_DC6_ADF_MODE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="ADF 1 Active", offText="ADF 1");
+		checkAndUpdateButtonCustom("#PMDG_DC6_ADF2_SELECT", PMDG_DC6_ADF_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="ADF 2 Active", offText="ADF 2");
+		if (PMDG_DC6_ADF_MODE == 0) {
+			$("#PMDG_DC6_ADF_NUM").text("ADF 1");
+			$("#PMDG_DC6_ADF_TUNE_NUM").text("Tune ADF 1");
+		} else {
+			$("#PMDG_DC6_ADF_NUM").text("ADF 2");
+			$("#PMDG_DC6_ADF_TUNE_NUM").text("Tune ADF 2");
+		}
+	}
+	
+	//FBW A32NX
+	if (selected_plane.substring(0, 5) == "A32NX") {
+		$("#FBW-A32NX-airspeed-hold-var").attr('placeholder', FBW_A32NX_AP_SPD_INDICATOR);
+		$("#FBW-A32NX-heading-lock-dir").attr('placeholder', FBW_A32NX_AP_HDG_INDICATOR);
+		$("#FBW-A32NX-vertical-hold-var").attr('placeholder', FBW_A32NX_AP_VS_FPA_INDICATOR);
+		$("#FBW-A32NX-altitude-lock-var").attr('placeholder', FBW_A32NX_AP_ALT_INDICATOR);
+		$("#FBW-A32NX_SPD_unit").text(FBW_A32NX_AP_SPD_UNIT);
+		$("#FBW-A32NX_HDG_unit").text(FBW_A32NX_AP_HDG_UNIT);
+		$("#FBW-A32NX_VS_unit").text(FBW_A32NX_AP_VS_UNIT);
+		checkAndUpdateButton("#FBW_A32NX_autopilot-master", FBW_A32NX_AP_ACTIVE, "Engaged", "Disengaged");
+		checkAndUpdateButton("#FBW_A32NX_LOC", FBW_A32NX_AP_LOC_MODE);
+		checkAndUpdateButton("#FBW_A32NX_ATHR", FBW_A32NX_AP_ATHR_MODE);
+		checkAndUpdateButton("#FBW_A32NX_EXPED", FBW_A32NX_AP_EXPED_MODE);
+		checkAndUpdateButton("#FBW_A32NX_APPR", FBW_A32NX_AP_APPR_MODE);
+		checkAndUpdateButton("#FBW_A32NX-fd", FBW_A32NX_EFIS_FD);
+		checkAndUpdateButton("#FBW_A32NX-ils", FBW_A32NX_EFIS_LS);
+		checkAndUpdateButton("#FBW_A32NX_rwy", FBW_A32NX_OVHD_RWY);
+		checkAndUpdateButton("#FBW_A32NX_anti_ice_wing", FBW_A32NX_OVHD_ANTIICE_WING, "Wing Anti-Ice (On)", "Wing Anti-Ice (Off)");
+		checkAndUpdateButton("#FBW_A32NX_anti_ice_eng1", FBW_A32NX_OVHD_ANTIICE_ENG1, "ENG1 Anti-Ice (On)", "ENG1 Anti-Ice (Off)");
+		checkAndUpdateButton("#FBW_A32NX_anti_ice_eng2", FBW_A32NX_OVHD_ANTIICE_ENG2, "ENG2 Anti-Ice (On)", "ENG2 Anti-Ice (Off)");
+		checkAndUpdateButton("#FBW_A32NX_window_heat", FBW_A32NX_OVHD_PROBESWINDOW, "Probe/Window Heat (On)", "Probe/Window Heat (Off)");
+		checkAndUpdateButtonCustom("#FBW_A32NX_SPD_selected", FBW_A32NX_AP_SPD_SLOT, 1, onBtn="btn-light", offBtn="btn-secondary", onText="Selected SPD", offText="Selected SPD");
+		checkAndUpdateButtonCustom("#FBW_A32NX_SPD_managed", FBW_A32NX_AP_SPD_SLOT, 2, onBtn="btn-light", offBtn="btn-secondary", onText="Managed SPD", offText="Managed SPD");
+		checkAndUpdateButtonCustom("#FBW_A32NX_HDG_selected", FBW_A32NX_AP_HDG_SLOT, 1, onBtn="btn-light", offBtn="btn-secondary", onText="Selected HDG", offText="Selected HDG");
+		checkAndUpdateButtonCustom("#FBW_A32NX_HDG_managed", FBW_A32NX_AP_HDG_SLOT, 2, onBtn="btn-light", offBtn="btn-secondary", onText="Managed HDG", offText="Managed HDG");
+		checkAndUpdateButtonCustom("#FBW_A32NX_increment_100", FBW_A32NX_AP_ALT_INC_MODE, 100, onBtn="btn-light", offBtn="btn-secondary", onText="Increment 100", offText="Increment 100");
+		checkAndUpdateButtonCustom("#FBW_A32NX_increment_1000", FBW_A32NX_AP_ALT_INC_MODE, 1000, onBtn="btn-light", offBtn="btn-secondary", onText="Increment 1000", offText="Increment 1000");
+		checkAndUpdateButtonCustom("#FBW_A32NX_ALT_selected", FBW_A32NX_AP_ALT_SLOT, 1, onBtn="btn-light", offBtn="btn-secondary", onText="Selected ALT", offText="Selected ALT");
+		checkAndUpdateButtonCustom("#FBW_A32NX_ALT_managed", FBW_A32NX_AP_ALT_SLOT, 2, onBtn="btn-light", offBtn="btn-secondary", onText="Managed ALT", offText="Managed ALT");
+		checkAndUpdateButtonCustom("#FBW_A32NX-cstr", FBW_A32NX_EFIS_CSTR, 1, onBtn="btn-light", offBtn="btn-secondary", onText="CSTR", offText="CSTR");
+		checkAndUpdateButtonCustom("#FBW_A32NX-wpt", FBW_A32NX_EFIS_WPT, 1, onBtn="btn-light", offBtn="btn-secondary", onText="WPT", offText="WPT");
+		checkAndUpdateButtonCustom("#FBW_A32NX-vord", FBW_A32NX_EFIS_VORD, 1, onBtn="btn-light", offBtn="btn-secondary", onText="VOR.D", offText="VOR.D");
+		checkAndUpdateButtonCustom("#FBW_A32NX-ndb", FBW_A32NX_EFIS_NDB, 1, onBtn="btn-light", offBtn="btn-secondary", onText="NDB", offText="NDB");
+		checkAndUpdateButtonCustom("#FBW_A32NX-arpt", FBW_A32NX_EFIS_ARPT, 1, onBtn="btn-light", offBtn="btn-secondary", onText="ARPT", offText="ARPT");
+		checkAndUpdateButtonCustom("#FBW_A32NX-ls", FBW_A32NX_EFIS_NAV_MODE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="LS", offText="LS");
+		checkAndUpdateButtonCustom("#FBW_A32NX-vor", FBW_A32NX_EFIS_NAV_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="VOR", offText="VOR");
+		checkAndUpdateButtonCustom("#FBW_A32NX-nav", FBW_A32NX_EFIS_NAV_MODE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="NAV", offText="NAV");
+		checkAndUpdateButtonCustom("#FBW_A32NX-arc", FBW_A32NX_EFIS_NAV_MODE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="ARC", offText="ARC");
+		checkAndUpdateButtonCustom("#FBW_A32NX-plan", FBW_A32NX_EFIS_NAV_MODE, 4, onBtn="btn-light", offBtn="btn-secondary", onText="PLAN", offText="PLAN");
+		checkAndUpdateButtonCustom("#FBW_A32NX-10", FBW_A32NX_EFIS_RANGE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="10", offText="10");
+		checkAndUpdateButtonCustom("#FBW_A32NX-20", FBW_A32NX_EFIS_RANGE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="20", offText="20");
+		checkAndUpdateButtonCustom("#FBW_A32NX-40", FBW_A32NX_EFIS_RANGE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="40", offText="40");
+		checkAndUpdateButtonCustom("#FBW_A32NX-80", FBW_A32NX_EFIS_RANGE, 3, onBtn="btn-light", offBtn="btn-secondary", onText="80", offText="80");
+		checkAndUpdateButtonCustom("#FBW_A32NX-160", FBW_A32NX_EFIS_RANGE, 4, onBtn="btn-light", offBtn="btn-secondary", onText="160", offText="160");
+		checkAndUpdateButtonCustom("#FBW_A32NX-320", FBW_A32NX_EFIS_RANGE, 5, onBtn="btn-light", offBtn="btn-secondary", onText="320", offText="320");
+		checkAndUpdateButtonCustom("#FBW_A32NX-320", FBW_A32NX_EFIS_RANGE, 5, onBtn="btn-light", offBtn="btn-secondary", onText="320", offText="320");
+		checkAndUpdateButtonCustom("#FBW_A32NX-l1-adf", FBW_A32NX_EFIS_NAV_AID_L1, 1, onBtn="btn-light", offBtn="btn-secondary", onText="ADF", offText="ADF");
+		checkAndUpdateButtonCustom("#FBW_A32NX-l1-off", FBW_A32NX_EFIS_NAV_AID_L1, 0, onBtn="btn-light", offBtn="btn-secondary", onText="Off", offText="Off");
+		checkAndUpdateButtonCustom("#FBW_A32NX-l1-vor", FBW_A32NX_EFIS_NAV_AID_L1, 2, onBtn="btn-light", offBtn="btn-secondary", onText="VOR", offText="VOR");
+		checkAndUpdateButtonCustom("#FBW_A32NX-l2-adf", FBW_A32NX_EFIS_NAV_AID_L2, 1, onBtn="btn-light", offBtn="btn-secondary", onText="ADF", offText="ADF");
+		checkAndUpdateButtonCustom("#FBW_A32NX-l2-off", FBW_A32NX_EFIS_NAV_AID_L2, 0, onBtn="btn-light", offBtn="btn-secondary", onText="Off", offText="Off");
+		checkAndUpdateButtonCustom("#FBW_A32NX-l2-vor", FBW_A32NX_EFIS_NAV_AID_L2, 2, onBtn="btn-light", offBtn="btn-secondary", onText="VOR", offText="VOR");
+		checkAndUpdateButtonCustom("#FBW_A32NX_strobe_on", FBW_A32NX_OVHD_STROBE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="On", offText="On");
+		checkAndUpdateButtonCustom("#FBW_A32NX_strobe_auto", FBW_A32NX_OVHD_STROBE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="Auto", offText="Auto");
+		checkAndUpdateButtonCustom("#FBW_A32NX_strobe_off", FBW_A32NX_OVHD_STROBE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="Off", offText="Off");
+		checkAndUpdateButtonCustom("#FBW_A32NX_nose_on", FBW_A32NX_OVHD_NOSE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="TO", offText="TO");
+		checkAndUpdateButtonCustom("#FBW_A32NX_nose_auto", FBW_A32NX_OVHD_NOSE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="Taxi", offText="Taxi");
+		checkAndUpdateButtonCustom("#FBW_A32NX_nose_off", FBW_A32NX_OVHD_NOSE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="Off", offText="Off");
+		checkAndUpdateButtonCustom("#FBW_A32NX_land", FBW_A32NX_OVHD_LAND, 0, onBtn="btn-success", offBtn="btn-danger", onText="On", offText="Off");
 	}
 }
 
@@ -1339,14 +1492,22 @@ function checkAndUpdateButtonCustom(buttonName, variableToCheck, variableTrue=1,
 }
 
 function toggleFollowPlane() {
-    followPlane = !followPlane;
-    if (followPlane === true) {
+    followPlane = followPlane + 1;
+	if (followPlane === 4) {
+		followPlane = 1
+	}
+    if (followPlane === 1) {
         $("#followMode").text("Unfollow Plane")
         $("#followModeButton").removeClass("btn-danger").addClass("btn-primary")
+		marker.addTo(map);
     }
-    if (followPlane === false) {
-        $("#followMode").text("Follow Plane")
+    if (followPlane === 2) {
+        $("#followMode").text("Hide Plane")
         $("#followModeButton").removeClass("btn-primary").addClass("btn-danger")
+    }
+	if (followPlane === 3) {
+        $("#followMode").text("Follow Plane")
+		marker.remove();
     }
 }
 
@@ -1370,7 +1531,7 @@ function updateMap() {
     });
     marker.setRotationAngle(compass);
 
-    if (followPlane === true) {
+    if (followPlane === 1) {
         map.panTo(pos);
     };
     // Trackline Update

@@ -48,7 +48,9 @@ def flask_thread_func(threadname):
         "Default GNS430",
         "Default GNS530",
         "Default G1000",
-        "A32NX (FlyByWire)",
+        "A320 (Asobo)",
+        "A32NX Dev (FlyByWire)",
+        "A32NX Stable 0.6.3 (FlyByWire)",
         "CRJ-550/700 (Aerosoft)",
         "DC-6 (PMDG)",
         "FG-1D Corsair (MilViz)",
@@ -63,7 +65,9 @@ def flask_thread_func(threadname):
         "Default GNS430": [["NAV", "nav"], ["COM", "com"], ["AP", "ap"], ["GPS", "gns430"], ["Panel", "panel"], ["Other", "other"]],
         "Default GNS530": [["NAV", "nav"], ["COM", "com"], ["AP", "ap"], ["GPS", "gns530"], ["Panel", "panel"], ["Other", "other"]],
         "Default G1000": [["NAV", "nav"], ["COM", "com"], ["AP", "ap"], ["PFD", "g1000_pfd"], ["MFD", "g1000_mfd"], ["Panel", "panel"], ["Other", "other"]],
-        "A32NX (FlyByWire)": [["FCU", "ap_a32nx"], ["EFIS", "efis_a32nx"], ["COM", "com"], ["Panel", "panel_a32nx"], ["Other", "other_a32nx"]],
+        "A320 (Asobo)": [["FCU", "ap_a320"], ["EFIS", "efis_a320"], ["COM", "com"], ["Panel", "panel_a320"], ["Other", "other_a32nx"]],
+        "A32NX Dev (FlyByWire)": [["FCU", "ap_a32nx_dev"], ["EFIS", "efis_a32nx_dev"], ["COM", "com"], ["Panel", "panel_a32nx_dev"], ["Other", "other_a32nx"]],
+        "A32NX Stable 0.6.3 (FlyByWire)": [["FCU", "ap_a32nx_stable"], ["EFIS", "efis_a32nx_stable"], ["COM", "com"], ["Panel", "panel_a32nx_stable"], ["Other", "other_a32nx"]],
         "CRJ-550/700 (Aerosoft)": [["FCP", "ap_as_crj"], ["Side\xa0Panel", "side_panel_as_crj"], ["NAV", "nav_as_crj"], ["COM", "com_as_crj"], ["Other", "other_as_crj"]],
         "DC-6 (PMDG)": [["NAV", "nav_pmdg_dc6"], ["COM", "com_pmdg_dc6"], ["AFE", "afe_pmdg_dc6"], ["AP", "ap_pmdg_dc6"], ["GPS", "gns430"], ["Other", "other_pmdg_dc6"]],
         "FG-1D Corsair (MilViz)": [["NAV", "nav_milviz_corsair"], ["COM", "com_milviz_corsair"], ["Engine", "engine_milviz_corsair"], ["Panel", "panel_milviz_corsair"], ["Other", "other_milviz_corsair"]],
@@ -679,6 +683,10 @@ def simconnect_thread_func3(threadname):
                 "(L:ADFActiveFreq)")
             ui_friendly_dictionary["PMDG_DC6_ADF_STBY"] = vr.get(
                 "(L:ADFStbyFreq)")
+            ui_friendly_dictionary["PMDG_DC6_ADF2_ACTIVE"] = vr.get(
+                "(L:ADF2ActiveFreq)")
+            ui_friendly_dictionary["PMDG_DC6_ADF2_STBY"] = vr.get(
+                "(L:ADF2StbyFreq)")
             ui_friendly_dictionary["PMDG_DC6_DME_MODE"] = vr.get(
                 "(L:dc6_271_obj)")
             ui_friendly_dictionary["PMDG_DC6_GYRO_PILOT"] = vr.get(
@@ -695,6 +703,8 @@ def simconnect_thread_func3(threadname):
                 "(A:COM SPACING MODE:1, Enum)")
             ui_friendly_dictionary["PMDG_DC6_COM2_SPACING"] = vr.get(
                 "(A:COM SPACING MODE:2, Enum)")
+            ui_friendly_dictionary["PMDG_DC6_ADF_MODE"] = vr.get(
+                "(L:dc6_133_obj)")
             try:
                 ui_friendly_dictionary["PMDG_DC6_COM1_STANDBY"] = round(
                     vr.get("(A:COM STANDBY FREQUENCY:1, Enum)")/1000000, 3)
@@ -732,6 +742,153 @@ def simconnect_thread_func3(threadname):
                 ui_friendly_dictionary["PMDG_DC6_COM2_SPACING"] = "Toggle COM2 Spacing: 25KHz"
             else:
                 ui_friendly_dictionary["PMDG_DC6_COM2_SPACING"] = "Toggle COM2 Spacing: 8.33KHz"
+            # ADF Frequency Display
+            if ui_friendly_dictionary["PMDG_DC6_ADF_MODE"] == 0:
+                ui_friendly_dictionary["PMDG_DC6_ADF_ACTIVE"] = ui_friendly_dictionary["PMDG_DC6_ADF_ACTIVE"]
+                ui_friendly_dictionary["PMDG_DC6_ADF_STBY"] = ui_friendly_dictionary["PMDG_DC6_ADF_STBY"]
+            else:
+                ui_friendly_dictionary["PMDG_DC6_ADF_ACTIVE"] = ui_friendly_dictionary["PMDG_DC6_ADF2_ACTIVE"]
+                ui_friendly_dictionary["PMDG_DC6_ADF_STBY"] = ui_friendly_dictionary["PMDG_DC6_ADF2_STBY"]
+        
+        # FBW A32NX L-Vars Dev and Stable 0.6.3
+        if selected_plane[:5] == "A32NX":
+            ui_friendly_dictionary["FBW_A32NX_EFIS_CSTR"] = vr.get(
+                "(L:BTN_CSTR_1_FILTER_ACTIVE)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_WPT"] = vr.get(
+                "(L:BTN_WPT_1_FILTER_ACTIVE)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_VORD"] = vr.get(
+                "(L:BTN_VORD_1_FILTER_ACTIVE)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_NDB"] = vr.get(
+                "(L:BTN_NDB_1_FILTER_ACTIVE)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_ARPT"] = vr.get(
+                "(L:BTN_ARPT_1_FILTER_ACTIVE)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_NAV_MODE"] = vr.get(
+                "(L:A320_Neo_MFD_NAV_MODE_1)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_RANGE"] = vr.get(
+                "(L:A320_Neo_MFD_Range_1)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_NAV_AID_L1"] = vr.get(
+                "(L:XMLVAR_NAV_AID_SWITCH_L1_State)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_NAV_AID_L2"] = vr.get(
+                "(L:XMLVAR_NAV_AID_SWITCH_L2_State)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_LS"] = vr.get(
+                "(L:BTN_LS_1_FILTER_ACTIVE)")
+            ui_friendly_dictionary["FBW_A32NX_EFIS_FD"] = vr.get(
+                "(A:AUTOPILOT FLIGHT DIRECTOR ACTIVE, Bool)")
+            ui_friendly_dictionary["FBW_A32NX_AP_ALT_INDICATOR"] = vr.get(
+                "(A:AUTOPILOT ALTITUDE LOCK VAR:3, Feet)")
+            ui_friendly_dictionary["FBW_A32NX_AP_FPA_INDICATOR"] = vr.get(
+                "(L:A32NX_AUTOPILOT_FPA_SELECTED)")
+            ui_friendly_dictionary["FBW_A32NX_AP_SPD_SLOT"] = vr.get(
+                "(A:AUTOPILOT SPEED SLOT INDEX, Number)")
+            ui_friendly_dictionary["FBW_A32NX_AP_HDG_SLOT"] = vr.get(
+                "(A:AUTOPILOT HEADING SLOT INDEX, Number)")
+            ui_friendly_dictionary["FBW_A32NX_AP_VS_SLOT"] = vr.get(
+                "(A:AUTOPILOT VS SLOT INDEX, Number)")
+            ui_friendly_dictionary["FBW_A32NX_AP_ALT_SLOT"] = vr.get(
+                "(A:AUTOPILOT ALTITUDE SLOT INDEX, Number)")
+            ui_friendly_dictionary["FBW_A32NX_AP_EXPED_MODE"] = vr.get(
+                "(L:A32NX_FMA_EXPEDITE_MODE)")
+            ui_friendly_dictionary["FBW_A32NX_AP_TRK_FPA_MODE"] = vr.get(
+                "(L:A32NX_TRK_FPA_MODE_ACTIVE)")
+            ui_friendly_dictionary["FBW_A32NX_AP_ALT_INC_MODE"] = vr.get(
+                "(L:XMLVAR_Autopilot_Altitude_Increment)")
+            ui_friendly_dictionary["FBW_A32NX_OVHD_ANTIICE_ENG1"] = vr.get(
+                "(L:XMLVAR_Momentary_PUSH_OVHD_ANTIICE_ENG1_Pressed)")
+            ui_friendly_dictionary["FBW_A32NX_OVHD_ANTIICE_ENG2"] = vr.get(
+                "(L:XMLVAR_Momentary_PUSH_OVHD_ANTIICE_ENG2_Pressed)")
+            ui_friendly_dictionary["FBW_A32NX_OVHD_ANTIICE_WING"] = vr.get(
+                "(L:XMLVAR_Momentary_PUSH_OVHD_ANTIICE_WING_Pressed)")
+            ui_friendly_dictionary["FBW_A32NX_OVHD_PROBESWINDOW"] = vr.get(
+                "(L:XMLVAR_Momentary_PUSH_OVHD_PROBESWINDOW_Pressed)")
+            ui_friendly_dictionary["FBW_A32NX_OVHD_NOSE"] = vr.get(
+                "(L:LIGHTING_LANDING_1)")
+            ui_friendly_dictionary["FBW_A32NX_OVHD_RWY"] = vr.get(
+                "(L:LIGHTING_TAXI_2)")
+            ui_friendly_dictionary["FBW_A32NX_OVHD_LAND"] = vr.get(
+                "(L:LIGHTING_LANDING_2)")
+            if selected_plane[:7] == "A32NX D":
+                # Development Version Differences
+                ui_friendly_dictionary["FBW_A32NX_OVHD_STROBE"] = vr.get(
+                    "(L:LIGHTING_STROBE_0)")
+                ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] = vr.get(
+                    "(L:A32NX_AUTOPILOT_SPEED_SELECTED)")
+                ui_friendly_dictionary["FBW_A32NX_AP_VS_INDICATOR"] = vr.get(
+                    "(L:A32NX_AUTOPILOT_VS_SELECTED)")
+                ui_friendly_dictionary["FBW_A32NX_AP_ACTIVE"] = vr.get(
+                    "(L:A32NX_AUTOPILOT_ACTIVE)")
+                ui_friendly_dictionary["FBW_A32NX_AP_APPR_MODE"] = vr.get(
+                    "(L:A32NX_FCU_APPR_MODE_ACTIVE)")
+                ui_friendly_dictionary["FBW_A32NX_AP_ATHR_MODE"] = vr.get(
+                    "(L:A32NX_AUTOTHRUST_STATUS)")
+                ui_friendly_dictionary["FBW_A32NX_AP_LOC_MODE"] = vr.get(
+                    "(L:A32NX_FCU_LOC_MODE_ACTIVE)")
+                try:
+                    ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = round(vr.get(
+                        "(L:A32NX_AUTOPILOT_HEADING_SELECTED)"), 0)
+                except:
+                    ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = vr.get(
+                        "(L:A32NX_AUTOPILOT_HEADING_SELECTED)")
+            else:
+                # Stable Version Differences
+                ui_friendly_dictionary["FBW_A32NX_OVHD_STROBE"] = vr.get(
+                    "(L:LIGHTING_STROBE_1)")
+                ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] = ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"]
+                ui_friendly_dictionary["FBW_A32NX_AP_VS_INDICATOR"] = "---"
+                ui_friendly_dictionary["FBW_A32NX_AP_ACTIVE"] = vr.get(
+                    "(L:XMLVAR_Autopilot_1_Status)")
+                ui_friendly_dictionary["FBW_A32NX_AP_APPR_MODE"] = vr.get(
+                    "(L:A32NX_AUTOPILOT_APPR_MODE)")
+                ui_friendly_dictionary["FBW_A32NX_AP_ATHR_MODE"] = vr.get(
+                    "(A:AUTOPILOT MANAGED THROTTLE ACTIVE, Bool)")
+                ui_friendly_dictionary["FBW_A32NX_AP_LOC_MODE"] = vr.get(
+                    "(L:A32NX_AUTOPILOT_LOC_MODE)")
+                if ui_friendly_dictionary["FBW_A32NX_AP_TRK_FPA_MODE"] == 0:
+                    ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"]
+                else:
+                    try:
+                        ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = round(vr.get(
+                            "(L:A32NX_AUTOPILOT_TRACK_SELECTED:1)"), 0)
+                    except:
+                        ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = vr.get(
+                            "(L:A32NX_AUTOPILOT_TRACK_SELECTED:1)")
+
+            # Change VS/FPA for HTML output depending on mode selected
+            try:
+                if ui_friendly_dictionary["FBW_A32NX_AP_TRK_FPA_MODE"] == 1:
+                    ui_friendly_dictionary["FBW_A32NX_AP_VS_FPA_INDICATOR"] = ui_friendly_dictionary["FBW_A32NX_AP_FPA_INDICATOR"]
+                    ui_friendly_dictionary["FBW_A32NX_AP_HDG_UNIT"] = "TRK"
+                    ui_friendly_dictionary["FBW_A32NX_AP_VS_UNIT"] = "FPA"
+                else:
+                    ui_friendly_dictionary["FBW_A32NX_AP_VS_FPA_INDICATOR"] = ui_friendly_dictionary["FBW_A32NX_AP_VS_INDICATOR"]
+                    ui_friendly_dictionary["FBW_A32NX_AP_HDG_UNIT"] = "HDG"
+                    ui_friendly_dictionary["FBW_A32NX_AP_VS_UNIT"] = "VS"
+
+                # Change HDG Indicator for managed mode
+                if ui_friendly_dictionary["FBW_A32NX_AP_HDG_SLOT"] == 2:
+                    ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = "---"
+                # Change SPD Indicator for managed mode
+                if selected_plane[:7] == "A32NX D":
+                    if ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] == -1:
+                        ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] = "---"
+                    if ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] == 0:
+                        ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] = 100
+                else:
+                    if ui_friendly_dictionary["FBW_A32NX_AP_SPD_SLOT"] == 2:
+                        ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] = "---"
+
+                # Change Autothrust to 0/1
+                if int(ui_friendly_dictionary["FBW_A32NX_AP_ATHR_MODE"]) > 1:
+                    ui_friendly_dictionary["FBW_A32NX_AP_ATHR_MODE"] = 1
+                
+                # Set SPD unit based on indicator
+                if ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] > 0 and ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] < 2:
+                    ui_friendly_dictionary["FBW_A32NX_AP_SPD_UNIT"] = "MACH"
+                else:
+                    ui_friendly_dictionary["FBW_A32NX_AP_SPD_UNIT"] = "KTS"
+            except:
+                None
+
+        # Set sleep to minimize performance impact
         sleep(0.15)
 
 
