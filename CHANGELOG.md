@@ -1,5 +1,11 @@
 # Change Log
 
+**v1.9 August 30, 2021:**
+- Updated and improved controls profile for FBW's A32NX stable v0.6.3 and development version
+- Added feature to upload custom KML files (thanks to @luka97)
+- Added ADF 1/2 selector for PMDG's DC-6
+- Added feature to hide the plane icon on the map. The lower left map button has 3 states now: "Follow plane" -> "Unfollow plane" -> "Hide plane"
+
 **v1.8.2 July 11, 2021:**
 - Added controls profile for the DC-6 by PMDG. Supports NAV, ADF, COM, XPNDR, Gyropilot and the Artificial Flight Engineer.
 - Minor UI improvements.
