@@ -1,5 +1,11 @@
 # Change Log
 
+**v1.9.1 November 3, 2021:**
+- Added controls profile for the Ju-52 Classic and Retrofit by Asobo
+- Improved UI for all NAV controls
+- Removed pop-up for panel switches
+- Added approximate G-forces at touchdown in the Data tab
+
 **v1.9 August 30, 2021:**
 - Updated and improved controls profile for FBW's A32NX stable v0.6.3 and development version
 - Added feature to upload custom KML files (thanks to @luka97)
