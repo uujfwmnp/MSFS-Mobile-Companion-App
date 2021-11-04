@@ -28,16 +28,17 @@ MSFS Mobile Companion App has built-in support for the following aircraft:
 - CRJ-550/700 by Aerosoft
 - DC-6 by PMDG
 - FG-1D Corsair by MilViz
+- Ju-52 Classic and Retrofit by Asobo
 - Long-EZ by IndiaFoxtEcho
 - MB-339 by IndiaFoxtEcho
 - PA-28R Arrow III (GPS100, GNS530, GNS Dual) by Just Flight
 
-## Update 08/30/2021 Version 1.9 Changelog:
+## Update Nov/04/2021 Version 1.9.1 Changelog:
 
-- Updated and improved controls profile for FBW's A32NX stable v0.6.3 and development version
-- Added feature to upload custom KML files (thanks to @luka97)
-- Added ADF 1/2 selector for PMDG's DC-6
-- Added feature to hide the plane icon on the map. The lower left map button has 3 states now: "Follow plane" -> "Unfollow plane" -> "Hide plane"
+- Added controls profile for the Ju-52 Classic and Retrofit by Asobo
+- Improved UI for all NAV controls
+- Removed pop-up for panel switches
+- Added approximate G-forces at touchdown in the Data tab
 
 ## How do I install MSFS Mobile Companion App?
 1. Download the latest build [here](https://github.com/mracko/MSFS-Mobile-Companion-App/releases/).
