@@ -10,19 +10,19 @@
 						<div class="lead">Lights</div>
 						<div class="row" style="margin-bottom:10px">
 						<div class="col">
-							<button onclick="triggerSimEvent('ALL_LIGHTS_TOGGLE');$(this).blur();" id="light-all" type="button" class="btn btn-warning" style="width:245px">Toggle All Lights</button><br>
+							<button onclick="triggerSimEvent('ALL_LIGHTS_TOGGLE',0,true);$(this).blur();" id="light-all" type="button" class="btn btn-warning" style="width:245px">Toggle All Lights</button><br>
 							<table style="width:245px">
 								<tr>
 									<td width="190">Panel Lights</td>
-									<td><button onclick="triggerSimEvent('PANEL_LIGHTS_TOGGLE');$(this).blur();" id="light-panel" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+									<td><button onclick="triggerSimEvent('PANEL_LIGHTS_TOGGLE',0,true);$(this).blur();" id="light-panel" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 								<tr>
 									<td>NAV Lights</td>
-									<td><button onclick="triggerSimEvent('TOGGLE_NAV_LIGHTS');$(this).blur();" id="light-nav" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+									<td><button onclick="triggerSimEvent('TOGGLE_NAV_LIGHTS',0,true);$(this).blur();" id="light-nav" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 								<tr>
 									<td>Strobe Lights</td>
-									<td><button onclick="triggerSimEvent('STROBES_TOGGLE');$(this).blur();" id="light-strobe" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+									<td><button onclick="triggerSimEvent('STROBES_TOGGLE',0,true);$(this).blur();" id="light-strobe" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 							</table>
 						</div>

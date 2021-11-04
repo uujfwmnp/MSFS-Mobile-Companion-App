@@ -62,19 +62,21 @@
 						</div>
 						
 						<!-- NAV 1 OBS Settings-->
-						<div class="row">
-						<div class="col">
-							<div class="input-group" style="width:254px;margin-bottom:8px">
+						<div class="row" style="margin-bottom:6px">
+						<div class="col" style="width:200px">
+							<div class="input-group" style="width:200px">
 								<div class="input-group-prepend">
-									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8;border-color:#B3B6B8;width:96px">OBS 1:</span>
+									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8;border-color:#B3B6B8;width:99px">OBS 1:</span>
 								</div>
 								<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS_1_Set').click()" inputmode="numeric" pattern="[0-9]*" id="OBS_1_heading" aria-label="OBS 1 Deg" aria-describedby="OBS_1_Deg" placeholder="-">
 								<div class="input-group-append">
 									<button onclick='if (document.getElementById("OBS_1_heading").value <= 360 && document.getElementById("OBS_1_heading").value >= 0 && document.getElementById("OBS_1_heading").value % 1 === 0 && document.getElementById("OBS_1_heading").value != "") {triggerSimEventFromField ("VOR1_SET", "OBS_1_heading");$("#OBS_1_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS_1_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS 1 heading in degrees">Set</button>
 								</div>
 							</div>
-							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR1_OBI_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:77px;margin-left:96px">-1°</button>
-							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR1_OBI_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:77px">+1°</button>
+						</div>
+						<div class="col-auto">
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR1_OBI_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">-1°</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR1_OBI_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">+1°</button>
 						</div>
 						</div>		
 					</div>
@@ -115,25 +117,27 @@
 						</div>
 						
 						<!-- NAV 2 OBS Settings-->
-						<div class="row">
-						<div class="col">		
-							<div class="input-group" style="width:254px;margin-bottom:8px">
+						<div class="row" style="margin-bottom:6px">
+						<div class="col" style="width:200px">		
+							<div class="input-group" style="width:200px">
 								<div class="input-group-prepend">
-									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8;border-color:#B3B6B8;width:96px">OBS 2:</span>
+									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8;border-color:#B3B6B8;width:99px">OBS 2:</span>
 								</div>
 								<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('OBS_2_Set').click()" inputmode="numeric" pattern="[0-9]*" id="OBS_2_heading" aria-label="OBS 2 Deg" aria-describedby="OBS_2_Deg" placeholder="-">
 								<div class="input-group-append">
 									<button onclick='if (document.getElementById("OBS_2_heading").value <= 360 && document.getElementById("OBS_2_heading").value >= 0 && document.getElementById("OBS_2_heading").value % 1 === 0 && document.getElementById("OBS_2_heading").value != "") {triggerSimEventFromField ("VOR2_SET", "OBS_2_heading");$("#OBS_2_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="OBS_2_Set" style="margin-top:0px;margin-bottom:0px;" title="Set OBS 1 heading in degrees">Set</button>
 								</div>
 							</div>
-							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR2_OBI_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:77px;margin-left:96px">-1°</button>
-							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR2_OBI_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:77px">+1°</button>
+						</div>
+						<div class="col-auto">
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR2_OBI_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">-1°</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR2_OBI_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">+1°</button>
 						</div>
 						</div>
 					</div>
 					
 					<!-- ADF -->
-					<div class="col" style="margin-top:20px; max-width:321px; min-width:321px;">
+					<div class="col" style="margin-top:20px; max-width:332px; min-width:332px;">
 						<div class="lead">ADF</div>	
 
 						<div class="row align-items-center" style="margin-bottom:10px;margin-left:0px;margin-right:0px">
@@ -208,28 +212,28 @@
 						</div>
 						
 						<!-- ADF Card -->
-						<div class="row">
-						<div class="col">
-							<div class="input-group" style="width:254px;margin-bottom:8px">
+						<div class="row" style="margin-bottom:6px">
+						<div class="col" style="width:200px">
+							<div class="input-group" style="width:200px">
 								<div class="input-group-prepend">
-									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8;border-color:#B3B6B8;width:96px">ADF Card</span>
+									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8;border-color:#B3B6B8;width:99px">ADF Card</span>
 								</div>
 								<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Set').click()" inputmode="numeric" pattern="[0-9]*" id="ADF_heading" aria-label="ADF Deg" aria-describedby="OBS_2_Deg" placeholder="-">
 								<div class="input-group-append">
 									<button onclick='if (document.getElementById("ADF_heading").value <= 360 && document.getElementById("ADF_heading").value >= 0 && document.getElementById("ADF_heading").value % 1 === 0 && document.getElementById("ADF_heading").value != "") {triggerSimEventFromField ("ADF_CARD_SET", "ADF_heading", "Setting ADF card");$("#ADF_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="ADF_Set" style="margin-top:0px;margin-bottom:0px;" title="Set ADF card heading in degrees">Set</button>
 								</div>
 							</div>
-							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('ADF_CARD_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:77px;margin-left:96px">-1°</button>
-							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('ADF_CARD_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:77px">+1°</button>
-							
-							
+						</div>
+						<div class="col-auto">
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('ADF_CARD_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">-1°</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('ADF_CARD_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">+1°</button>
 						</div>
 						</div>
 						
 					</div>
 					
 					<!-- General -->
-					<div class="col" style="margin-top:20px">
+					<div class="col" style="margin-top:20px; max-width:332px; min-width:332px;">
 						<div class="lead">General</div>	
 						<!-- Toggel Buttons Row-->
 						<div class="row">

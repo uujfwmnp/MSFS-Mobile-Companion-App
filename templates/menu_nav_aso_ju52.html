@@ -1,5 +1,5 @@
 	<!-- NAV-->
-	<div class="collapse {% if (post_loop.first) and (request.path != "/") %}show{% endif %}" id="collapsenav_jf_arrow_gnsdual" data-parent="#myGroup">
+	<div class="collapse {% if (post_loop.first) and (request.path != "/") %}show{% endif %}" id="collapsenav_aso_ju52" data-parent="#myGroup">
 		<div class="card bg-dark text-white" style="margin-top:10px; margin-bottom:12px;">
 			<div class="card-body">
 				
@@ -31,33 +31,18 @@
 					<!-- NAV 1 -->
 					<div class="col" style="margin-top:20px; max-width:332px; min-width:332px;">
 						<div class="lead">NAV 1</div>					
-						<!-- NAV 1 Frequency Swap Row-->
-						<div class="row" style="margin-bottom:10px">
-						<div class="col">
-							<div class="btn-group" role="group" aria-label="NAV1 USE">
-								<button type="button" class="btn btn-light" style="width:50px;padding-left:0px;padding-right:0px" disabled>USE</button>
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:80px;opacity:1;padding:0px" disabled><strong><span style="color:red" id="nav1_active">?</span></strong></button>
-							</div>
-							<button onclick="triggerSimEvent ('NAV1_RADIO_SWAP', 0, true); $(this).blur(); nav1switch();" type="button" class="btn btn-secondary" title="Swap NAV1 Standby frequency" style="width:35px;height:37px;padding:0px;padding-bottom:1px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"></path></svg></button>
-							<div class="btn-group" role="group" aria-label="NAV1 STBY">
-								<button type="button" class="btn btn-light" style="width:50px;padding-left:0px;padding-right:0px" disabled>STBY</button>
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:80px;opacity:1;padding:0px" disabled><strong><span style="color:red" id="nav1_standby">?</span></strong></button>
-							</div>
-						</div>
-						</div>
-						
 						<!-- NAV 1 Tuner Row-->
-						<div class="row align-items-center" style="margin-bottom:10px;margin-top:5px">
+						<div class="row align-items-center" style="margin-bottom:6px;margin-top:5px">
 						<div class="col-auto" style="padding-right:5px">
-							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_WHOLE_DEC',0,true) },function(){ nav1minus1() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
-							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_FRACT_DEC',0,true) },function(){ nav1minus005() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_WHOLE_DEC',0,true) },function(){ nav1minus1_act() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_FRACT_DEC',0,true) },function(){ nav1minus005_act() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
 						</div>
-						<div class="col" style="padding-left:0px;padding-right:0px;margin">
-							<button type="button" class="btn btn-light btn-sm" style="width:100%" disabled>Tune NAV 1</button>
+						<div class="col" style="padding-left:0px;padding-right:0px">
+							<button type="button" class="btn btn-secondary" style="background-color:#000000;width:100%;opacity:1;padding-left:0px;padding-right:0px" disabled><strong><span style="color:red" id="nav1_active">?</span></strong></button>
 						</div>
 						<div class="col-auto" style="padding-left:5px">
-							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_FRACT_INC',0,true) },function(){ nav1plus005() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
-							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_WHOLE_INC',0,true) },function(){ nav1plus1() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_FRACT_INC',0,true) },function(){ nav1plus005_act() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV1_RADIO_WHOLE_INC',0,true) },function(){ nav1plus1_act() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV1 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
 						</div>
 						</div>
 						
@@ -78,41 +63,38 @@
 							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR1_OBI_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">-1°</button>
 							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR1_OBI_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">+1°</button>
 						</div>
-						</div>		
+						</div>
+						<div class="row">
+						<div class="col">
+							<table>
+								<tr>
+									<td style="width:99px">Volume:</td>
+									<td>
+										<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('NAV1_VOLUME_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:49px">-</button>
+										<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('NAV1_VOLUME_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:48px">+</button>
+									</td>
+							</table>
+						</div>
+						</div>
 					</div>
 					
 					
 					<!-- NAV 2 -->
 					<div class="col" style="margin-top:20px; max-width:332px; min-width:332px;">
 						<div class="lead">NAV 2</div>	
-
-						<!-- NAV 2 Frequency Swap Row-->
-						<div class="row" style="margin-bottom:10px">
-						<div class="col">
-							<div class="btn-group" role="group" aria-label="NAV2 USE">
-								<button type="button" class="btn btn-light" style="width:50px;;padding-left:0px;padding-right:0px" disabled>USE</button>
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:80px;opacity:1;padding:0px" disabled><strong><span style="color:red" id="nav2_active">?</span></strong></button>
-							</div>
-							<button onclick="triggerSimEvent ('NAV2_RADIO_SWAP', 0, true); $(this).blur(); nav2switch();" type="button" class="btn btn-secondary" title="Swap NAV2 Standby frequency" style="width:35px;height:37px;padding:0px;padding-bottom:1px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"></path></svg></button>
-							<div class="btn-group" role="group" aria-label="NAV2 STBY">
-								<button type="button" class="btn btn-light" style="width:50px;;padding-left:0px;padding-right:0px" disabled>STBY</button>
-								<button type="button" class="btn btn-secondary" style="background-color:#000000;width:80px;opacity:1;padding:0px" disabled><strong><span style="color:red" id="nav2_standby">?</span></strong></button>
-							</div>
-						</div>
-						</div>
 						
 						<!-- NAV 2 Tuner Row-->
-						<div class="row align-items-center" style="margin-bottom:10px;margin-top:5px">
+						<div class="row align-items-center" style="margin-bottom:6px;margin-top:5px">
 						<div class="col-auto" style="padding-right:5px">
-							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_WHOLE_DEC',0,true) },function(){ nav2minus1() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
-							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_FRACT_DEC',0,true) },function(){ nav2minus005() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_WHOLE_DEC',0,true) },function(){ nav2minus1_act() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 1 MHz" style="width:45px;"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.86 8.753l5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_FRACT_DEC',0,true) },function(){ nav2minus005_act() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Decrease NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 12.796L4.519 8 10 3.204v9.592zm-.659.753l-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></button>
 						</div>
 						<div class="col" style="padding-left:0px;padding-right:0px;margin">	
-							<button type="button" class="btn btn-light btn-sm" style="width:100%" disabled>Tune NAV 2</button>
+							<button type="button" class="btn btn-secondary" style="background-color:#000000;width:100%;opacity:1;padding-left:0px;padding-right:0px" disabled><strong><span style="color:red" id="nav2_active">?</span></strong></button>
 						</div>
 						<div class="col-auto" style="padding-left:5px">	
-							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_FRACT_INC',0,true) },function(){ nav2plus005() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
-							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_WHOLE_INC',0,true) },function(){ nav2plus1() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_FRACT_INC',0,true) },function(){ nav2plus005_act() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 25 kHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 12.796L11.481 8 6 3.204v9.592zm.659.753l5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></button>
+							<button onpointerdown="presshold2(function(){ triggerSimEvent('NAV2_RADIO_WHOLE_INC',0,true) },function(){ nav2plus1_act() }, 400, 0.6, 150);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" type="button" class="btn btn-secondary" title="Increase NAV2 frequency by 1 MHz" style="width:45px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></button>
 						</div>
 						</div>
 						
@@ -132,6 +114,18 @@
 						<div class="col-auto">
 							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR2_OBI_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">-1°</button>
 							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('VOR2_OBI_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">+1°</button>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col">
+							<table>
+								<tr>
+									<td style="width:99px">Volume:</td>
+									<td>
+										<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('NAV2_VOLUME_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:49px">-</button>
+										<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('NAV2_VOLUME_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-sm btn-secondary" style="width:48px">+</button>
+									</td>
+							</table>
 						</div>
 						</div>
 					</div>
@@ -193,22 +187,12 @@
 							
 						</div>
 						
-						<!-- ADF Card -->
-						<div class="row" style="margin-bottom:6px">
-						<div class="col" style="width:200px">
-							<div class="input-group" style="width:200px">
-								<div class="input-group-prepend">
-									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8;border-color:#B3B6B8;width:99px">ADF Card</span>
-								</div>
-								<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Set').click()" inputmode="numeric" pattern="[0-9]*" id="ADF_heading" aria-label="ADF Deg" aria-describedby="OBS_2_Deg" placeholder="-">
-								<div class="input-group-append">
-									<button onclick='if (document.getElementById("ADF_heading").value <= 360 && document.getElementById("ADF_heading").value >= 0 && document.getElementById("ADF_heading").value % 1 === 0 && document.getElementById("ADF_heading").value != "") {triggerSimEventFromField ("ADF_CARD_SET", "ADF_heading", "Setting ADF card");$("#ADF_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="ADF_Set" style="margin-top:0px;margin-bottom:0px;" title="Set ADF card heading in degrees">Set</button>
-								</div>
-							</div>
-						</div>
-						<div class="col-auto">
-							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('ADF_CARD_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">-1°</button>
-							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('ADF_CARD_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:45px;padding-left:0px;padding-right:0px;margin-top:0px">+1°</button>
+						<!-- ADF Options -->
+						<div class="row">
+						<div class="col">		
+							<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_ADF_OFF', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_ADF_OFF">OFF</button>
+							<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_ADF_ANT', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_ADF_ANT">ANT</button>
+							<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_ADF_ADF', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_ADF_ADF">ADF</button>
 						</div>
 						</div>
 						
@@ -216,27 +200,24 @@
 
 					<!-- General -->
 					<div class="col" style="margin-top:20px; max-width:332px; min-width:332px;">
-						<div class="lead">DME Settings</div>	
-						<!-- Toggel Buttons Row-->
-						<div class="row"  style="width:260px">
+						<div class="lead">DME Settings</div>
+						<div class="row"  style="width:290px">
 							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_DME_NAV1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for DME">NAV1</button>
-								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_DME_NAV2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for DME">NAV2</button>
+								<button type="button" onclick="triggerSimEvent ('RADIO_DME1_IDENT_TOGGLE', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:257px">Turn On/Off DME</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_DME_STATE_1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_DME_NM">NM</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_DME_STATE_2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_DME_MIN">MIN</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_DME_STATE_3', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_DME_KTS">KTS</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_DME_STATE_4', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_DME_TEST">TEST</button>
 							</div>
 						</div>
-						<div class="lead" style="margin-top:10px">General</div>	
-						<!-- Toggel Buttons Row-->
-						<div class="row">
+						<div class="lead" style="margin-top:10px">RMI</div>
+						<div class="row" style="width:280px">
 							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('TOGGLE_GPS_DRIVES_NAV1', 0, true); $(this).blur();" class="btn btn-secondary" style="width:220px" title="Toggle between GPS and NAV 1 driving NAV 1 OBS display (and AP)">AP Source GPS/NAV</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_NAV_ADF_1_STATE_TOGGLE', 0, true);$(this).blur();" class="btn btn-warning btn-sm" style="width:257px">Toggle VOR/ADF 1</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_NAV_ADF_2_STATE_TOGGLE', 0, true);$(this).blur();" class="btn btn-success btn-sm" style="width:257px">Toggle VOR/ADF 2</button>
 							</div>
 						</div>
-						<div class="row"  style="width:260px">
-							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for CDI/AP">AP NAV1</button>
-								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for CDI/AP">AP NAV2</button>
-							</div>
-						</div>
+						<div class="lead" style="margin-top:10px">General</div>
 						<div class="row" style="margin-top:10px">
 							<div class="col align-self-center" style="max-width:88px; padding-right:0px">
 							Gyro Drift:
@@ -362,45 +343,46 @@
 							</div>
 						</div>
 						
-						<!-- ADF Card -->
+						<!-- ADF Options -->
 						<div class="row">
 						<div class="col">		
-							<div class="input-group" style="width:278px">
-								<div class="input-group-prepend">
-									<span class="input-group-text text-body" id="inputGroup-sizing-default" style="background-color:#B3B6B8; border-color:#B3B6B8; width:150px">ADF (Deg)</span>
-								</div>
-								<input class="form-control" type="number" onkeydown = "if (event.keyCode == 13) document.getElementById('ADF_Direct_Set').click()" inputmode="numeric" pattern="[0-9]*" id="ADF_direct_heading" aria-label="ADF Deg" aria-describedby="ADF_Direct_Card" placeholder="-">
-								<div class="input-group-append">
-									<button onclick='if (document.getElementById("ADF_direct_heading").value <= 360 && document.getElementById("ADF_direct_heading").value >= 0 && document.getElementById("ADF_direct_heading").value % 1 === 0 && document.getElementById("ADF_direct_heading").value != "") {triggerSimEventFromField ("ADF_CARD_SET", "ADF_direct_heading", "Setting ADF card");$("#ADF_direct_heading").val("");}; $(this).blur();' class="btn btn-warning" type="button" id="ADF_Direct_Set" style="margin-top:0px;margin-bottom:0px;" title="Set ADF card heading in degrees">Set</button>
-								</div>
-							</div>
+							<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_ADF_OFF', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_ADF_OFF">OFF</button>
+							<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_ADF_ANT', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_ADF_ANT">ANT</button>
+							<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_ADF_ADF', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_ADF_ADF">ADF</button>
 						</div>
 						</div>
 					</div>
 
-					<!-- General Direct Entry-->
-					<div class="col" style="margin-top:20px">
-						<div class="lead">DME Settings</div>	
-						<div class="row"  style="width:260px">
+					<!-- General Direct -->
+					<div class="col" style="margin-top:20px; max-width:332px; min-width:332px;">
+						<div class="lead">DME Settings</div>
+						<div class="row"  style="width:290px">
 							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_DME_NAV1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for DME">NAV1</button>
-								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_DME_NAV2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for DME">NAV2</button>
+								<button type="button" onclick="triggerSimEvent ('RADIO_DME1_IDENT_TOGGLE', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:257px">Turn On/Off DME</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_DME_STATE_1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_DME_NM_DIRECT">NM</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_DME_STATE_2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_DME_MIN_DIRECT">MIN</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_DME_STATE_3', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_DME_KTS_DIRECT">KTS</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_DME_STATE_4', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:61px" id="ASO_JU52_DME_TEST_DIRECT">TEST</button>
 							</div>
 						</div>
-						<div class="lead" style="margin-top:10px">General</div>	
-						<!-- Toggel Buttons Row-->
-						<div class="row">
+						<div class="lead" style="margin-top:10px">RMI</div>
+						<div class="row" style="width:280px">
 							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('TOGGLE_GPS_DRIVES_NAV1', 0, true); $(this).blur();" class="btn btn-secondary" style="width:220px" title="Toggle between GPS and NAV 1 driving NAV 1 OBS display (and AP)">AP Source GPS/NAV</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_NAV_ADF_1_STATE_TOGGLE', 0, true);$(this).blur();" class="btn btn-warning btn-sm" style="width:257px">Toggle VOR/ADF 1</button>
+								<button type="button" onclick="triggerSimEvent ('MobiFlight.ASO_JU52_NAV_ADF_2_STATE_TOGGLE', 0, true);$(this).blur();" class="btn btn-success btn-sm" style="width:257px">Toggle VOR/ADF 2</button>
 							</div>
 						</div>
-						<div class="row"  style="width:260px">
+						<div class="lead" style="margin-top:10px">General</div>
+						<div class="row" style="margin-top:10px">
+							<div class="col align-self-center" style="max-width:88px; padding-right:0px">
+							Gyro Drift:
+							</div>
 							<div class="col">
-								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV1', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV1 for CDI/AP">AP NAV1</button>
-								<button type="button" onclick="triggerSimEvent ('MobiFlight.JF_ARROW_AUTOPILOT_SOURCE_NAV2', 0, true);$(this).blur();" class="btn btn-secondary btn-sm" style="width:108px" title="Set NAV2 for CDI/AP">AP NAV2</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('GYRO_DRIFT_DEC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:44px;" title="Decrements altimeter setting">-</button>
+							<button type="button" onpointerdown="presshold(function(){ triggerSimEvent('GYRO_DRIFT_INC',0,true) }, 400, 0.6, 90);" onpointerup="releasehold();$(this).blur();" onpointerout="releasehold();$(this).blur();" class="btn btn-secondary" style="width:44px" title="Decrements altimeter setting">+</button>
 							</div>
 						</div>
-						<div class="row" style="margin-top:10px;margin-bottom:10px">
+						<div class="row" style="margin-bottom:10px">
 							<div class="col align-self-center" style="max-width:88px; padding-right:0px">
 							Altimeter:
 							</div>

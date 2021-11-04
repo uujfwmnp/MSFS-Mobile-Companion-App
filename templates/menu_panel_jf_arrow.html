@@ -10,31 +10,31 @@
 						<div class="lead">Lights and Heat Controls</div>
 						<div class="row" style="margin-bottom:10px">
 						<div class="col">
-							<button onclick="triggerSimEvent('ALL_LIGHTS_TOGGLE');$(this).blur();" id="light-all" type="button" class="btn btn-warning" style="width:266px">Toggle All Lights</button><br>
+							<button onclick="triggerSimEvent('ALL_LIGHTS_TOGGLE',0,true);$(this).blur();" id="light-all" type="button" class="btn btn-warning" style="width:266px">Toggle All Lights</button><br>
 							<table style="width:280px">
 								<tr>
 									<td style="width:150px">NAV/RAD Lights:</td>
-									<td><button onclick="triggerSimEvent('TOGGLE_NAV_LIGHTS');$(this).blur();" id="light-nav" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+									<td><button onclick="triggerSimEvent('TOGGLE_NAV_LIGHTS',0,true);$(this).blur();" id="light-nav" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 								<tr>
 									<td>Landing Lights</td>
-									<td><button onclick="triggerSimEvent('LANDING_LIGHTS_TOGGLE');$(this).blur();" id="light-landing" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+									<td><button onclick="triggerSimEvent('LANDING_LIGHTS_TOGGLE',0,true);$(this).blur();" id="light-landing" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 								<tr>
 									<td>ROT BCN Lights:</td>
-									<td><button onclick="triggerSimEvent('MobiFlight.JF_ARROW_LIGHTS_BCN_toggle');$(this).blur();" id="jf_pa28_bcn_light" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+									<td><button onclick="triggerSimEvent('MobiFlight.JF_ARROW_LIGHTS_BCN_toggle',0,true);$(this).blur();" id="jf_pa28_bcn_light" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 								<tr>
 									<td>ANT COL Lights:</td>
-									<td><button onclick="triggerSimEvent('STROBES_TOGGLE');$(this).blur();" id="light-strobe" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+									<td><button onclick="triggerSimEvent('STROBES_TOGGLE',0,true);$(this).blur();" id="light-strobe" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 								<tr>
 									<td>Pitot Heat:</td>
-									<td><button onclick="triggerSimEvent ('MobiFlight.JF_ARROW_PITOT_HEAT_toggle',0,false);$(this).blur();" id="pitot-heat-on-of" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+									<td><button onclick="triggerSimEvent ('MobiFlight.JF_ARROW_PITOT_HEAT_toggle',0,true);$(this).blur();" id="pitot-heat-on-of" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 								<tr>
 									<td>Panel Lights:</td>
-									<td><button onclick="triggerSimEvent('MobiFlight.JF_ARROW_LIGHTS_PANEL_toggle',0,false);$(this).blur();" id="light-panel" type="button" class="btn btn-danger" style="width:55px">?</button></td>
+									<td><button onclick="triggerSimEvent('MobiFlight.JF_ARROW_LIGHTS_PANEL_toggle',0,true);$(this).blur();" id="light-panel" type="button" class="btn btn-danger" style="width:55px">?</button></td>
 								</tr>
 							</table>
 						</div>

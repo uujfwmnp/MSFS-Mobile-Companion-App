@@ -49,11 +49,12 @@ def flask_thread_func(threadname):
         "Default GNS530",
         "Default G1000",
         "A320 (Asobo)",
-        "A32NX Dev (FlyByWire)",
-        "A32NX Stable 0.6.3 (FlyByWire)",
+        "A32NX (FlyByWire)",
         "CRJ-550/700 (Aerosoft)",
         "DC-6 (PMDG)",
         "FG-1D Corsair (MilViz)",
+        "Ju-52 Classic (Asobo)",
+        "Ju-52 Retrofit (Asobo)",
         "Long-EZ (IndiaFoxtEcho)",
         "MB-339 (IndiaFoxtEcho)",
         "PA-28R Arrow III GPS100 (Just Flight)",
@@ -66,11 +67,12 @@ def flask_thread_func(threadname):
         "Default GNS530": [["NAV", "nav"], ["COM", "com"], ["AP", "ap"], ["GPS", "gns530"], ["Panel", "panel"], ["Other", "other"]],
         "Default G1000": [["NAV", "nav"], ["COM", "com"], ["AP", "ap"], ["PFD", "g1000_pfd"], ["MFD", "g1000_mfd"], ["Panel", "panel"], ["Other", "other"]],
         "A320 (Asobo)": [["FCU", "ap_a320"], ["EFIS", "efis_a320"], ["COM", "com"], ["Panel", "panel_a320"], ["Other", "other_a32nx"]],
-        "A32NX Dev (FlyByWire)": [["FCU", "ap_a32nx_dev"], ["EFIS", "efis_a32nx_dev"], ["COM", "com"], ["Panel", "panel_a32nx_dev"], ["Other", "other_a32nx"]],
-        "A32NX Stable 0.6.3 (FlyByWire)": [["FCU", "ap_a32nx_stable"], ["EFIS", "efis_a32nx_stable"], ["COM", "com"], ["Panel", "panel_a32nx_stable"], ["Other", "other_a32nx"]],
+        "A32NX (FlyByWire)": [["FCU", "ap_a32nx_dev"], ["EFIS", "efis_a32nx_dev"], ["COM", "com"], ["Panel", "panel_a32nx_dev"], ["Other", "other_a32nx"]],
         "CRJ-550/700 (Aerosoft)": [["FCP", "ap_as_crj"], ["Side\xa0Panel", "side_panel_as_crj"], ["NAV", "nav_as_crj"], ["COM", "com_as_crj"], ["Other", "other_as_crj"]],
         "DC-6 (PMDG)": [["NAV", "nav_pmdg_dc6"], ["COM", "com_pmdg_dc6"], ["AFE", "afe_pmdg_dc6"], ["AP", "ap_pmdg_dc6"], ["GPS", "gns430"], ["Other", "other_pmdg_dc6"]],
         "FG-1D Corsair (MilViz)": [["NAV", "nav_milviz_corsair"], ["COM", "com_milviz_corsair"], ["Engine", "engine_milviz_corsair"], ["Panel", "panel_milviz_corsair"], ["Other", "other_milviz_corsair"]],
+        "Ju-52 Classic (Asobo)": [["NAV", "nav_aso_ju52c"], ["COM", "com_aso_ju52c"], ["AP", "ap_aso_ju52c"], ["Panel", "panel_aso_ju52c"], ["Other", "other_aso_ju52"]],
+        "Ju-52 Retrofit (Asobo)": [["NAV", "nav_aso_ju52"], ["COM", "com_aso_ju52"], ["Panel", "panel_aso_ju52"], ["Other", "other_aso_ju52"]],
         "Long-EZ (IndiaFoxtEcho)": [["COM", "com_ife_long_ez"], ["Panel", "panel_ife_long_ez"], ["Other", "other_ife_long_ez"]],
         "MB-339 (IndiaFoxtEcho)": [["NAV", "nav_ife_mb339"], ["COM", "com_ife_mb339"], ["FLT\xa0DIR", "flt_dir_ife_mb339"], ["AP", "ap_ife_mb339"], ["Panel", "panel_ife_mb339"], ["Other", "other"]],
         "PA-28R Arrow III GPS100 (Just Flight)": [["NAV", "nav_jf_arrow_gps100"], ["COM", "com_jf_arrow_gps100"], ["AP", "ap_jf_arrow"], ["GPS", "gps100_jf_arrow"], ["Panel", "panel_jf_arrow"], ["Other", "other_no_spd_ailr"]],
@@ -342,15 +344,18 @@ def simconnect_thread_func(threadname):
     # Initialize vars for landing info
     ui_friendly_dictionary["LANDING_VS1"] = "N/A"
     ui_friendly_dictionary["LANDING_T1"] = 0
+    ui_friendly_dictionary["LANDING_G1"] = "N/A"
     ui_friendly_dictionary["LANDING_VS2"] = "N/A"
     ui_friendly_dictionary["LANDING_T2"] = 0
+    ui_friendly_dictionary["LANDING_G2"] = "N/A"
     ui_friendly_dictionary["LANDING_VS3"] = "N/A"
     ui_friendly_dictionary["LANDING_T3"] = 0
+    ui_friendly_dictionary["LANDING_G3"] = "N/A"
 
     def thousandify(x):
         return f"{x:,}"
 
-    async def ui_dictionary(ui_friendly_dictionary, previous_alt, landing_t1, landing_vs1, landing_t2, landing_vs2, landing_t3, landing_vs3):
+    async def ui_dictionary(ui_friendly_dictionary, previous_alt, landing_t1, landing_vs1, landing_t2, landing_vs2, landing_t3, landing_vs3, landing_g1, landing_g2, landing_g3):
         # Position
         try:
             ui_friendly_dictionary["LATITUDE"] = round(await aq.get("PLANE_LATITUDE"), 6)
@@ -461,22 +466,22 @@ def simconnect_thread_func(threadname):
         # ui_friendly_dictionary["AUTOPILOT_PITCH_HOLD_REF"] = await aq.get("AUTOPILOT_PITCH_HOLD_REF")
         ui_friendly_dictionary["AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE"] = await aq.get("AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE")
         # Lights
-        ui_friendly_dictionary["LIGHT_LANDING"] = await aq.get("LIGHT_LANDING")
-        ui_friendly_dictionary["LIGHT_TAXI"] = await aq.get("LIGHT_TAXI")
-        ui_friendly_dictionary["LIGHT_STROBE"] = await aq.get("LIGHT_STROBE")
-        ui_friendly_dictionary["LIGHT_NAV"] = await aq.get("LIGHT_NAV")
-        ui_friendly_dictionary["LIGHT_BEACON"] = await aq.get("LIGHT_BEACON")
-        ui_friendly_dictionary["LIGHT_CABIN"] = await aq.get("LIGHT_CABIN")
-        ui_friendly_dictionary["LIGHT_LOGO"] = await aq.get("LIGHT_LOGO")
-        ui_friendly_dictionary["LIGHT_PANEL"] = await aq.get("LIGHT_PANEL")
-        ui_friendly_dictionary["LIGHT_WING"] = await aq.get("LIGHT_WING")
-        ui_friendly_dictionary["LIGHT_RECOGNITION"] = await aq.get("LIGHT_RECOGNITION")
+        #ui_friendly_dictionary["LIGHT_LANDING"] = await aq.get("LIGHT_LANDING")
+        #ui_friendly_dictionary["LIGHT_TAXI"] = await aq.get("LIGHT_TAXI")
+        #ui_friendly_dictionary["LIGHT_STROBE"] = await aq.get("LIGHT_STROBE")
+        #ui_friendly_dictionary["LIGHT_NAV"] = await aq.get("LIGHT_NAV")
+        #ui_friendly_dictionary["LIGHT_BEACON"] = await aq.get("LIGHT_BEACON")
+        #ui_friendly_dictionary["LIGHT_CABIN"] = await aq.get("LIGHT_CABIN")
+        #ui_friendly_dictionary["LIGHT_LOGO"] = await aq.get("LIGHT_LOGO")
+        #ui_friendly_dictionary["LIGHT_PANEL"] = await aq.get("LIGHT_PANEL")
+        #ui_friendly_dictionary["LIGHT_WING"] = await aq.get("LIGHT_WING")
+        #ui_friendly_dictionary["LIGHT_RECOGNITION"] = await aq.get("LIGHT_RECOGNITION")
         # Pitot Heat and Deice
-        ui_friendly_dictionary["PITOT_HEAT"] = await aq.get("PITOT_HEAT")
+        #ui_friendly_dictionary["PITOT_HEAT"] = await aq.get("PITOT_HEAT")
         # ui_friendly_dictionary["PROP_DEICE_SWITCH"] = await aq.get("PROP_DEICE_SWITCH:1")
-        ui_friendly_dictionary["ENG_ANTI_ICE"] = await aq.get("ENG_ANTI_ICE:1")
+        #ui_friendly_dictionary["ENG_ANTI_ICE"] = await aq.get("ENG_ANTI_ICE:1")
         # ui_friendly_dictionary["GEN_ENG_ANTI_ICE"] = await aq.get("GENERAL_ENG_ANTI_ICE_POSITION:1")
-        ui_friendly_dictionary["STRUCTURAL_DEICE_SWITCH"] = await aq.get("STRUCTURAL_DEICE_SWITCH")
+        #ui_friendly_dictionary["STRUCTURAL_DEICE_SWITCH"] = await aq.get("STRUCTURAL_DEICE_SWITCH")
         # ui_friendly_dictionary["PANEL_ANTI_ICE_SWITCH"] = await aq.get("PANEL_ANTI_ICE_SWITCH")
         # Sim Rate
         ui_friendly_dictionary["SIMULATION_RATE"] = await aq.get("SIMULATION_RATE")
@@ -516,28 +521,42 @@ def simconnect_thread_func(threadname):
 
         current_landing = round(await aq.get("PLANE_TOUCHDOWN_NORMAL_VELOCITY") * 60)
         current_time = datetime.datetime.now().strftime('%H:%M:%S')
+        # Calculate Custom G-Force based on vertical speed
+        # Model uses Harvsine acceleration model for peak acceleration https://www.nhtsa.gov/sites/nhtsa.dot.gov/files/18esv-000501.pdf
+        # For time a custom function is used that ranges from 0.25 for GA to 0.35 for airliners. This simulates the rigidness of suspention.
+        try:
+            plane_weight = await aq.get("TOTAL_WEIGHT")
+        except:
+            plane_weight = 0
+        plane_weight_adj = max(round(plane_weight * 0.45), 200)
+        custom_g_force_impact_duration = 0.355 + (-0.103/(1 + (plane_weight_adj/15463)**1.28))
 
         if landing_vs1 != current_landing:
             # Move 2nd to 3rd
             landing_t3 = landing_t2
             landing_vs3 = landing_vs2
+            landing_g3 = landing_g2
             # Move 1st to 2nd
             landing_t2 = landing_t1
             landing_vs2 = landing_vs1
+            landing_g2 = landing_g1
             # Assign new 1st
             landing_t1 = current_time
             landing_vs1 = current_landing
+            landing_g1 = round(1 + (((2 * (current_landing / (60 * 3.281))) / custom_g_force_impact_duration) / 9.80665), 2)
             # Dictionary Output
             ui_friendly_dictionary["LANDING_VS1"] = landing_vs1
             ui_friendly_dictionary["LANDING_T1"] = landing_t1
+            ui_friendly_dictionary["LANDING_G1"] = landing_g1
             ui_friendly_dictionary["LANDING_VS2"] = landing_vs2
             ui_friendly_dictionary["LANDING_T2"] = landing_t2
+            ui_friendly_dictionary["LANDING_G2"] = landing_g2
             ui_friendly_dictionary["LANDING_VS3"] = landing_vs3
             ui_friendly_dictionary["LANDING_T3"] = landing_t3
+            ui_friendly_dictionary["LANDING_G3"] = landing_g3
 
     while True:
-        asyncio.run(ui_dictionary(ui_friendly_dictionary, previous_alt, ui_friendly_dictionary["LANDING_T1"], ui_friendly_dictionary["LANDING_VS1"], ui_friendly_dictionary[
-                    "LANDING_T2"], ui_friendly_dictionary["LANDING_VS2"], ui_friendly_dictionary["LANDING_T3"], ui_friendly_dictionary["LANDING_VS3"]))
+        asyncio.run(ui_dictionary(ui_friendly_dictionary, previous_alt, ui_friendly_dictionary["LANDING_T1"], ui_friendly_dictionary["LANDING_VS1"], ui_friendly_dictionary["LANDING_T2"], ui_friendly_dictionary["LANDING_VS2"], ui_friendly_dictionary["LANDING_T3"], ui_friendly_dictionary["LANDING_VS3"], ui_friendly_dictionary["LANDING_G1"], ui_friendly_dictionary["LANDING_G2"], ui_friendly_dictionary["LANDING_G3"]))
         # sleep(0.3)
 
 # SimConnect  App 2
@@ -587,6 +606,34 @@ def simconnect_thread_func3(threadname):
         return f"{x:,}"
 
     while True:
+        # Default/Generic
+        ui_friendly_dictionary["LIGHT_LANDING"] = vr.get(
+                "(A:LIGHT LANDING, Bool)")
+        ui_friendly_dictionary["LIGHT_TAXI"] = vr.get(
+                "(A:LIGHT TAXI, Bool)")
+        ui_friendly_dictionary["LIGHT_STROBE"] = vr.get(
+                "(A:LIGHT STROBE, Bool)")
+        ui_friendly_dictionary["LIGHT_NAV"] = vr.get(
+                "(A:LIGHT NAV, Bool)")
+        ui_friendly_dictionary["LIGHT_BEACON"] = vr.get(
+                "(A:LIGHT BEACON, Bool)")
+        ui_friendly_dictionary["LIGHT_CABIN"] = vr.get(
+                "(A:LIGHT CABIN, Bool)")
+        ui_friendly_dictionary["LIGHT_LOGO"] = vr.get(
+                "(A:LIGHT LOGO, Bool)")
+        ui_friendly_dictionary["LIGHT_PANEL"] = vr.get(
+                "(A:LIGHT PANEL, Bool)")
+        ui_friendly_dictionary["LIGHT_WING"] = vr.get(
+                "(A:LIGHT WING, Bool)")
+        ui_friendly_dictionary["LIGHT_RECOGNITION"] = vr.get(
+                "(A:LIGHT RECOGNITION, Bool)")
+        ui_friendly_dictionary["PITOT_HEAT"] = vr.get(
+                "(A:PITOT HEAT, Bool)")
+        ui_friendly_dictionary["ENG_ANTI_ICE"] = vr.get(
+                "(A:ENG ANTI ICE:1, Bool)")
+        ui_friendly_dictionary["STRUCTURAL_DEICE_SWITCH"] = vr.get(
+                "(A:STRUCTURAL DEICE SWITCH, Bool)")
+
         # PA-28R L-Vars
         if selected_plane[:6] == "PA-28R":
             ui_friendly_dictionary["JF_PA_28R_AP_HDG"] = vr.get(
@@ -750,7 +797,7 @@ def simconnect_thread_func3(threadname):
                 ui_friendly_dictionary["PMDG_DC6_ADF_ACTIVE"] = ui_friendly_dictionary["PMDG_DC6_ADF2_ACTIVE"]
                 ui_friendly_dictionary["PMDG_DC6_ADF_STBY"] = ui_friendly_dictionary["PMDG_DC6_ADF2_STBY"]
         
-        # FBW A32NX L-Vars Dev and Stable 0.6.3
+        # FBW A32NX L-Vars
         if selected_plane[:5] == "A32NX":
             ui_friendly_dictionary["FBW_A32NX_EFIS_CSTR"] = vr.get(
                 "(L:BTN_CSTR_1_FILTER_ACTIVE)")
@@ -806,52 +853,27 @@ def simconnect_thread_func3(threadname):
                 "(L:LIGHTING_TAXI_2)")
             ui_friendly_dictionary["FBW_A32NX_OVHD_LAND"] = vr.get(
                 "(L:LIGHTING_LANDING_2)")
-            if selected_plane[:7] == "A32NX D":
-                # Development Version Differences
-                ui_friendly_dictionary["FBW_A32NX_OVHD_STROBE"] = vr.get(
-                    "(L:LIGHTING_STROBE_0)")
-                ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] = vr.get(
-                    "(L:A32NX_AUTOPILOT_SPEED_SELECTED)")
-                ui_friendly_dictionary["FBW_A32NX_AP_VS_INDICATOR"] = vr.get(
-                    "(L:A32NX_AUTOPILOT_VS_SELECTED)")
-                ui_friendly_dictionary["FBW_A32NX_AP_ACTIVE"] = vr.get(
-                    "(L:A32NX_AUTOPILOT_ACTIVE)")
-                ui_friendly_dictionary["FBW_A32NX_AP_APPR_MODE"] = vr.get(
-                    "(L:A32NX_FCU_APPR_MODE_ACTIVE)")
-                ui_friendly_dictionary["FBW_A32NX_AP_ATHR_MODE"] = vr.get(
-                    "(L:A32NX_AUTOTHRUST_STATUS)")
-                ui_friendly_dictionary["FBW_A32NX_AP_LOC_MODE"] = vr.get(
-                    "(L:A32NX_FCU_LOC_MODE_ACTIVE)")
-                try:
-                    ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = round(vr.get(
-                        "(L:A32NX_AUTOPILOT_HEADING_SELECTED)"), 0)
-                except:
-                    ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = vr.get(
-                        "(L:A32NX_AUTOPILOT_HEADING_SELECTED)")
-            else:
-                # Stable Version Differences
-                ui_friendly_dictionary["FBW_A32NX_OVHD_STROBE"] = vr.get(
-                    "(L:LIGHTING_STROBE_1)")
-                ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] = ui_friendly_dictionary["AUTOPILOT_AIRSPEED_HOLD_VAR"]
-                ui_friendly_dictionary["FBW_A32NX_AP_VS_INDICATOR"] = "---"
-                ui_friendly_dictionary["FBW_A32NX_AP_ACTIVE"] = vr.get(
-                    "(L:XMLVAR_Autopilot_1_Status)")
-                ui_friendly_dictionary["FBW_A32NX_AP_APPR_MODE"] = vr.get(
-                    "(L:A32NX_AUTOPILOT_APPR_MODE)")
-                ui_friendly_dictionary["FBW_A32NX_AP_ATHR_MODE"] = vr.get(
-                    "(A:AUTOPILOT MANAGED THROTTLE ACTIVE, Bool)")
-                ui_friendly_dictionary["FBW_A32NX_AP_LOC_MODE"] = vr.get(
-                    "(L:A32NX_AUTOPILOT_LOC_MODE)")
-                if ui_friendly_dictionary["FBW_A32NX_AP_TRK_FPA_MODE"] == 0:
-                    ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = ui_friendly_dictionary["AUTOPILOT_HEADING_LOCK_DIR"]
-                else:
-                    try:
-                        ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = round(vr.get(
-                            "(L:A32NX_AUTOPILOT_TRACK_SELECTED:1)"), 0)
-                    except:
-                        ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = vr.get(
-                            "(L:A32NX_AUTOPILOT_TRACK_SELECTED:1)")
-
+            ui_friendly_dictionary["FBW_A32NX_OVHD_STROBE"] = vr.get(
+                "(L:LIGHTING_STROBE_0)")
+            ui_friendly_dictionary["FBW_A32NX_AP_SPD_INDICATOR"] = vr.get(
+                "(L:A32NX_AUTOPILOT_SPEED_SELECTED)")
+            ui_friendly_dictionary["FBW_A32NX_AP_VS_INDICATOR"] = vr.get(
+                "(L:A32NX_AUTOPILOT_VS_SELECTED)")
+            ui_friendly_dictionary["FBW_A32NX_AP_ACTIVE"] = vr.get(
+                "(L:A32NX_AUTOPILOT_ACTIVE)")
+            ui_friendly_dictionary["FBW_A32NX_AP_APPR_MODE"] = vr.get(
+                "(L:A32NX_FCU_APPR_MODE_ACTIVE)")
+            ui_friendly_dictionary["FBW_A32NX_AP_ATHR_MODE"] = vr.get(
+                "(L:A32NX_AUTOTHRUST_STATUS)")
+            ui_friendly_dictionary["FBW_A32NX_AP_LOC_MODE"] = vr.get(
+                "(L:A32NX_FCU_LOC_MODE_ACTIVE)")
+            try:
+                ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = round(vr.get(
+                    "(L:A32NX_AUTOPILOT_HEADING_SELECTED)"), 0)
+            except:
+                ui_friendly_dictionary["FBW_A32NX_AP_HDG_INDICATOR"] = vr.get(
+                    "(L:A32NX_AUTOPILOT_HEADING_SELECTED)")
+                    
             # Change VS/FPA for HTML output depending on mode selected
             try:
                 if ui_friendly_dictionary["FBW_A32NX_AP_TRK_FPA_MODE"] == 1:
@@ -887,6 +909,27 @@ def simconnect_thread_func3(threadname):
                     ui_friendly_dictionary["FBW_A32NX_AP_SPD_UNIT"] = "KTS"
             except:
                 None
+                
+        # Asobo Ju-52 L-Vars
+        if selected_plane[:5] == "Ju-52":
+            ui_friendly_dictionary["ASO_JU52_ADF_MODE"] = vr.get(
+                "(L:XMLVAR_ADF_1_Power)")
+            ui_friendly_dictionary["ASO_JU52_DMI"] = vr.get(
+                "(L:DME_1_STATE)")
+            ui_friendly_dictionary["ASO_JU52C_ALTIMETER_1"] = vr.get(
+                "(A:KOHLSMAN SETTING HG:1, inHg)")
+            ui_friendly_dictionary["ASO_JU52C_ALTIMETER_2"] = vr.get(
+                "(A:KOHLSMAN SETTING HG:2, inHg)")
+            ui_friendly_dictionary["ASO_JU52C_COM1"] = vr.get(
+                "(A:COM ACTIVE FREQUENCY:1, MHz)")
+            ui_friendly_dictionary["ASO_JU52C_AP"] = vr.get(
+                "(L:XMLVAR_AUTOPILOT_ACTIVE)")
+            ui_friendly_dictionary["ASO_JU52C_AP_DISENG"] = vr.get(
+                "(L:XMLVAR_AP_DISENGAGED)")
+            ui_friendly_dictionary["ASO_JU52C_AP_HEADING"] = vr.get(
+                "(L:XMLVAR_AP_HEADING_HOLD)")
+            ui_friendly_dictionary["ASO_JU52C_PITOT"] = vr.get(
+                "(L:SWITCH_Vorwaermung)")
 
         # Set sleep to minimize performance impact
         sleep(0.15)

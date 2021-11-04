@@ -85,10 +85,13 @@ let cabin_no_smoking_alert_switch;
 
 let landing_vs1;
 let landing_t1;
+let landing_g1;
 let landing_vs2;
 let landing_t2;
+let landing_g2;
 let landing_vs3;
 let landing_t3;
+let landing_g3;
 
 let sim_rate;
 
@@ -231,6 +234,17 @@ let FBW_A32NX_OVHD_STROBE;
 let FBW_A32NX_OVHD_NOSE;
 let FBW_A32NX_OVHD_RWY;
 let FBW_A32NX_OVHD_LAND;
+
+//Asobo Ju-52
+let ASO_JU52_ADF_MODE;
+let ASO_JU52_DMI;
+let ASO_JU52C_ALTIMETER_1;
+let ASO_JU52C_ALTIMETER_2;
+let ASO_JU52C_COM1;
+let ASO_JU52C_AP;
+let ASO_JU52C_AP_DISENG;
+let ASO_JU52C_AP_HEADING;
+let ASO_JU52C_PITOT;
 
 function mapRefreshFix() {
 	map_size_fix = map_size_fix + 1;
@@ -1073,10 +1087,13 @@ function getSimulatorData() {
 		//Other
 		landing_vs1 = data.LANDING_VS1;
 		landing_t1 = data.LANDING_T1;
+		landing_g1 = data.LANDING_G1;
 		landing_vs2 = data.LANDING_VS2;
 		landing_t2 = data.LANDING_T2;
+		landing_g2 = data.LANDING_G2;
 		landing_vs3 = data.LANDING_VS3;
 		landing_t3 = data.LANDING_T3;
+		landing_g3 = data.LANDING_G3;
 		sim_rate = data.SIMULATION_RATE;
 		
 		//Flight Plan
@@ -1201,6 +1218,18 @@ function getSimulatorData() {
 			FBW_A32NX_OVHD_RWY = data.FBW_A32NX_OVHD_RWY;
 			FBW_A32NX_OVHD_LAND = data.FBW_A32NX_OVHD_LAND;
 		}
+		//FBW A32NX
+		if (selected_plane.substring(0, 5) == "Ju-52") {
+			ASO_JU52_ADF_MODE = data.ASO_JU52_ADF_MODE;
+			ASO_JU52_DMI = data.ASO_JU52_DMI;
+			ASO_JU52C_ALTIMETER_1 = (Number(data.ASO_JU52C_ALTIMETER_1)*33.864).toFixed(2);
+			ASO_JU52C_ALTIMETER_2 = (Number(data.ASO_JU52C_ALTIMETER_2)*33.864).toFixed(2);
+			ASO_JU52C_COM1 = Number(data.ASO_JU52C_COM1).toFixed(3)
+			ASO_JU52C_AP = data.ASO_JU52C_AP;
+			ASO_JU52C_AP_DISENG = data.ASO_JU52C_AP_DISENG;
+			ASO_JU52C_AP_HEADING = data.ASO_JU52C_AP_HEADING;
+			ASO_JU52C_PITOT = data.ASO_JU52C_PITOT;
+		}
 
 	});
 	return false;
@@ -1282,10 +1311,13 @@ function displayData() {
 	$("#flaps-position").text(flaps_position + "%");
 	$("#landing-vs1").text(landing_vs1);
 	$("#landing-t1").text(landing_t1);
+	$("#landing-g1").text(landing_g1);
 	$("#landing-vs2").text(landing_vs2);
 	$("#landing-t2").text(landing_t2);
+	$("#landing-g2").text(landing_g2);
 	$("#landing-vs3").text(landing_vs3);
 	$("#landing-t3").text(landing_t3);
+	$("#landing-g3").text(landing_g3);
 	$("#sim-rate").text(sim_rate);
 	
 	//JF PA-28R
@@ -1472,6 +1504,37 @@ function displayData() {
 		checkAndUpdateButtonCustom("#FBW_A32NX_nose_auto", FBW_A32NX_OVHD_NOSE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="Taxi", offText="Taxi");
 		checkAndUpdateButtonCustom("#FBW_A32NX_nose_off", FBW_A32NX_OVHD_NOSE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="Off", offText="Off");
 		checkAndUpdateButtonCustom("#FBW_A32NX_land", FBW_A32NX_OVHD_LAND, 0, onBtn="btn-success", offBtn="btn-danger", onText="On", offText="Off");
+	}
+	
+	//Asobo Ju-52
+	if (selected_plane.substring(0, 5) == "Ju-52") {
+		$("#ASO_JU52C_ALTIMETER_1").text(ASO_JU52C_ALTIMETER_1);
+		$("#ASO_JU52C_ALTIMETER_2").text(ASO_JU52C_ALTIMETER_2);
+		$("#ASO_JU52C_ALTIMETER_1d").text(ASO_JU52C_ALTIMETER_1);
+		$("#ASO_JU52C_ALTIMETER_2d").text(ASO_JU52C_ALTIMETER_2);
+		$("#ASO_JU52C_COM1").text(ASO_JU52C_COM1);
+		checkAndUpdateButton("#ASO_JU52_anti-ice", eng_anti_ice, "Carburetor Heat (On)", "Carburetor Heat (Off)");
+		checkAndUpdateButtonCustom("#ASO_JU52_ADF_OFF", ASO_JU52_ADF_MODE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="OFF", offText="OFF");
+		checkAndUpdateButtonCustom("#ASO_JU52_ADF_ANT", ASO_JU52_ADF_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="ANT", offText="ANT");
+		checkAndUpdateButtonCustom("#ASO_JU52_ADF_ADF", ASO_JU52_ADF_MODE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="ADF", offText="ADF");
+		checkAndUpdateButtonCustom("#ASO_JU52_DME_NM", ASO_JU52_DMI, 1, onBtn="btn-light", offBtn="btn-secondary", onText="NM", offText="NM");
+		checkAndUpdateButtonCustom("#ASO_JU52_DME_MIN", ASO_JU52_DMI, 2, onBtn="btn-light", offBtn="btn-secondary", onText="MIN", offText="MIN");
+		checkAndUpdateButtonCustom("#ASO_JU52_DME_KTS", ASO_JU52_DMI, 3, onBtn="btn-light", offBtn="btn-secondary", onText="KTS", offText="KTS");
+		checkAndUpdateButtonCustom("#ASO_JU52_DME_TEST", ASO_JU52_DMI, 4, onBtn="btn-light", offBtn="btn-secondary", onText="TEST", offText="TEST");
+		checkAndUpdateButtonCustom("#ASO_JU52_ADF_OFF_DIRECT", ASO_JU52_ADF_MODE, 0, onBtn="btn-light", offBtn="btn-secondary", onText="OFF", offText="OFF");
+		checkAndUpdateButtonCustom("#ASO_JU52_ADF_ANT_DIRECT", ASO_JU52_ADF_MODE, 1, onBtn="btn-light", offBtn="btn-secondary", onText="ANT", offText="ANT");
+		checkAndUpdateButtonCustom("#ASO_JU52_ADF_ADF_DIRECT", ASO_JU52_ADF_MODE, 2, onBtn="btn-light", offBtn="btn-secondary", onText="ADF", offText="ADF");
+		checkAndUpdateButtonCustom("#ASO_JU52_DME_NM_DIRECT", ASO_JU52_DMI, 1, onBtn="btn-light", offBtn="btn-secondary", onText="NM", offText="NM");
+		checkAndUpdateButtonCustom("#ASO_JU52_DME_MIN_DIRECT", ASO_JU52_DMI, 2, onBtn="btn-light", offBtn="btn-secondary", onText="MIN", offText="MIN");
+		checkAndUpdateButtonCustom("#ASO_JU52_DME_KTS_DIRECT", ASO_JU52_DMI, 3, onBtn="btn-light", offBtn="btn-secondary", onText="KTS", offText="KTS");
+		checkAndUpdateButtonCustom("#ASO_JU52_DME_TEST_DIRECT", ASO_JU52_DMI, 4, onBtn="btn-light", offBtn="btn-secondary", onText="TEST", offText="TEST");
+		checkAndUpdateButtonCustom("#ASO_JU52C_AP", ASO_JU52C_AP, 1, onBtn="btn-success", offBtn="btn-danger", onText="Kurssteuerung (On)", offText="Kurssteuerung (Off)");
+		checkAndUpdateButtonCustom("#ASO_JU52C_AP_DISENG", ASO_JU52C_AP_DISENG, 1, onBtn="btn-success", offBtn="btn-danger", onText="Kurssteuerung Notauslösung (On)", offText="Kurssteuerung Notauslösung (Off)");
+		checkAndUpdateButtonCustom("#ASO_JU52C_PITOT_0", ASO_JU52C_PITOT, 0, onBtn="btn-light", offBtn="btn-secondary", onText="Off", offText="Off");
+		checkAndUpdateButtonCustom("#ASO_JU52C_PITOT_1", ASO_JU52C_PITOT, 1, onBtn="btn-light", offBtn="btn-secondary", onText="Staurohr", offText="Staurohr");
+		checkAndUpdateButtonCustom("#ASO_JU52C_PITOT_2", ASO_JU52C_PITOT, 2, onBtn="btn-light", offBtn="btn-secondary", onText="Vergaser", offText="Vergaser");
+		checkAndUpdateButton("#ASO_JU52C_AP_HEADING", ASO_JU52C_AP_HEADING, "On", "Off");
+		checkAndUpdateButton("#ASU_JU52C_ENTEISER", structural_deice, "Enteiser (On)", "Enteiser (Off)");
 	}
 }
 

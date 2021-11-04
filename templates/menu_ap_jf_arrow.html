@@ -10,7 +10,7 @@
 						<div class="lead" style="margin-bottom:-15px">AP Master</div>
 						<div class="row" style="margin-bottom:10px">
 						<div class="col">
-							<button onclick="triggerSimEvent('AP_MASTER');$(this).blur();" id="autopilot-master" type="button" class="btn mt-3 btn-block btn-danger btn-lg">?</button>
+							<button onclick="triggerSimEvent('AP_MASTER',0,true);$(this).blur();" id="autopilot-master" type="button" class="btn mt-3 btn-block btn-danger btn-lg">?</button>
 							<hr class="bg-secondary" style="margin-bottom:5px">
 						</div>
 						</div>
@@ -41,7 +41,7 @@
 								<tr>
 									<td style="width:130px">Heading switch:</td>
 									<td>
-										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_HDG_Toggle',0,false);$(this).blur();" id="jf_pa28_ap_hdg" type="button" class="btn btn-danger" style="width:55px">?</button>
+										<button onclick="triggerSimEvent('MobiFlight.JF_ARROW_AUTOPILOT_HDG_Toggle',0,true);$(this).blur();" id="jf_pa28_ap_hdg" type="button" class="btn btn-danger" style="width:55px">?</button>
 									</td>
 								</tr>
 								<tr>
@@ -96,7 +96,7 @@
 								<tr>
 									<td style="width:130px">Toggle ALT hold:</td>
 									<td>
-										<button onclick="triggerSimEvent('AP_ALT_HOLD',0,false);$(this).blur();" id="autopilot-altitude-lock" type="button" class="btn btn-danger" style="width:55px">?</button>
+										<button onclick="triggerSimEvent('AP_ALT_HOLD',0,true);$(this).blur();" id="autopilot-altitude-lock" type="button" class="btn btn-danger" style="width:55px">?</button>
 									</td>
 								</tr>
 							</table>
